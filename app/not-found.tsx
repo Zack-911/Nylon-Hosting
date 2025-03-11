@@ -21,7 +21,7 @@ export default function NotFound() {
             </h1>
             <p className="text-xl font-medium text-white">Page Not Found</p>
             <p className="max-w-[600px] text-slate-400 md:text-xl/relaxed">
-              The page you're looking for doesn't exist or has been moved.
+              The page you&apos;re looking for doesn&apos;t exist or has been moved.
             </p>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">

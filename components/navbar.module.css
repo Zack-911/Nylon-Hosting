@@ -46,6 +46,7 @@
 
 .desktopNav {
   display: none;
+  align-items: center;
 }
 
 @media (min-width: 768px) {

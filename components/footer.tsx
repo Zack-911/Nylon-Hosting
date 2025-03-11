@@ -76,55 +76,15 @@ export default function Footer() {
           </div>
           <div className={styles.linksGrid}>
             <div className={styles.linkGroup}>
-              <h3 className={styles.linkGroupTitle}>Platform</h3>
-              <ul className={styles.linksList}>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    Web Hosting
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    App Hosting
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    Discord Bot Hosting
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    GPU Marketplace
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    API
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div className={styles.linkGroup}>
               <h3 className={styles.linkGroupTitle}>Company</h3>
               <ul className={styles.linksList}>
                 <li>
-                  <Link href="#" className={styles.footerLink}>
+                  <Link href="/about" className={styles.footerLink}>
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className={styles.footerLink}>
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
+                  <Link href="/support" className={styles.footerLink}>
                     Contact
                   </Link>
                 </li>
@@ -135,21 +95,6 @@ export default function Footer() {
               <ul className={styles.linksList}>
                 <li>
                   <ToSButton css={styles.footerLink} />
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    Privacy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    Cookies
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className={styles.footerLink}>
-                    Licenses
-                  </Link>
                 </li>
               </ul>
             </div>

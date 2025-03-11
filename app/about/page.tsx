@@ -115,7 +115,7 @@ export default function AboutPage() {
                     Powering the Future of GPU Computing
                   </h1>
                   <p className="max-w-[600px] text-slate-400 md:text-xl">
-                    We're on a mission to democratize access to high-performance GPU computing for developers,
+                    We&apos;re on a mission to democratize access to high-performance GPU computing for developers,
                     researchers, and businesses worldwide.
                   </p>
                 </div>
@@ -237,7 +237,7 @@ export default function AboutPage() {
                 Meet the People Behind NexusHost
               </h2>
               <p className="text-lg text-slate-400 max-w-[700px]" data-aos="fade-left">
-                We're a diverse team of engineers, product managers, designers, and customer success specialists united
+                We&apos;re a diverse team of engineers, product managers, designers, and customer success specialists united
                 by our passion for GPU computing and helping our customers succeed.
               </p>
             </div>
@@ -279,7 +279,7 @@ export default function AboutPage() {
               <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Our Journey</Badge>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">Company History</h2>
               <p className="text-lg text-slate-400 max-w-[700px]">
-                From a small startup to a leading GPU cloud provider, here's how our journey has unfolded.
+                From a small startup to a leading GPU cloud provider, here&apos;s how our journey has unfolded.
               </p>
             </div>
 
@@ -394,7 +394,7 @@ export default function AboutPage() {
                 <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Get In Touch</Badge>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">Contact Us</h2>
                 <p className="text-lg text-slate-400">
-                  Have questions about our company, products, or career opportunities? We'd love to hear from you.
+                  Have questions about our company, products, or career opportunities? We&apos;d love to hear from you.
                 </p>
 
                 <div className="space-y-4 mt-6">
@@ -465,7 +465,7 @@ export default function AboutPage() {
                   <CardHeader>
                     <CardTitle className="text-white">Send us a message</CardTitle>
                     <CardDescription className="text-slate-400">
-                      Fill out the form below and we'll get back to you as soon as possible.
+                      Fill out the form below and we&apos;ll get back to you as soon as possible.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -537,7 +537,7 @@ export default function AboutPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center text-center space-y-4">
               <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Join Our Team</Badge>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">We're Hiring!</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">We&apos;re Hiring!</h2>
               <p className="text-lg text-slate-400 max-w-[700px]">
                 Join our team of passionate individuals working to democratize access to high-performance GPU computing.
               </p>

@@ -19,6 +19,8 @@ export function ToSProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
   const [accepted, setAccepted] = useState(false)
 
+  console.log(accepted)
+
   // Check if ToS has been accepted previously
   useEffect(() => {
     const tosAccepted = localStorage.getItem("tos-accepted")
@@ -107,7 +109,7 @@ function ToSModal() {
               <h3 className={styles.sectionTitle}>1. Introduction</h3>
               <p className={styles.sectionText}>
                 Welcome to NexusHost. By accessing or using our GPU hosting services, you agree to be bound by these
-                Terms of Service ("Terms"). Please read these Terms carefully before using our services.
+                Terms of Service (&quot;Terms&quot;). Please read these Terms carefully before using our services.
               </p>
             </section>
 

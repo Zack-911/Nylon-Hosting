@@ -17,7 +17,6 @@ export default function Snowflakes({ count = 50 }: { count?: number }) {
 
   useEffect(() => {
     const generatedSnowflakes: Snowflake[] = []
-    const snowflakeChars = ["❄", "❅", "❆", "•", "*"]
 
     for (let i = 0; i < count; i++) {
       const left = `${Math.random() * 100}%`

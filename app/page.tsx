@@ -59,7 +59,7 @@ export default function Home() {
                     </li>
                     <li className="flex items-start">
                       <ChevronRight className="h-4 w-4 text-blue-500 mr-1 mt-0.5" />
-                      Berk's Femboy Pics
+                      Berk&apos;s Femboy Pics
                     </li>
                   </ul>
                 }
@@ -126,7 +126,7 @@ export default function Home() {
                   Host anything, anywhere
                 </h2>
                 <p className="max-w-[900px] text-slate-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  From simple static websites to complex applications, we've got you covered with our comprehensive
+                  From simple static websites to complex applications, we&apos;ve got you covered with our comprehensive
                   hosting solutions.
                 </p>
               </div>
@@ -350,7 +350,7 @@ export default function Home() {
                   Choose the perfect plan for your needs
                 </h2>
                 <p className="max-w-[900px] text-slate-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Whether you're a hobbyist, small business, or enterprise, we have pricing options that scale with your
+                  Whether you&apos;re a hobbyist, small business, or enterprise, we have pricing options that scale with your
                   requirements.
                 </p>
               </div>

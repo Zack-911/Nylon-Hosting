@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
 import {
   CpuIcon as Gpu,
   Search,
@@ -12,12 +11,7 @@ import {
   Terminal,
   FileText,
   Rocket,
-  Bookmark,
   ChevronRight,
-  Copy,
-  ExternalLink,
-  ThumbsUp,
-  ThumbsDown,
 } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
@@ -280,10 +274,10 @@ export default function DocsPage() {
               <div className="space-y-4 md:w-1/2">
                 <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Need Help?</Badge>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">
-                  Can't find what you're looking for?
+                  Can&apos;t find what you&apos;re looking for?
                 </h2>
                 <p className="text-lg text-slate-400">
-                  Our support team is here to help. Reach out to us with any questions or issues you're facing.
+                  Our support team is here to help. Reach out to us with any questions or issues you&apos;re facing.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 md:w-1/2">

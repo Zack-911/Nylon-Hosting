@@ -22,20 +22,20 @@ export default function Navbar({ transparent = false }: NavbarProps) {
             <span className={styles.logoText}>NexusHost</span>
           </Link>
           <nav className={styles.desktopNav}>
-            <Link href="#features" className={styles.navLink}>
-              Features
-            </Link>
-            <Link href="#hosting" className={styles.navLink}>
-              Hosting
-            </Link>
-            <Link href="#marketplace" className={styles.navLink}>
-              GPU Marketplace
-            </Link>
             <Link href="/pricing" className={styles.navLink}>
               Pricing
             </Link>
-            <Link href="#contact" className={styles.navLink}>
-              Contact
+            <Link href="/about" className={styles.navLink}>
+              About
+            </Link>
+            <Link href="/buy-gpu" className={styles.navLink}>
+              Gpu Marketplace
+            </Link>
+            <Link href="/docs" className={styles.navLink}>
+              Documentation
+            </Link>
+            <Link href="/support" className={styles.navLink}>
+              Support
             </Link>
           </nav>
         </div>
@@ -57,20 +57,20 @@ export default function Navbar({ transparent = false }: NavbarProps) {
         <div className={styles.mobileMenu}>
           <div className={`container ${styles.mobileMenuContainer}`}>
             <nav className={styles.mobileNavList}>
-              <Link href="#features" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
-                Features
-              </Link>
-              <Link href="#hosting" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
-                Hosting
-              </Link>
-              <Link href="#marketplace" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
-                GPU Marketplace
-              </Link>
-              <Link href="#pricing" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
+              <Link href="/pricing" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
                 Pricing
               </Link>
-              <Link href="#contact" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
-                Contact
+              <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
+                About
+              </Link>
+              <Link href="/buy-gpu" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
+                GPU Marketplace
+              </Link>
+              <Link href="/docs" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
+                Documentation
+              </Link>
+              <Link href="/support" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
+                Support
               </Link>
             </nav>
             <div className={styles.mobileActions}>
