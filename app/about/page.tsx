@@ -36,7 +36,7 @@ const teamMembers = [
     role: "FrontEnd Developer",
     bio: "Berk Likes Femboys",
     image: "/team/zack.png?height=400&width=400",
-    github: "https://github.com/zack911",
+    github: "https://github.com/zack-911",
     discord: "https://discord.com/users/1273256222715285527",
   }
 ]
