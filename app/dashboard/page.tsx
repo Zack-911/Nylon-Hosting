@@ -818,7 +818,7 @@ export default function DashboardPage() {
                 <CardHeader>
                   <CardTitle className="text-white">Cryptocurrency Mining</CardTitle>
                   <CardDescription className="text-slate-400">
-                    Performance metrics for each cryptocurrency you're mining
+                    Performance metrics for each cryptocurrency you&apos;re mining
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6">
