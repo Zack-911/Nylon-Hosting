@@ -26,7 +26,13 @@ const teamMembers = [
     name: "Koomball",
     role: "CEO & Co-Founder",
     bio: "Idk His Stats",
-    image: "/placeholder.svg?height=400&width=400",
+    image: "/team/koomball.png?height=400&width=400",
+  },
+  {
+    name: "Μοχάμεντ",
+    role: "FrontEnd Developer",
+    bio: "Berk Likes Femboys",
+    image: "/team/zack.png?height=400&width=400",
   }
 ]
 
