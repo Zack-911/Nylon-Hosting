@@ -144,6 +144,24 @@
     scroll-behavior: smooth;
   }
 
+  ::-webkit-scrollbar {
+    width: 8px; /* Adjust width */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent; /* Makes the track transparent */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5); /* Light-colored scrollbar handle */
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.7); /* Slightly darker on hover */
+  }
+
+
   .container {
     margin-inline: auto;
     padding-inline: 2rem;
