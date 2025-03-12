@@ -21,24 +21,17 @@ export default function Navbar({ transparent = false }: NavbarProps) {
             <Cpu className={styles.logoIcon} />
             <span className={styles.logoText}>NexusHost</span>
           </Link>
-          <nav className={styles.desktopNav}>
-            <Link href="/pricing" className={styles.navLink}>
-              Pricing
-            </Link>
-            <Link href="/about" className={styles.navLink}>
-              About
-            </Link>
-            <Link href="/buy-gpu" className={styles.navLink}>
-              Gpu Marketplace
-            </Link>
-            <Link href="/docs" className={styles.navLink}>
-              Documentation
-            </Link>
-            <Link href="/support" className={styles.navLink}>
-              Support
-            </Link>
-          </nav>
-        </div>
+          <div className="navWrapper">
+            <nav className="flex jusify-center gap-4">
+              <Link href="/pricing" className={styles.navLink}>Pricing</Link>
+              <Link href="/about" className={styles.navLink}>About</Link>
+              <Link href="/buy-gpu" className={styles.navLink}>Gpu Marketplace</Link>
+              <Link href="/docs" className={styles.navLink}>Documentation</Link>
+              <Link href="/dashboard" className={styles.navLink}>Dashboard</Link>
+              <Link href="/support" className={styles.navLink}>Support</Link>
+            </nav>
+          </div>
+        </div>          
         <div className={styles.actionsContainer}>
           <nav className={styles.desktopNav}>
             <Button variant="ghost" className="text-slate-300 hover:text-white">
@@ -85,4 +78,3 @@ export default function Navbar({ transparent = false }: NavbarProps) {
     </header>
   )
 }
-

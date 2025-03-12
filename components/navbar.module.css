@@ -44,6 +44,12 @@
   color: transparent;
 }
 
+.navWrapper {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
 .desktopNav {
   display: none;
   align-items: center;
