@@ -50,56 +50,56 @@ const partners = [
 // Timeline events
 const timelineEvents = [
   {
-    year: "2020",
+    year: "2022",
     title: "Company Founded",
     description:
-      "NexusHost was founded by Sarah Johnson and Michael Chen with a mission to democratize access to GPU computing.",
+      "Nylon was founded by Roxette Menzy Dylarno with a mission to simplify access to GPU computing, Crypto Mining & Hosting Services.",
   },
   {
-    year: "2021",
-    title: "Seed Funding",
-    description: "Raised $5M in seed funding to build the initial platform and infrastructure.",
+    year: "2024",
+    title: "Started Development on NHS",
+    description: "With the combined effort of Roxette, Μοχάμεντ & Aditya Nylon begins development on its first endevour the Nylon Hosting Services (NHS).",
   },
   {
-    year: "2021",
-    title: "Beta Launch",
+    year: "2025",
+    title: "(placeholder) Beta Launch",
     description: "Launched our beta platform with support for NVIDIA RTX 3090 and A100 GPUs.",
   },
   {
-    year: "2022",
-    title: "Series A Funding",
+    year: "2025",
+    title: "(placeholder) Series A Funding",
     description: "Secured $25M in Series A funding to expand our infrastructure and team.",
   },
   {
-    year: "2022",
-    title: "Public Launch",
+    year: "2026",
+    title: "(placeholder) Public Launch",
     description:
       "Officially launched the NexusHost platform to the public with support for a wide range of GPU models.",
   },
   {
-    year: "2023",
-    title: "Enterprise Offering",
+    year: "2026",
+    title: "(placeholder) Enterprise Offering",
     description: "Introduced NexusHost Enterprise with dedicated infrastructure and advanced security features.",
   },
   {
-    year: "2023",
-    title: "International Expansion",
+    year: "2026",
+    title: "(placeholder) International Expansion",
     description: "Expanded our infrastructure to Europe and Asia to provide lower latency for global customers.",
   },
   {
-    year: "2024",
-    title: "Series B Funding",
+    year: "2027",
+    title: "(placeholder) Series B Funding",
     description: "Raised $80M in Series B funding to accelerate growth and product development.",
   },
   {
-    year: "2024",
-    title: "H100 Support",
+    year: "2027",
+    title: "(placeholder) H100 Support",
     description:
       "Added support for NVIDIA H100 GPUs, making us one of the first cloud providers to offer these cutting-edge GPUs.",
   },
   {
-    year: "2025",
-    title: "1 Million Users",
+    year: "2027",
+    title: "(placeholder) 1 Million Users",
     description: "Reached the milestone of 1 million registered users on the platform.",
   },
 ]
