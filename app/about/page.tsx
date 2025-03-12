@@ -13,9 +13,6 @@ import {
   Mail,
   MapPin,
   Phone,
-  Github,
-  Twitter,
-  Linkedin,
 } from "lucide-react"
 import { FaGithub, FaDiscord } from "react-icons/fa"
 import Navbar from "@/components/navbar"
@@ -466,13 +463,13 @@ export default function AboutPage() {
 
                 <div className="flex space-x-4 mt-6">
                   <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                    <Twitter className="h-5 w-5" />
+                    temp
                   </Button>
                   <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                    <Linkedin className="h-5 w-5" />
+                    temp
                   </Button>
                   <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                    <Github className="h-5 w-5" />
+                    temp
                   </Button>
                 </div>
               </div>
