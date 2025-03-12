@@ -19,7 +19,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
         <div className={styles.logoContainer}>
           <Link href="/" className={styles.logoContainer}>
             <Cpu className={styles.logoIcon} />
-            <span className={styles.logoText}>NexusHost</span>
+            <span className={styles.logoText}>Nylon Hosting Services</span>
           </Link>
           <div className="navWrapper">
             <nav className="flex jusify-center gap-4">
