@@ -17,6 +17,7 @@ import {
   Twitter,
   Linkedin,
 } from "lucide-react"
+import { FaGithub, FaDiscord } from "react-icons/fa"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 
@@ -27,12 +28,16 @@ const teamMembers = [
     role: "CEO & Co-Founder",
     bio: "Idk His Stats",
     image: "/team/koomball.png?height=400&width=400",
+    github: "https://github.com/Koomball",
+    discord: "https://discord.com/users/1095378481237475409",
   },
   {
     name: "Μοχάμεντ",
     role: "FrontEnd Developer",
     bio: "Berk Likes Femboys",
     image: "/team/zack.png?height=400&width=400",
+    github: "https://github.com/zack911",
+    discord: "https://discord.com/users/1273256222715285527",
   }
 ]
 
@@ -262,15 +267,21 @@ export default function AboutPage() {
                     <p className="text-slate-300">{member.bio}</p>
                   </CardContent>
                   <CardFooter className="flex justify-start space-x-2">
-                    <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                      <Linkedin className="h-5 w-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                      <Twitter className="h-5 w-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                      <Github className="h-5 w-5" />
-                    </Button>
+                    <Button asChild variant="ghost" size="icon" className="text-slate-400 hover:text-white">
+                        <a href={member.github} target="_blank" rel="noopener noreferrer">
+                          <span className="h-5 w-5">
+                            <FaGithub size={20} />
+                          </span>
+                        </a>
+                      </Button>
+
+                      <Button asChild variant="ghost" size="icon" className="text-slate-400 hover:text-white">
+                        <a href={member.discord} target="_blank" rel="noopener noreferrer">
+                          <span className="h-5 w-5">
+                            <FaDiscord size={20} />
+                          </span>
+                        </a>
+                      </Button>                                           
                   </CardFooter>
                 </Card>
               ))}
