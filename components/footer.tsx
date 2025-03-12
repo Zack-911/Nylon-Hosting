@@ -12,7 +12,7 @@ export default function Footer() {
           <div className={styles.companyInfo}>
             <Link href="/" className={styles.logoContainer}>
               <Cpu className={styles.logoIcon} />
-              <span className={styles.logoText}>NexusHost</span>
+              <span className={styles.logoText}>Nylon Hosting Services</span>
             </Link>
             <p className={styles.companyDescription}>
               NexusHost provides comprehensive hosting solutions for websites, applications, Discord bots, and
