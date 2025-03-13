@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-animate';
 
@@ -131,13 +131,7 @@
   body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   html {
@@ -161,7 +155,6 @@
     background: rgba(255, 255, 255, 0.7); /* Slightly darker on hover */
   }
 
-
   .container {
     margin-inline: auto;
     padding-inline: 2rem;
@@ -183,11 +176,7 @@
   }
 
   .gradient-purple-blue {
-    background: linear-gradient(
-      to right,
-      var(--primary-purple),
-      var(--primary-blue)
-    );
+    background: linear-gradient(to right, var(--primary-purple), var(--primary-blue));
   }
 
   .gradient-purple-blue-hover:hover {
@@ -195,11 +184,7 @@
   }
 
   .card-gradient {
-    background: linear-gradient(
-      to bottom,
-      var(--border-dark),
-      var(--bg-card-hover)
-    );
+    background: linear-gradient(to bottom, var(--border-dark), var(--bg-card-hover));
   }
 
   .glow-effect {
@@ -207,14 +192,10 @@
   }
 
   .glow-effect::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to right,
-      rgba(139, 92, 246, 0.1),
-      rgba(59, 130, 246, 0.1)
-    );
+    background: linear-gradient(to right, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
     border-radius: 1.5rem;
     filter: blur(24px);
     z-index: -10;
@@ -282,11 +263,7 @@
   }
 
   .badge-gradient {
-    background: linear-gradient(
-      to right,
-      var(--primary-purple),
-      var(--primary-blue)
-    );
+    background: linear-gradient(to right, var(--primary-purple), var(--primary-blue));
     color: white;
     border: none;
   }
@@ -343,11 +320,7 @@
   }
 
   .btn-primary {
-    background: linear-gradient(
-      to right,
-      var(--primary-purple),
-      var(--primary-blue)
-    );
+    background: linear-gradient(to right, var(--primary-purple), var(--primary-blue));
     color: white;
   }
 
