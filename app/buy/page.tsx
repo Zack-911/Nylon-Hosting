@@ -52,7 +52,7 @@ export default function BuyPage() {
                 <Card className={`bg-[var(--bg-card)] border-slate-800 h-full ${styles.cardHover}`}>
                   <div className="relative h-48 overflow-hidden rounded-t-lg">
                     <Image
-                      src="/placeholder.svg?height=300&width=600"
+                      src="/buy/4090.png?height=300&width=600"
                       alt="GPU Computing"
                       width={600}
                       height={300}
@@ -92,7 +92,7 @@ export default function BuyPage() {
                 <Card className={`bg-[var(--bg-card)] border-slate-800 h-full ${styles.cardHover}`}>
                   <div className="relative h-48 overflow-hidden rounded-t-lg">
                     <Image
-                      src="/placeholder.svg?height=300&width=600"
+                      src="/buy/hosting.png?height=300&width=600"
                       alt="Web Hosting"
                       width={600}
                       height={300}
@@ -130,7 +130,7 @@ export default function BuyPage() {
                 <Card className={`bg-[var(--bg-card)] border-slate-800 h-full ${styles.cardHover}`}>
                   <div className="relative h-48 overflow-hidden rounded-t-lg">
                     <Image
-                      src="/placeholder.svg?height=300&width=600"
+                      src="/buy/cloudstorage.png?height=300&width=600"
                       alt="Cloud Storage"
                       width={600}
                       height={300}
