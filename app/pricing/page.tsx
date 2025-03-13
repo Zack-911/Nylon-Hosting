@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useState } from "react"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -475,20 +474,53 @@ export default function PricingPage() {
     switch (sortOption) {
       case "price-low":
         return [...products].sort((a, b) => {
-          const aPrice = "hashrate" in a ? a.pricing.hourly : "pricing" in a && a.pricing ? a.pricing.monthly : 0
-          const bPrice = "hashrate" in b ? b.pricing.hourly : "pricing" in b && b.pricing ? b.pricing.monthly : 0
+          const aPrice = isGPUProduct(a)
+            ? pricingView === "hourly"
+              ? a.pricing.hourly
+              : pricingView === "daily"
+                ? a.pricing.daily
+                : a.pricing.monthly
+            : isServiceProduct(a) && a.pricing
+              ? a.pricing.monthly
+              : 0
+          const bPrice = isGPUProduct(b)
+            ? pricingView === "hourly"
+              ? b.pricing.hourly
+              : pricingView === "daily"
+                ? b.pricing.daily
+                : b.pricing.monthly
+            : isServiceProduct(b) && b.pricing
+              ? b.pricing.monthly
+              : 0
           return aPrice - bPrice
         })
       case "price-high":
         return [...products].sort((a, b) => {
-          const aPrice = "hashrate" in a ? a.pricing.hourly : "pricing" in a && a.pricing ? a.pricing.monthly : 0
-          const bPrice = "hashrate" in b ? b.pricing.hourly : "pricing" in b && b.pricing ? b.pricing.monthly : 0
+          const aPrice = isGPUProduct(a)
+            ? pricingView === "hourly"
+              ? a.pricing.hourly
+              : pricingView === "daily"
+                ? a.pricing.daily
+                : a.pricing.monthly
+            : isServiceProduct(a) && a.pricing
+              ? a.pricing.monthly
+              : 0
+          const bPrice = isGPUProduct(b)
+            ? pricingView === "hourly"
+              ? b.pricing.hourly
+              : pricingView === "daily"
+                ? b.pricing.daily
+                : b.pricing.monthly
+            : isServiceProduct(b) && b.pricing
+              ? b.pricing.monthly
+              : 0
           return bPrice - aPrice
         })
       case "memory":
         return [...products].sort((a, b) => {
+          if (!isGPUProduct(a) || !isGPUProduct(b)) return 0
           // Extract memory size from the memory string (e.g., "24GB GDDR6X" -> 24)
-          const getMemorySize = (item: any) => {
+          const getMemorySize = (item: GPUProduct) => {
             if (!item.memory) return 0
             const match = item.memory.match(/(\d+)GB/)
             return match ? Number.parseInt(match[1], 10) : 0
@@ -498,23 +530,23 @@ export default function PricingPage() {
       case "performance":
         return [...products].sort((a, b) => {
           // For GPUs, we'll use cores as a rough performance indicator
-          const getPerformanceScore = (item: any) => {
-            if ("cores" in item) {
+          const getPerformanceScore = (item: Product) => {
+            if (isGPUProduct(item) && item.cores) {
               const match = item.cores.match(/(\d+,?\d*)/)
               return match ? Number.parseInt(match[1].replace(",", ""), 10) : 0
             }
             // For other services, use pricing as a proxy for performance
-            return "pricing" in item && item.pricing ? item.pricing.monthly : 0
+            return isServiceProduct(item) && item.pricing ? item.pricing.monthly : 0
           }
           return getPerformanceScore(b) - getPerformanceScore(a)
         })
       case "efficiency":
         return [...products].sort((a, b) => {
           // For mining GPUs, use efficiency
-          if ("efficiency" in a && "efficiency" in b) {
-            const aEff = Number.parseFloat(a.efficiency?.split(" ")[0] ?? "0");
-            const bEff = Number.parseFloat(b.efficiency?.split(" ")[0] ?? "0");
-            return bEff - aEff;                      
+          if (isGPUProduct(a) && isGPUProduct(b) && a.efficiency && b.efficiency) {
+            const aEff = Number.parseFloat(a.efficiency.split(" ")[0])
+            const bEff = Number.parseFloat(b.efficiency.split(" ")[0])
+            return bEff - aEff
           }
           return 0
         })
@@ -699,52 +731,38 @@ export default function PricingPage() {
                   {isGPUProduct(product) ? (
                     // Mining GPU Card
                     <>
-                      <div className="relative">
-                        <Image
-                          src={product.image || "/placeholder.svg"}
-                          width={400}
-                          height={300}
-                          alt={product.name}
-                          className="w-full h-48 object-cover"
-                        />
-                        {product.popular && (
-                          <Badge className="absolute top-2 right-2 gradient-purple-blue text-white border-0">
-                            Popular
-                          </Badge>
+                      <div className="p-4 border-b border-slate-700 flex justify-between items-center">
+                        {product.popular && <Badge className="gradient-purple-blue text-white border-0">Popular</Badge>}
+                        {product.premium && <Badge className="bg-purple-600 text-white border-0">Premium</Badge>}
+                        {product.value && <Badge className="bg-green-600 text-white border-0">Best Value</Badge>}
+                        {!product.popular && !product.premium && !product.value && (
+                          <span className="text-transparent">-</span>
                         )}
-                        {product.premium && (
-                          <Badge className="absolute top-2 right-2 bg-purple-600 text-white border-0">Premium</Badge>
-                        )}
-                        {product.value && (
-                          <Badge className="absolute top-2 right-2 bg-green-600 text-white border-0">Best Value</Badge>
-                        )}
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Badge
+                                className={`
+            ${
+              product.availability === "High"
+                ? "bg-green-500/20 text-green-400"
+                : product.availability === "Medium"
+                  ? "bg-yellow-500/20 text-yellow-400"
+                  : "bg-red-500/20 text-red-400"
+            }
+          `}
+                              >
+                                {product.availability}
+                              </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Current availability status</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </div>
                       <CardHeader>
-                        <div className="flex justify-between items-center">
-                          <CardTitle className="text-white">{product.name}</CardTitle>
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Badge
-                                  className={`
-                    ${
-                      product.availability === "High"
-                        ? "bg-green-500/20 text-green-400"
-                        : product.availability === "Medium"
-                          ? "bg-yellow-500/20 text-yellow-400"
-                          : "bg-red-500/20 text-red-400"
-                    }
-                  `}
-                                >
-                                  {product.availability}
-                                </Badge>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Current availability status</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </div>
+                        <CardTitle className="text-white">{product.name}</CardTitle>
                         <div className="flex justify-between items-center mt-2">
                           <CardDescription className="text-slate-400">{product.architecture}</CardDescription>
                           <span className="text-lg font-bold text-purple-400">
