@@ -22,7 +22,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
         <div className={styles.logoContainer}>
           <Link href="/" className={styles.logoContainer}>
             <Cpu className={styles.logoIcon} />
-            <span className={styles.logoText}>NexusHost</span>
+            <span className={styles.logoText}>Nylon Hosting Services</span>
           </Link>
           <div className="navWrapper hidden md:block">
             <nav className="flex justify-center gap-6">
@@ -159,4 +159,3 @@ export default function Navbar({ transparent = false }: NavbarProps) {
     </header>
   )
 }
-

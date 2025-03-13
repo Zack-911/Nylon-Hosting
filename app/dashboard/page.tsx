@@ -79,8 +79,8 @@ const servers = [
     ramUsage: 68,
     diskUsage: 32,
     gpus: [
-      { name: "NVIDIA RTX 4090", temp: 65, usage: 98, power: 320 },
-      { name: "NVIDIA RTX 4090", temp: 67, usage: 97, power: 315 },
+      { name: "NVIDIA RTX 4090", temp: 65, usage: 98, power: 320, mining: "NEXA" },
+      { name: "NVIDIA RTX 4090", temp: 67, usage: 97, power: 315, mining: "RVN" },
     ],
   },
   {
@@ -95,9 +95,9 @@ const servers = [
     ramUsage: 72,
     diskUsage: 45,
     gpus: [
-      { name: "NVIDIA RTX 3090", temp: 72, usage: 99, power: 350 },
-      { name: "NVIDIA RTX 3090", temp: 74, usage: 99, power: 345 },
-      { name: "NVIDIA RTX 3090", temp: 71, usage: 98, power: 348 },
+      { name: "NVIDIA RTX 3090", temp: 72, usage: 99, power: 350, mining: "NEXA" },
+      { name: "NVIDIA RTX 3090", temp: 74, usage: 99, power: 345, mining: "NEXA" },
+      { name: "NVIDIA RTX 3090", temp: 71, usage: 98, power: 348, mining: "RVN" },
     ],
   },
   {
@@ -138,8 +138,8 @@ const servers = [
     ramUsage: 0,
     diskUsage: 45,
     gpus: [
-      { name: "AMD Instinct MI250", temp: 0, usage: 0, power: 0 },
-      { name: "AMD Instinct MI250", temp: 0, usage: 0, power: 0 },
+      { name: "AMD Instinct MI250", temp: 0, usage: 0, power: 0, mining: "NONE" },
+      { name: "AMD Instinct MI250", temp: 0, usage: 0, power: 0, mining: "NONE" },
     ],
   },
 ]
@@ -766,4 +766,3 @@ export default function DashboardPage() {
     </div>
   )
 }
-
