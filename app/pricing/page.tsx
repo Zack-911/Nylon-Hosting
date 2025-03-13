@@ -1,14 +1,75 @@
+"use client"
+
+import type React from "react"
+
+import { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CpuIcon as Gpu, MemoryStickIcon as Memory, HardDrive, Zap, Filter, Check, Info } from "lucide-react"
+import { CpuIcon as Gpu, MemoryStickIcon as Memory, HardDrive, Zap, Check, Bot, Server, Globe } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import Link from "next/link"
+
+// Define types for our data structures
+interface GPUProduct {
+  id: string
+  name: string
+  memory: string
+  cores: string
+  bandwidth: string
+  tdp: string
+  architecture: string
+  bestFor: string[]
+  image: string
+  pricing: {
+    hourly: number
+    daily: number
+    monthly: number
+  }
+  availability: string
+  popular?: boolean
+  premium?: boolean
+  value?: boolean
+  enterprise?: boolean
+  professional?: boolean
+  reliable?: boolean
+  category: string
+  hashrate?: string
+  efficiency?: string
+}
+
+interface ServiceProduct {
+  id: string
+  name: string
+  icon: React.ElementType
+  iconColor?: string
+  description: string
+  features: string[]
+  pricing: {
+    monthly: number
+  }
+  availability: string
+  popular?: boolean
+  category: string
+}
+
+// Type guard functions to check product types
+function isGPUProduct(product: Product): product is GPUProduct {
+  return "cores" in product && "memory" in product
+}
+
+function isServiceProduct(product: Product): product is ServiceProduct {
+  return "icon" in product && "features" in product
+}
+
+// Union type for all product types
+type Product = GPUProduct | ServiceProduct
 
 // GPU data
 const gpus = [
@@ -29,6 +90,7 @@ const gpus = [
     },
     availability: "High",
     popular: true,
+    category: "general",
   },
   {
     id: "a100-80gb",
@@ -47,6 +109,7 @@ const gpus = [
     },
     availability: "Limited",
     enterprise: true,
+    category: "general",
   },
   {
     id: "rtx-3090",
@@ -65,6 +128,7 @@ const gpus = [
     },
     availability: "High",
     value: true,
+    category: "general",
   },
   {
     id: "h100-80gb",
@@ -83,6 +147,7 @@ const gpus = [
     },
     availability: "Very Limited",
     premium: true,
+    category: "general",
   },
   {
     id: "rtx-4080",
@@ -101,6 +166,7 @@ const gpus = [
     },
     availability: "High",
     reliable: true,
+    category: "general",
   },
   {
     id: "a6000",
@@ -119,6 +185,7 @@ const gpus = [
     },
     availability: "Medium",
     professional: true,
+    category: "general",
   },
   {
     id: "rtx-a5000",
@@ -136,6 +203,7 @@ const gpus = [
       monthly: 850.0,
     },
     availability: "Medium",
+    category: "general",
   },
   {
     id: "amd-mi250",
@@ -153,6 +221,200 @@ const gpus = [
       monthly: 2200.0,
     },
     availability: "Limited",
+    category: "general",
+  },
+  // Mining-optimized GPUs
+  {
+    id: "mining-rtx-3080",
+    name: "NVIDIA RTX 3080 (Mining)",
+    memory: "10GB GDDR6X",
+    cores: "8,704 CUDA Cores",
+    bandwidth: "760 GB/s",
+    tdp: "320W",
+    architecture: "Ampere",
+    bestFor: ["Ethereum Mining", "Cryptocurrency", "Mining Farms"],
+    image: "/placeholder.svg?height=300&width=400",
+    pricing: {
+      hourly: 0.75,
+      daily: 16.0,
+      monthly: 420.0,
+    },
+    availability: "High",
+    hashrate: "100 MH/s (ETH)",
+    efficiency: "0.31 MH/W",
+    category: "mining",
+  },
+  {
+    id: "mining-rtx-3090",
+    name: "NVIDIA RTX 3090 (Mining)",
+    memory: "24GB GDDR6X",
+    cores: "10,496 CUDA Cores",
+    bandwidth: "936 GB/s",
+    tdp: "350W",
+    architecture: "Ampere",
+    bestFor: ["Ethereum Mining", "Cryptocurrency", "Mining Farms"],
+    image: "/placeholder.svg?height=300&width=400",
+    pricing: {
+      hourly: 0.9,
+      daily: 20.0,
+      monthly: 480.0,
+    },
+    availability: "High",
+    hashrate: "125 MH/s (ETH)",
+    efficiency: "0.36 MH/W",
+    category: "mining",
+  },
+  {
+    id: "mining-a4000",
+    name: "NVIDIA A4000 (Mining)",
+    memory: "16GB GDDR6",
+    cores: "6,144 CUDA Cores",
+    bandwidth: "448 GB/s",
+    tdp: "140W",
+    architecture: "Ampere",
+    bestFor: ["Efficient Mining", "Cryptocurrency", "Low Power"],
+    image: "/placeholder.svg?height=300&width=400",
+    pricing: {
+      hourly: 0.65,
+      daily: 14.0,
+      monthly: 380.0,
+    },
+    availability: "Medium",
+    hashrate: "65 MH/s (ETH)",
+    efficiency: "0.46 MH/W",
+    category: "mining",
+    value: true,
+  },
+  {
+    id: "mining-cmp-170hx",
+    name: "NVIDIA CMP 170HX",
+    memory: "8GB HBM2e",
+    cores: "4,480 CUDA Cores",
+    bandwidth: "1,493 GB/s",
+    tdp: "250W",
+    architecture: "Ampere",
+    bestFor: ["Professional Mining", "Cryptocurrency", "Mining Farms"],
+    image: "/placeholder.svg?height=300&width=400",
+    pricing: {
+      hourly: 1.1,
+      daily: 24.0,
+      monthly: 580.0,
+    },
+    availability: "Limited",
+    hashrate: "164 MH/s (ETH)",
+    efficiency: "0.66 MH/W",
+    category: "mining",
+    premium: true,
+  },
+]
+
+// Other services data
+const otherServices = [
+  {
+    id: "discord-bot-basic",
+    name: "Discord Bot Hosting - Basic",
+    icon: Bot,
+    iconColor: "text-indigo-500",
+    description: "24/7 uptime for your Discord bot with automatic restarts",
+    features: ["1 GB RAM", "Shared CPU", "10 GB Storage", "Unlimited Traffic", "Automatic Restarts"],
+    pricing: {
+      monthly: 5.99,
+    },
+    availability: "High",
+    category: "discord",
+  },
+  {
+    id: "discord-bot-standard",
+    name: "Discord Bot Hosting - Standard",
+    icon: Bot,
+    iconColor: "text-indigo-500",
+    description: "Enhanced resources for medium-sized Discord bots",
+    features: ["2 GB RAM", "1 vCPU", "20 GB Storage", "Unlimited Traffic", "Priority Support"],
+    pricing: {
+      monthly: 9.99,
+    },
+    availability: "High",
+    popular: true,
+    category: "discord",
+  },
+  {
+    id: "discord-bot-premium",
+    name: "Discord Bot Hosting - Premium",
+    icon: Bot,
+    iconColor: "text-indigo-500",
+    description: "High-performance hosting for large Discord bots",
+    features: ["4 GB RAM", "2 vCPU", "40 GB Storage", "Unlimited Traffic", "24/7 Support"],
+    pricing: {
+      monthly: 19.99,
+    },
+    availability: "High",
+    category: "discord",
+  },
+  {
+    id: "game-server-minecraft",
+    name: "Minecraft Server",
+    icon: Server,
+    iconColor: "text-green-500",
+    description: "Dedicated Minecraft server with easy setup",
+    features: ["4 GB RAM", "2 vCPU", "50 GB SSD", "Up to 50 Players", "One-Click Mods"],
+    pricing: {
+      monthly: 14.99,
+    },
+    availability: "High",
+    category: "game",
+  },
+  {
+    id: "game-server-valheim",
+    name: "Valheim Server",
+    icon: Server,
+    iconColor: "text-green-500",
+    description: "Host your Valheim world with friends",
+    features: ["6 GB RAM", "2 vCPU", "100 GB SSD", "Up to 20 Players", "Automatic Backups"],
+    pricing: {
+      monthly: 19.99,
+    },
+    availability: "High",
+    category: "game",
+  },
+  {
+    id: "vps-basic",
+    name: "VPS - Basic",
+    icon: Server,
+    iconColor: "text-blue-500",
+    description: "General purpose virtual private server",
+    features: ["2 GB RAM", "1 vCPU", "50 GB SSD", "2 TB Traffic", "Linux/Windows"],
+    pricing: {
+      monthly: 10.99,
+    },
+    availability: "High",
+    category: "vps",
+  },
+  {
+    id: "vps-standard",
+    name: "VPS - Standard",
+    icon: Server,
+    iconColor: "text-blue-500",
+    description: "Enhanced VPS for websites and applications",
+    features: ["4 GB RAM", "2 vCPU", "80 GB SSD", "4 TB Traffic", "Linux/Windows"],
+    pricing: {
+      monthly: 19.99,
+    },
+    availability: "High",
+    popular: true,
+    category: "vps",
+  },
+  {
+    id: "web-hosting-basic",
+    name: "Web Hosting - Basic",
+    icon: Globe,
+    iconColor: "text-cyan-500",
+    description: "Affordable hosting for personal websites",
+    features: ["10 GB Storage", "Unlimited Bandwidth", "5 Databases", "Free SSL", "24/7 Support"],
+    pricing: {
+      monthly: 4.99,
+    },
+    availability: "High",
+    category: "web",
   },
 ]
 
@@ -190,6 +452,89 @@ const pricingPlans = [
 ]
 
 export default function PricingPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>("all")
+  const [pricingView, setPricingView] = useState<string>("hourly")
+  const [sortOption, setSortOption] = useState<string>("availability")
+
+  // Filter GPUs based on selected category
+  const filteredProducts = (): Product[] => {
+    if (selectedCategory === "all") {
+      return gpus.filter((gpu) => gpu.category === "general") as Product[]
+    } else if (selectedCategory === "mining") {
+      return gpus.filter((gpu) => gpu.category === "mining") as Product[]
+    } else if (selectedCategory === "other") {
+      return otherServices as Product[]
+    }
+    return []
+  }
+
+  // Sort products based on selected option
+  const sortedProducts = (): Product[] => {
+    const products = filteredProducts()
+
+    switch (sortOption) {
+      case "price-low":
+        return [...products].sort((a, b) => {
+          const aPrice = "hashrate" in a ? a.pricing.hourly : "pricing" in a && a.pricing ? a.pricing.monthly : 0
+          const bPrice = "hashrate" in b ? b.pricing.hourly : "pricing" in b && b.pricing ? b.pricing.monthly : 0
+          return aPrice - bPrice
+        })
+      case "price-high":
+        return [...products].sort((a, b) => {
+          const aPrice = "hashrate" in a ? a.pricing.hourly : "pricing" in a && a.pricing ? a.pricing.monthly : 0
+          const bPrice = "hashrate" in b ? b.pricing.hourly : "pricing" in b && b.pricing ? b.pricing.monthly : 0
+          return bPrice - aPrice
+        })
+      case "memory":
+        return [...products].sort((a, b) => {
+          // Extract memory size from the memory string (e.g., "24GB GDDR6X" -> 24)
+          const getMemorySize = (item: any) => {
+            if (!item.memory) return 0
+            const match = item.memory.match(/(\d+)GB/)
+            return match ? Number.parseInt(match[1], 10) : 0
+          }
+          return getMemorySize(b) - getMemorySize(a)
+        })
+      case "performance":
+        return [...products].sort((a, b) => {
+          // For GPUs, we'll use cores as a rough performance indicator
+          const getPerformanceScore = (item: any) => {
+            if ("cores" in item) {
+              const match = item.cores.match(/(\d+,?\d*)/)
+              return match ? Number.parseInt(match[1].replace(",", ""), 10) : 0
+            }
+            // For other services, use pricing as a proxy for performance
+            return "pricing" in item && item.pricing ? item.pricing.monthly : 0
+          }
+          return getPerformanceScore(b) - getPerformanceScore(a)
+        })
+      case "efficiency":
+        return [...products].sort((a, b) => {
+          // For mining GPUs, use efficiency
+          if ("efficiency" in a && "efficiency" in b) {
+            const aEff = Number.parseFloat(a.efficiency?.split(" ")[0] ?? "0");
+            const bEff = Number.parseFloat(b.efficiency?.split(" ")[0] ?? "0");
+            return bEff - aEff;                      
+          }
+          return 0
+        })
+      case "popular":
+        return [...products].sort((a, b) => {
+          const aPopular = a.popular ? 1 : 0
+          const bPopular = b.popular ? 1 : 0
+          return bPopular - aPopular
+        })
+      case "availability":
+      default:
+        return [...products].sort((a, b) => {
+          const availabilityOrder = { High: 0, Medium: 1, Limited: 2, "Very Limited": 3 }
+          const aAvail = availabilityOrder[a.availability as keyof typeof availabilityOrder] || 0
+          const bAvail = availabilityOrder[b.availability as keyof typeof availabilityOrder] || 0
+          return aAvail - bAvail
+        })
+    }
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -203,15 +548,17 @@ export default function PricingPage() {
                 High-Performance Computing
               </Badge>
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl gradient-text">
-                GPU Products & Pricing
+                Products & Pricing
               </h1>
               <p className="text-xl text-slate-400 max-w-[700px]">
-                Access the latest NVIDIA and AMD GPUs with flexible pricing options to fit your computational needs.
+                Access the latest hardware with flexible pricing options to fit your computational needs.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <Button size="lg" className="gradient-purple-blue gradient-purple-blue-hover">
-                  Deploy a GPU Instance
-                </Button>
+                <Link href="/buy">
+                  <Button size="lg" className="gradient-purple-blue gradient-purple-blue-hover">
+                    Deploy Now
+                  </Button>
+                </Link>
                 <Button
                   size="lg"
                   variant="outline"
@@ -270,59 +617,65 @@ export default function PricingPage() {
           </div>
         </section>
 
-        {/* GPU Products Section */}
+        {/* Products Section */}
         <section className="w-full py-12 md:py-24 bg-[var(--bg-dark)]">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center text-center space-y-4 mb-10">
-              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">GPU Selection</Badge>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">Available GPU Models</h2>
+              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Product Selection</Badge>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">Available Products</h2>
               <p className="text-lg text-slate-400 max-w-[700px]">
-                Browse our selection of high-performance GPUs for AI, machine learning, rendering, and more.
+                Browse our selection of high-performance hardware and services
               </p>
+            </div>
+
+            {/* Category Selection */}
+            <div className="flex justify-center mb-8">
+              <div className="inline-flex bg-slate-800/50 rounded-lg p-1">
+                <Button
+                  variant={selectedCategory === "all" ? "default" : "ghost"}
+                  className={selectedCategory === "all" ? "gradient-purple-blue text-white" : "text-slate-400"}
+                  onClick={() => setSelectedCategory("all")}
+                >
+                  <Gpu className="mr-2 h-4 w-4" />
+                  All GPUs
+                </Button>
+                <Button
+                  variant={selectedCategory === "mining" ? "default" : "ghost"}
+                  className={selectedCategory === "mining" ? "gradient-purple-blue text-white" : "text-slate-400"}
+                  onClick={() => setSelectedCategory("mining")}
+                >
+                  <Zap className="mr-2 h-4 w-4" />
+                  Mining GPUs
+                </Button>
+                <Button
+                  variant={selectedCategory === "other" ? "default" : "ghost"}
+                  className={selectedCategory === "other" ? "gradient-purple-blue text-white" : "text-slate-400"}
+                  onClick={() => setSelectedCategory("other")}
+                >
+                  <Server className="mr-2 h-4 w-4" />
+                  Other Services
+                </Button>
+              </div>
             </div>
 
             {/* Filtering and Sorting Controls */}
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
-              <div className="flex flex-wrap gap-3 w-full md:w-auto">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                >
-                  <Filter className="h-4 w-4 mr-2" />
-                  All GPUs
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                >
-                  NVIDIA
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                >
-                  AMD
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                >
-                  AI/ML
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                >
-                  Rendering
-                </Button>
-              </div>
+              {selectedCategory !== "other" && (
+                <div className="flex gap-3 w-full md:w-auto">
+                  <Select defaultValue={pricingView} onValueChange={setPricingView}>
+                    <SelectTrigger className="w-full md:w-[180px] bg-[var(--bg-card)] border-slate-700 text-slate-300">
+                      <SelectValue placeholder="Pricing" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[var(--bg-card)] border-slate-700">
+                      <SelectItem value="hourly">Hourly Pricing</SelectItem>
+                      <SelectItem value="daily">Daily Pricing</SelectItem>
+                      <SelectItem value="monthly">Monthly Pricing</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
               <div className="flex gap-3 w-full md:w-auto">
-                <Select defaultValue="availability">
+                <Select defaultValue={sortOption} onValueChange={setSortOption}>
                   <SelectTrigger className="w-full md:w-[180px] bg-[var(--bg-card)] border-slate-700 text-slate-300">
                     <SelectValue placeholder="Sort by" />
                   </SelectTrigger>
@@ -332,457 +685,534 @@ export default function PricingPage() {
                     <SelectItem value="price-high">Price: High to Low</SelectItem>
                     <SelectItem value="memory">Memory Size</SelectItem>
                     <SelectItem value="performance">Performance</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select defaultValue="hourly">
-                  <SelectTrigger className="w-full md:w-[180px] bg-[var(--bg-card)] border-slate-700 text-slate-300">
-                    <SelectValue placeholder="Pricing" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[var(--bg-card)] border-slate-700">
-                    <SelectItem value="hourly">Hourly Pricing</SelectItem>
-                    <SelectItem value="daily">Daily Pricing</SelectItem>
-                    <SelectItem value="monthly">Monthly Pricing</SelectItem>
+                    {selectedCategory === "mining" && <SelectItem value="efficiency">Mining Efficiency</SelectItem>}
+                    <SelectItem value="popular">Most Popular</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            {/* GPU Cards Grid */}
+            {/* Products Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {gpus.map((gpu) => (
-                <Card key={gpu.id} className="bg-[var(--bg-card)] border-slate-800 overflow-hidden flex flex-col">
-                  <div className="relative">
-                    <Image
-                      src={gpu.image || "/placeholder.svg"}
-                      width={400}
-                      height={300}
-                      alt={gpu.name}
-                      className="w-full h-48 object-cover"
-                    />
-                    {gpu.popular && (
-                      <Badge className="absolute top-2 right-2 gradient-purple-blue text-white border-0">Popular</Badge>
-                    )}
-                    {gpu.enterprise && (
-                      <Badge className="absolute top-2 right-2 bg-blue-600 text-white border-0">Enterprise</Badge>
-                    )}
-                    {gpu.premium && (
-                      <Badge className="absolute top-2 right-2 bg-purple-600 text-white border-0">Premium</Badge>
-                    )}
-                    {gpu.value && (
-                      <Badge className="absolute top-2 right-2 bg-green-600 text-white border-0">Best Value</Badge>
-                    )}
-                  </div>
-                  <CardHeader>
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="text-white">{gpu.name}</CardTitle>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Badge
-                              className={`
-                              ${
-                                gpu.availability === "High"
-                                  ? "bg-green-500/20 text-green-400"
-                                  : gpu.availability === "Medium"
-                                    ? "bg-yellow-500/20 text-yellow-400"
-                                    : "bg-red-500/20 text-red-400"
-                              }
-                            `}
-                            >
-                              {gpu.availability}
-                            </Badge>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Current availability status</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </div>
-                    <div className="flex justify-between items-center mt-2">
-                      <CardDescription className="text-slate-400">{gpu.architecture}</CardDescription>
-                      <span className="text-lg font-bold text-purple-400">${gpu.pricing.hourly.toFixed(2)}/hr</span>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="text-slate-300 grow">
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="flex items-start">
-                        <Memory className="h-4 w-4 text-blue-500 mr-1 mt-0.5" />
-                        <span className="text-sm">{gpu.memory}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <Gpu className="h-4 w-4 text-purple-500 mr-1 mt-0.5" />
-                        <span className="text-sm">{gpu.cores}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <Zap className="h-4 w-4 text-yellow-500 mr-1 mt-0.5" />
-                        <span className="text-sm">{gpu.tdp}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <HardDrive className="h-4 w-4 text-green-500 mr-1 mt-0.5" />
-                        <span className="text-sm">{gpu.bandwidth}</span>
-                      </div>
-                    </div>
-                    <div className="mt-2">
-                      <p className="text-sm font-medium text-slate-300 mb-1">Best for:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {gpu.bestFor.map((use, i) => (
-                          <Badge key={i} variant="outline" className="bg-slate-800/50 text-slate-300 border-slate-700">
-                            {use}
+              {sortedProducts().map((product) => (
+                <Card key={product.id} className="bg-[var(--bg-card)] border-slate-800 overflow-hidden flex flex-col">
+                  {isGPUProduct(product) ? (
+                    // Mining GPU Card
+                    <>
+                      <div className="relative">
+                        <Image
+                          src={product.image || "/placeholder.svg"}
+                          width={400}
+                          height={300}
+                          alt={product.name}
+                          className="w-full h-48 object-cover"
+                        />
+                        {product.popular && (
+                          <Badge className="absolute top-2 right-2 gradient-purple-blue text-white border-0">
+                            Popular
                           </Badge>
-                        ))}
+                        )}
+                        {product.premium && (
+                          <Badge className="absolute top-2 right-2 bg-purple-600 text-white border-0">Premium</Badge>
+                        )}
+                        {product.value && (
+                          <Badge className="absolute top-2 right-2 bg-green-600 text-white border-0">Best Value</Badge>
+                        )}
                       </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex flex-col gap-3">
-                    <div className="w-full flex justify-between text-sm text-slate-400 px-1">
-                      <span>Hourly: ${gpu.pricing.hourly.toFixed(2)}</span>
-                      <span>Daily: ${gpu.pricing.daily.toFixed(2)}</span>
-                      <span>Monthly: ${gpu.pricing.monthly.toFixed(0)}</span>
-                    </div>
-                    <div className="flex gap-2 w-full">
-                      <Button className="flex-1 gradient-purple-blue gradient-purple-blue-hover">Deploy Now</Button>
-                      <Button
-                        variant="outline"
-                        className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                      >
-                        Details
-                      </Button>
-                    </div>
-                  </CardFooter>
+                      <CardHeader>
+                        <div className="flex justify-between items-center">
+                          <CardTitle className="text-white">{product.name}</CardTitle>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Badge
+                                  className={`
+                    ${
+                      product.availability === "High"
+                        ? "bg-green-500/20 text-green-400"
+                        : product.availability === "Medium"
+                          ? "bg-yellow-500/20 text-yellow-400"
+                          : "bg-red-500/20 text-red-400"
+                    }
+                  `}
+                                >
+                                  {product.availability}
+                                </Badge>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Current availability status</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
+                        <div className="flex justify-between items-center mt-2">
+                          <CardDescription className="text-slate-400">{product.architecture}</CardDescription>
+                          <span className="text-lg font-bold text-purple-400">
+                            $
+                            {pricingView === "hourly"
+                              ? product.pricing.hourly.toFixed(2) + "/hr"
+                              : pricingView === "daily"
+                                ? product.pricing.daily.toFixed(2) + "/day"
+                                : pricingView === "monthly"
+                                  ? product.pricing.monthly.toFixed(0) + "/mo"
+                                  : null}
+                          </span>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="text-slate-300 grow">
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div className="flex items-start">
+                            <Memory className="h-4 w-4 text-blue-500 mr-1 mt-0.5" />
+                            <span className="text-sm">{product.memory}</span>
+                          </div>
+                          <div className="flex items-start">
+                            <Gpu className="h-4 w-4 text-purple-500 mr-1 mt-0.5" />
+                            <span className="text-sm">{product.cores}</span>
+                          </div>
+                          {isGPUProduct(product) && product.hashrate && (
+                            <div className="flex items-start">
+                              <Zap className="h-4 w-4 text-yellow-500 mr-1 mt-0.5" />
+                              <span className="text-sm">{product.hashrate}</span>
+                            </div>
+                          )}
+                          {isGPUProduct(product) && product.efficiency && (
+                            <div className="flex items-start">
+                              <HardDrive className="h-4 w-4 text-green-500 mr-1 mt-0.5" />
+                              <span className="text-sm">{product.efficiency}</span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="mt-2">
+                          <p className="text-sm font-medium text-slate-300 mb-1">Best for:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {product.bestFor &&
+                              product.bestFor.map((use, i) => (
+                                <Badge
+                                  key={i}
+                                  variant="outline"
+                                  className="bg-slate-800/50 text-slate-300 border-slate-700"
+                                >
+                                  {use}
+                                </Badge>
+                              ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter className="flex flex-col gap-3">
+                        <div className="w-full flex justify-between text-sm text-slate-400 px-1">
+                          <span>Hourly: ${product.pricing.hourly.toFixed(2)}</span>
+                          <span>Daily: ${product.pricing.daily.toFixed(2)}</span>
+                          <span>Monthly: ${product.pricing.monthly.toFixed(0)}</span>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                          <Button className="flex-1 gradient-purple-blue gradient-purple-blue-hover">Deploy Now</Button>
+                          <Button
+                            variant="outline"
+                            className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                          >
+                            Details
+                          </Button>
+                        </div>
+                      </CardFooter>
+                    </>
+                  ) : (
+                    // Other Services Card
+                    !isGPUProduct(product) && (
+                      <>
+                        <CardHeader>
+                          <div className="flex items-center space-x-2 mb-2">
+                            {isServiceProduct(product) && product.icon && (
+                              <div className="h-10 w-10 rounded-md bg-slate-800/50 flex items-center justify-center">
+                                <product.icon className={`h-5 w-5 ${product.iconColor || "text-purple-400"}`} />
+                              </div>
+                            )}
+                            {product.popular && (
+                              <Badge className="gradient-purple-blue text-white border-0">Popular</Badge>
+                            )}
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <CardTitle className="text-white">{product.name}</CardTitle>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Badge
+                                    className={`
+                    ${
+                      product.availability === "High"
+                        ? "bg-green-500/20 text-green-400"
+                        : product.availability === "Medium"
+                          ? "bg-yellow-500/20 text-yellow-400"
+                          : "bg-red-500/20 text-red-400"
+                    }
+                  `}
+                                  >
+                                    {product.availability}
+                                  </Badge>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>Current availability status</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </div>
+                          {isServiceProduct(product) && (
+                            <CardDescription className="text-slate-400 mt-2">{product.description}</CardDescription>
+                          )}
+                        </CardHeader>
+                        <CardContent className="text-slate-300 grow">
+                          {isServiceProduct(product) && (
+                            <div className="space-y-2">
+                              <p className="text-sm font-medium text-slate-300 mb-1">Features:</p>
+                              <ul className="space-y-1">
+                                {product.features &&
+                                  product.features.map((feature: string, i: number) => (
+                                    <li key={i} className="flex items-start text-sm">
+                                      <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                                      <span>{feature}</span>
+                                    </li>
+                                  ))}
+                              </ul>
+                            </div>
+                          )}
+                        </CardContent>
+                        <CardFooter className="flex flex-col gap-3">
+                          <div className="w-full flex justify-between items-center">
+                            <span className="text-sm text-slate-400">Monthly Price</span>
+                            <span className="text-xl font-bold text-purple-400">
+                              ${product.pricing && product.pricing.monthly ? product.pricing.monthly.toFixed(2) : "N/A"}
+                            </span>
+                          </div>
+                          <div className="flex gap-2 w-full">
+                            <Button className="flex-1 gradient-purple-blue gradient-purple-blue-hover">
+                              Deploy Now
+                            </Button>
+                            <Button
+                              variant="outline"
+                              className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                            >
+                              Details
+                            </Button>
+                          </div>
+                        </CardFooter>
+                      </>
+                    )
+                  )}
                 </Card>
               ))}
             </div>
 
             <div className="flex justify-center mt-10">
-              <Button size="lg" className="gradient-purple-blue gradient-purple-blue-hover">
-                View All GPU Options
-              </Button>
+              <Link href="/buy">
+                <Button size="lg" className="gradient-purple-blue gradient-purple-blue-hover">
+                  View All Options
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
 
         {/* Pricing Comparison Table */}
-        <section className="w-full py-12 md:py-24 bg-[#030305]">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center text-center space-y-4 mb-10">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">
-                Detailed Pricing Comparison
-              </h2>
-              <p className="text-lg text-slate-400 max-w-[700px]">
-                Compare pricing across different rental durations to find the best option for your workload.
-              </p>
-            </div>
-
-            <Tabs defaultValue="hourly" className="w-full max-w-5xl mx-auto">
-              <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 mb-6">
-                <TabsTrigger value="hourly">Hourly Pricing</TabsTrigger>
-                <TabsTrigger value="daily">Daily Pricing</TabsTrigger>
-                <TabsTrigger value="monthly">Monthly Pricing</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="hourly" className="mt-0">
-                <Card className="bg-[var(--bg-card)] border-slate-800">
-                  <CardContent className="p-0">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="border-slate-700 hover:bg-transparent">
-                          <TableHead className="text-slate-300">GPU Model</TableHead>
-                          <TableHead className="text-slate-300">Memory</TableHead>
-                          <TableHead className="text-slate-300">Architecture</TableHead>
-                          <TableHead className="text-slate-300 text-right">Price (Hourly)</TableHead>
-                          <TableHead className="text-slate-300 text-center">Availability</TableHead>
-                          <TableHead className="text-slate-300"></TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {gpus.map((gpu) => (
-                          <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
-                            <TableCell className="font-medium text-white">{gpu.name}</TableCell>
-                            <TableCell>{gpu.memory}</TableCell>
-                            <TableCell>{gpu.architecture}</TableCell>
-                            <TableCell className="text-right font-bold text-purple-400">
-                              ${gpu.pricing.hourly.toFixed(2)}
-                            </TableCell>
-                            <TableCell className="text-center">
-                              <Badge
-                                className={`
-                                ${
-                                  gpu.availability === "High"
-                                    ? "bg-green-500/20 text-green-400"
-                                    : gpu.availability === "Medium"
-                                      ? "bg-yellow-500/20 text-yellow-400"
-                                      : "bg-red-500/20 text-red-400"
-                                }
-                              `}
-                              >
-                                {gpu.availability}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
-                                Deploy
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="daily" className="mt-0">
-                <Card className="bg-[var(--bg-card)] border-slate-800">
-                  <CardContent className="p-0">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="border-slate-700 hover:bg-transparent">
-                          <TableHead className="text-slate-300">GPU Model</TableHead>
-                          <TableHead className="text-slate-300">Memory</TableHead>
-                          <TableHead className="text-slate-300">Architecture</TableHead>
-                          <TableHead className="text-slate-300 text-right">Price (Daily)</TableHead>
-                          <TableHead className="text-slate-300 text-center">Availability</TableHead>
-                          <TableHead className="text-slate-300"></TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {gpus.map((gpu) => (
-                          <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
-                            <TableCell className="font-medium text-white">{gpu.name}</TableCell>
-                            <TableCell>{gpu.memory}</TableCell>
-                            <TableCell>{gpu.architecture}</TableCell>
-                            <TableCell className="text-right font-bold text-purple-400">
-                              ${gpu.pricing.daily.toFixed(2)}
-                            </TableCell>
-                            <TableCell className="text-center">
-                              <Badge
-                                className={`
-                                ${
-                                  gpu.availability === "High"
-                                    ? "bg-green-500/20 text-green-400"
-                                    : gpu.availability === "Medium"
-                                      ? "bg-yellow-500/20 text-yellow-400"
-                                      : "bg-red-500/20 text-red-400"
-                                }
-                              `}
-                              >
-                                {gpu.availability}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
-                                Deploy
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="monthly" className="mt-0">
-                <Card className="bg-[var(--bg-card)] border-slate-800">
-                  <CardContent className="p-0">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="border-slate-700 hover:bg-transparent">
-                          <TableHead className="text-slate-300">GPU Model</TableHead>
-                          <TableHead className="text-slate-300">Memory</TableHead>
-                          <TableHead className="text-slate-300">Architecture</TableHead>
-                          <TableHead className="text-slate-300 text-right">Price (Monthly)</TableHead>
-                          <TableHead className="text-slate-300 text-center">Availability</TableHead>
-                          <TableHead className="text-slate-300"></TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {gpus.map((gpu) => (
-                          <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
-                            <TableCell className="font-medium text-white">{gpu.name}</TableCell>
-                            <TableCell>{gpu.memory}</TableCell>
-                            <TableCell>{gpu.architecture}</TableCell>
-                            <TableCell className="text-right font-bold text-purple-400">
-                              ${gpu.pricing.monthly.toFixed(0)}
-                            </TableCell>
-                            <TableCell className="text-center">
-                              <Badge
-                                className={`
-                                ${
-                                  gpu.availability === "High"
-                                    ? "bg-green-500/20 text-green-400"
-                                    : gpu.availability === "Medium"
-                                      ? "bg-yellow-500/20 text-yellow-400"
-                                      : "bg-red-500/20 text-red-400"
-                                }
-                              `}
-                              >
-                                {gpu.availability}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
-                                Deploy
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-
-            <div className="flex justify-center mt-8">
-              <div className="max-w-2xl text-center">
-                <p className="text-sm text-slate-400">
-                  * All prices are in USD. Monthly pricing offers up to 30% savings compared to hourly rates. Reserved
-                  instances are available for additional discounts on long-term commitments.
+        {selectedCategory !== "other" && (
+          <section className="w-full py-12 md:py-24 bg-[#030305]">
+            <div className="container px-4 md:px-6">
+              <div className="flex flex-col items-center text-center space-y-4 mb-10">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">
+                  Detailed Pricing Comparison
+                </h2>
+                <p className="text-lg text-slate-400 max-w-[700px]">
+                  Compare pricing across different rental durations to find the best option for your workload.
                 </p>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Technical Specifications Section */}
-        <section className="w-full py-12 md:py-24 bg-[var(--bg-dark)]">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center text-center space-y-4 mb-10">
-              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Technical Details</Badge>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">GPU Specifications</h2>
-              <p className="text-lg text-slate-400 max-w-[700px]">
-                Detailed technical specifications to help you choose the right GPU for your workload.
-              </p>
-            </div>
+              <Tabs defaultValue="hourly" className="w-full max-w-5xl mx-auto">
+                <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 mb-6">
+                  <TabsTrigger value="hourly">Hourly Pricing</TabsTrigger>
+                  <TabsTrigger value="daily">Daily Pricing</TabsTrigger>
+                  <TabsTrigger value="monthly">Monthly Pricing</TabsTrigger>
+                </TabsList>
 
-            <div className="overflow-hidden rounded-lg border border-slate-700 bg-[var(--bg-card)]">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-slate-700 hover:bg-transparent">
-                    <TableHead className="text-slate-300">GPU Model</TableHead>
-                    <TableHead className="text-slate-300">Memory</TableHead>
-                    <TableHead className="text-slate-300">CUDA Cores</TableHead>
-                    <TableHead className="text-slate-300">Memory Bandwidth</TableHead>
-                    <TableHead className="text-slate-300">TDP</TableHead>
-                    <TableHead className="text-slate-300">Architecture</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {gpus.map((gpu) => (
-                    <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
-                      <TableCell className="font-medium text-white">{gpu.name}</TableCell>
-                      <TableCell>{gpu.memory}</TableCell>
-                      <TableCell>{gpu.cores}</TableCell>
-                      <TableCell>{gpu.bandwidth}</TableCell>
-                      <TableCell>{gpu.tdp}</TableCell>
-                      <TableCell>{gpu.architecture}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                <TabsContent value="hourly" className="mt-0">
+                  <Card className="bg-[var(--bg-card)] border-slate-800">
+                    <CardContent className="p-0">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="border-slate-700 hover:bg-transparent">
+                            <TableHead className="text-slate-300">GPU Model</TableHead>
+                            <TableHead className="text-slate-300">Memory</TableHead>
+                            <TableHead className="text-slate-300">Architecture</TableHead>
+                            <TableHead className="text-slate-300 text-right">Price (Hourly)</TableHead>
+                            <TableHead className="text-slate-300 text-center">Availability</TableHead>
+                            <TableHead className="text-slate-300"></TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {selectedCategory === "all"
+                            ? gpus
+                                .filter((gpu) => gpu.category === "general")
+                                .map((gpu) => (
+                                  <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
+                                    <TableCell className="font-medium text-white">{gpu.name}</TableCell>
+                                    <TableCell>{gpu.memory}</TableCell>
+                                    <TableCell>{gpu.architecture}</TableCell>
+                                    <TableCell className="text-right font-bold text-purple-400">
+                                      ${gpu.pricing.hourly.toFixed(2)}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                      <Badge
+                                        className={`
+                                    ${
+                                      gpu.availability === "High"
+                                        ? "bg-green-500/20 text-green-400"
+                                        : gpu.availability === "Medium"
+                                          ? "bg-yellow-500/20 text-yellow-400"
+                                          : "bg-red-500/20 text-red-400"
+                                    }
+                                  `}
+                                      >
+                                        {gpu.availability}
+                                      </Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                      <Link href="/buy/gpu">
+                                        <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
+                                          Deploy
+                                        </Button>
+                                      </Link>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                            : gpus
+                                .filter((gpu) => gpu.category === "mining")
+                                .map((gpu) => (
+                                  <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
+                                    <TableCell className="font-medium text-white">{gpu.name}</TableCell>
+                                    <TableCell>{gpu.memory}</TableCell>
+                                    <TableCell>{gpu.architecture}</TableCell>
+                                    <TableCell className="text-right font-bold text-purple-400">
+                                      ${gpu.pricing.hourly.toFixed(2)}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                      <Badge
+                                        className={`
+                                    ${
+                                      gpu.availability === "High"
+                                        ? "bg-green-500/20 text-green-400"
+                                        : gpu.availability === "Medium"
+                                          ? "bg-yellow-500/20 text-yellow-400"
+                                          : "bg-red-500/20 text-red-400"
+                                    }
+                                  `}
+                                      >
+                                        {gpu.availability}
+                                      </Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                      <Link href="/buy/gpu">
+                                        <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
+                                          Deploy
+                                        </Button>
+                                      </Link>
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-            <div className="mt-10 space-y-6 max-w-3xl mx-auto">
-              <div className="bg-[var(--bg-card)] border border-slate-700 rounded-lg p-6">
-                <h3 className="text-xl font-bold text-white mb-4">Performance Comparison</h3>
-                <p className="text-slate-400 mb-4">
-                  The following chart provides a relative performance comparison for common workloads:
-                </p>
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm text-slate-300">AI Training</span>
-                      <span className="text-sm text-slate-400">
-                        H100 &gt; A100 &gt; RTX 4090 &gt; A6000 &gt; RTX 4080
-                      </span>
-                    </div>
-                    <div className="w-full bg-slate-700 rounded-full h-2.5">
-                      <div
-                        className="bg-linear-to-r from-purple-600 to-blue-600 h-2.5 rounded-full"
-                        style={{ width: "100%" }}
-                      ></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm text-slate-300">3D Rendering</span>
-                      <span className="text-sm text-slate-400">
-                        RTX 4090 &gt; A6000 &gt; RTX 3090 &gt; RTX 4080 &gt; A5000
-                      </span>
-                    </div>
-                    <div className="w-full bg-slate-700 rounded-full h-2.5">
-                      <div
-                        className="bg-linear-to-r from-purple-600 to-blue-600 h-2.5 rounded-full"
-                        style={{ width: "90%" }}
-                      ></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm text-slate-300">Scientific Computing</span>
-                      <span className="text-sm text-slate-400">MI250 &gt; H100 &gt; A100 &gt; A6000 &gt; RTX 4090</span>
-                    </div>
-                    <div className="w-full bg-slate-700 rounded-full h-2.5">
-                      <div
-                        className="bg-linear-to-r from-purple-600 to-blue-600 h-2.5 rounded-full"
-                        style={{ width: "85%" }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <TabsContent value="daily" className="mt-0">
+                  <Card className="bg-[var(--bg-card)] border-slate-800">
+                    <CardContent className="p-0">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="border-slate-700 hover:bg-transparent">
+                            <TableHead className="text-slate-300">GPU Model</TableHead>
+                            <TableHead className="text-slate-300">Memory</TableHead>
+                            <TableHead className="text-slate-300">Architecture</TableHead>
+                            <TableHead className="text-slate-300 text-right">Price (Daily)</TableHead>
+                            <TableHead className="text-slate-300 text-center">Availability</TableHead>
+                            <TableHead className="text-slate-300"></TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {selectedCategory === "all"
+                            ? gpus
+                                .filter((gpu) => gpu.category === "general")
+                                .map((gpu) => (
+                                  <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
+                                    <TableCell className="font-medium text-white">{gpu.name}</TableCell>
+                                    <TableCell>{gpu.memory}</TableCell>
+                                    <TableCell>{gpu.architecture}</TableCell>
+                                    <TableCell className="text-right font-bold text-purple-400">
+                                      ${gpu.pricing.daily.toFixed(2)}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                      <Badge
+                                        className={`
+                                    ${
+                                      gpu.availability === "High"
+                                        ? "bg-green-500/20 text-green-400"
+                                        : gpu.availability === "Medium"
+                                          ? "bg-yellow-500/20 text-yellow-400"
+                                          : "bg-red-500/20 text-red-400"
+                                    }
+                                  `}
+                                      >
+                                        {gpu.availability}
+                                      </Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                      <Link href="/buy/gpu">
+                                        <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
+                                          Deploy
+                                        </Button>
+                                      </Link>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                            : gpus
+                                .filter((gpu) => gpu.category === "mining")
+                                .map((gpu) => (
+                                  <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
+                                    <TableCell className="font-medium text-white">{gpu.name}</TableCell>
+                                    <TableCell>{gpu.memory}</TableCell>
+                                    <TableCell>{gpu.architecture}</TableCell>
+                                    <TableCell className="text-right font-bold text-purple-400">
+                                      ${gpu.pricing.daily.toFixed(2)}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                      <Badge
+                                        className={`
+                                    ${
+                                      gpu.availability === "High"
+                                        ? "bg-green-500/20 text-green-400"
+                                        : gpu.availability === "Medium"
+                                          ? "bg-yellow-500/20 text-yellow-400"
+                                          : "bg-red-500/20 text-red-400"
+                                    }
+                                  `}
+                                      >
+                                        {gpu.availability}
+                                      </Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                      <Link href="/buy/gpu">
+                                        <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
+                                          Deploy
+                                        </Button>
+                                      </Link>
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-              <div className="bg-[var(--bg-card)] border border-slate-700 rounded-lg p-6">
-                <h3 className="text-xl font-bold text-white mb-4">Software Compatibility</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="text-lg font-medium text-white mb-2">NVIDIA GPUs</h4>
-                    <ul className="space-y-1 text-slate-400">
-                      <li className="flex items-start">
-                        <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        CUDA Toolkit (11.x, 12.x)
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        TensorRT, cuDNN
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        PyTorch, TensorFlow, JAX
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        NVIDIA Container Runtime
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium text-white mb-2">AMD GPUs</h4>
-                    <ul className="space-y-1 text-slate-400">
-                      <li className="flex items-start">
-                        <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        ROCm Platform
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        HIP (Heterogeneous-Compute Interface)
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        PyTorch for ROCm
-                      </li>
-                      <li className="flex items-start">
-                        <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        TensorFlow for ROCm
-                      </li>
-                    </ul>
-                  </div>
+                <TabsContent value="monthly" className="mt-0">
+                  <Card className="bg-[var(--bg-card)] border-slate-800">
+                    <CardContent className="p-0">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="border-slate-700 hover:bg-transparent">
+                            <TableHead className="text-slate-300">GPU Model</TableHead>
+                            <TableHead className="text-slate-300">Memory</TableHead>
+                            <TableHead className="text-slate-300">Architecture</TableHead>
+                            <TableHead className="text-slate-300 text-right">Price (Monthly)</TableHead>
+                            <TableHead className="text-slate-300 text-center">Availability</TableHead>
+                            <TableHead className="text-slate-300"></TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {selectedCategory === "all"
+                            ? gpus
+                                .filter((gpu) => gpu.category === "general")
+                                .map((gpu) => (
+                                  <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
+                                    <TableCell className="font-medium text-white">{gpu.name}</TableCell>
+                                    <TableCell>{gpu.memory}</TableCell>
+                                    <TableCell>{gpu.architecture}</TableCell>
+                                    <TableCell className="text-right font-bold text-purple-400">
+                                      ${gpu.pricing.monthly.toFixed(0)}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                      <Badge
+                                        className={`
+                                    ${
+                                      gpu.availability === "High"
+                                        ? "bg-green-500/20 text-green-400"
+                                        : gpu.availability === "Medium"
+                                          ? "bg-yellow-500/20 text-yellow-400"
+                                          : "bg-red-500/20 text-red-400"
+                                    }
+                                  `}
+                                      >
+                                        {gpu.availability}
+                                      </Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                      <Link href="/buy/gpu">
+                                        <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
+                                          Deploy
+                                        </Button>
+                                      </Link>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                            : gpus
+                                .filter((gpu) => gpu.category === "mining")
+                                .map((gpu) => (
+                                  <TableRow key={gpu.id} className="border-slate-700 hover:bg-slate-800/30">
+                                    <TableCell className="font-medium text-white">{gpu.name}</TableCell>
+                                    <TableCell>{gpu.memory}</TableCell>
+                                    <TableCell>{gpu.architecture}</TableCell>
+                                    <TableCell className="text-right font-bold text-purple-400">
+                                      ${gpu.pricing.monthly.toFixed(0)}
+                                    </TableCell>
+                                    <TableCell className="text-center">
+                                      <Badge
+                                        className={`
+                                    ${
+                                      gpu.availability === "High"
+                                        ? "bg-green-500/20 text-green-400"
+                                        : gpu.availability === "Medium"
+                                          ? "bg-yellow-500/20 text-yellow-400"
+                                          : "bg-red-500/20 text-red-400"
+                                    }
+                                  `}
+                                      >
+                                        {gpu.availability}
+                                      </Badge>
+                                    </TableCell>
+                                    <TableCell>
+                                      <Link href="/buy/gpu">
+                                        <Button size="sm" className="gradient-purple-blue gradient-purple-blue-hover">
+                                          Deploy
+                                        </Button>
+                                      </Link>
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+
+              <div className="flex justify-center mt-8">
+                <div className="max-w-2xl text-center">
+                  <p className="text-sm text-slate-400">
+                    * All prices are in USD. Monthly pricing offers up to 30% savings compared to hourly rates. Reserved
+                    instances are available for additional discounts on long-term commitments.
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* CTA Section */}
         <section className="w-full py-12 md:py-24 bg-[#030305]">
@@ -794,20 +1224,24 @@ export default function PricingPage() {
                   Ready to accelerate your workloads?
                 </h2>
                 <p className="text-lg text-slate-400">
-                  Deploy your first GPU instance in minutes. No long-term commitments required, and you can scale up or
-                  down as your needs change.
+                  Deploy your first instance in minutes. No long-term commitments required, and you can scale up or down
+                  as your needs change.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <Button size="lg" className="gradient-purple-blue gradient-purple-blue-hover">
-                    Deploy a GPU Instance
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                  >
-                    Contact Sales
-                  </Button>
+                  <Link href="/buy">
+                    <Button size="lg" className="gradient-purple-blue gradient-purple-blue-hover">
+                      Deploy Now
+                    </Button>
+                  </Link>
+                  <Link href="/support">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    >
+                      Contact Sales
+                    </Button>
+                  </Link>
                 </div>
               </div>
               <div className="flex-1 glow-effect">
@@ -815,7 +1249,7 @@ export default function PricingPage() {
                   <CardHeader>
                     <CardTitle className="text-white">Need help choosing?</CardTitle>
                     <CardDescription className="text-slate-400">
-                      Our GPU experts can help you select the right hardware for your specific workload.
+                      Our experts can help you select the right hardware for your specific workload.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -855,8 +1289,9 @@ export default function PricingPage() {
                           <option value="ai-training">AI/ML Training</option>
                           <option value="ai-inference">AI/ML Inference</option>
                           <option value="rendering">3D Rendering</option>
-                          <option value="scientific">Scientific Computing</option>
-                          <option value="gaming">Game Development</option>
+                          <option value="mining">Cryptocurrency Mining</option>
+                          <option value="gaming">Game Server</option>
+                          <option value="web">Web Hosting</option>
                           <option value="other">Other</option>
                         </select>
                       </div>
@@ -880,74 +1315,8 @@ export default function PricingPage() {
             </div>
           </div>
         </section>
-
-        {/* FAQ Section */}
-        <section className="w-full py-12 md:py-24 bg-[var(--bg-dark)]">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center text-center space-y-4 mb-10">
-              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">
-                Frequently Asked Questions
-              </Badge>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text">
-                Common Questions About GPU Hosting
-              </h2>
-              <p className="text-lg text-slate-400 max-w-[700px]">
-                Find answers to the most common questions about our GPU products and pricing.
-              </p>
-            </div>
-
-            <div className="max-w-3xl mx-auto space-y-4">
-              {[
-                {
-                  question: "How do I choose the right GPU for my workload?",
-                  answer:
-                    "Consider your specific requirements: For AI training, H100 or A100 GPUs offer the best performance. For rendering, RTX 4090 or A6000 are excellent choices. For general ML development, RTX 4080 or RTX 3090 provide good value. Our team can provide personalized recommendations based on your specific needs.",
-                },
-                {
-                  question: "What operating systems are supported?",
-                  answer:
-                    "We support a wide range of operating systems including Ubuntu 20.04/22.04, CentOS 7/8, Windows Server 2019/2022, and custom images with pre-installed ML frameworks like PyTorch, TensorFlow, and CUDA toolkit.",
-                },
-                {
-                  question: "How is billing calculated?",
-                  answer:
-                    "For hourly billing, you're charged only for the time your instance is running. Daily rates apply for instances running more than 12 hours in a 24-hour period. Monthly rates provide the best value for continuous usage and are billed upfront for a 30-day period.",
-                },
-                {
-                  question: "Can I upgrade or downgrade my GPU?",
-                  answer:
-                    "Yes, you can upgrade or downgrade your GPU at any time. For upgrades, the change is typically immediate (subject to availability). For downgrades, changes take effect at the next billing cycle to avoid disruption to your workloads.",
-                },
-                {
-                  question: "What support is included?",
-                  answer:
-                    "All plans include standard technical support via email with 24-hour response time. Professional and Enterprise plans include priority support with faster response times and direct access to our GPU specialists. Enterprise plans also include a dedicated account manager.",
-                },
-              ].map((faq, index) => (
-                <Card key={index} className="bg-[var(--bg-card)] border-slate-800">
-                  <CardHeader>
-                    <CardTitle className="text-white flex items-center">
-                      <Info className="h-5 w-5 text-purple-500 mr-2" />
-                      {faq.question}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-slate-300">{faq.answer}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="flex justify-center mt-10">
-              <Button variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white">
-                View All FAQs
-              </Button>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer />
     </div>
   )
 }
-

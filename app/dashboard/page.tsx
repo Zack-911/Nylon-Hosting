@@ -1,23 +1,28 @@
 "use client"
 
+import { SelectItem } from "@/components/ui/select"
+
+import { SelectContent } from "@/components/ui/select"
+
+import { SelectValue } from "@/components/ui/select"
+
+import { SelectTrigger } from "@/components/ui/select"
+
+import { Select } from "@/components/ui/select"
+
+import { Separator } from "@/components/ui/separator"
+
 import { useState } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
 import {
   Server,
   CpuIcon as Gpu,
-  Activity,
   Wallet,
-  Plus,
-  ArrowUpRight,
-  ArrowDownRight,
   Zap,
-  Thermometer,
-  RefreshCw,
   ChevronRight,
   Bitcoin,
   EclipseIcon as Ethereum,
@@ -27,6 +32,9 @@ import {
   LogOut,
   Menu,
   X,
+  HardDrive,
+  Database,
+  BarChart3,
 } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
@@ -50,6 +58,12 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts"
+
+// Import dashboard components
+import DashboardSidebar from "@/components/dashboard/DashboardSidebar"
+import DashboardHeader from "@/components/dashboard/DashboardHeader"
+import DashboardStats from "@/components/dashboard/DashboardStats"
+import { useRouter } from "next/navigation"
 
 // Sample data for servers
 const servers = [
@@ -246,6 +260,15 @@ const StatusBadge = ({ status }: { status: string }) => {
 export default function DashboardPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedTimeframe, setSelectedTimeframe] = useState("24h")
+  const router = useRouter()
+
+  // Dashboard sections
+  const dashboardSections = [
+    { name: "Overview", icon: BarChart3, path: "/dashboard" },
+    { name: "GPU Management", icon: Gpu, path: "/dashboard/gpu" },
+    { name: "Hosting", icon: Server, path: "/dashboard/hosting" },
+    { name: "Cloud Storage", icon: Database, path: "/dashboard/cloudstorage" },
+  ]
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -257,163 +280,36 @@ export default function DashboardPage() {
 
         <div className="container max-w-7xl px-4 py-8">
           {/* Dashboard Header */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8" data-aos="fade-down">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tighter gradient-text">Mining Dashboard</h1>
-              <p className="text-slate-400 mt-1">Monitor your servers, mining performance, and GPU inventory</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white">
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Refresh
-              </Button>
-              <Button className="gradient-purple-blue gradient-purple-blue-hover">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Server
-              </Button>
-            </div>
+          <DashboardHeader />
+
+          {/* Dashboard Navigation */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            {dashboardSections.map((section, index) => (
+              <Card
+                key={index}
+                className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover} cursor-pointer`}
+                onClick={() => router.push(section.path)}
+              >
+                <CardContent className="p-6 flex items-center">
+                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                    <section.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-white">{section.name}</h3>
+                    <p className="text-sm text-slate-400">
+                      {section.name === "Overview" ? "Dashboard Summary" : `Manage your ${section.name.toLowerCase()}`}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           {/* Dashboard Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Sidebar */}
             <div className="hidden lg:block lg:col-span-1">
-              <div className="space-y-6 sticky top-20">
-                {/* User Profile Card */}
-                <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`} data-aos="fade-right">
-                  <CardContent className="p-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="relative h-12 w-12 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">JD</span>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-white">John Doe</h3>
-                        <p className="text-sm text-slate-400">Premium Miner</p>
-                      </div>
-                    </div>
-
-                    <Separator className="my-4 bg-slate-700" />
-
-                    <div className="space-y-1">
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/30"
-                      >
-                        <User className="mr-2 h-4 w-4" />
-                        Profile
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/30"
-                      >
-                        <Settings className="mr-2 h-4 w-4" />
-                        Settings
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/30"
-                      >
-                        <Bell className="mr-2 h-4 w-4" />
-                        Notifications
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start text-slate-300 hover:text-white hover:bg-slate-800/30"
-                      >
-                        <LogOut className="mr-2 h-4 w-4" />
-                        Logout
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Mining Summary Card */}
-                <Card
-                  className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`}
-                  data-aos="fade-right"
-                  data-aos-delay="100"
-                >
-                  <CardHeader>
-                    <CardTitle className="text-white">Mining Summary</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Total Hashrate</span>
-                        <span className="font-medium text-white">{miningStats.totalHashrate} MH/s</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Active Workers</span>
-                        <span className="font-medium text-white">{miningStats.activeWorkers}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Daily Earnings</span>
-                        <span className="font-medium text-white">{miningStats.dailyEarnings} BTC</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Power Consumption</span>
-                        <span className="font-medium text-white">{miningStats.powerConsumption} W</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Efficiency</span>
-                        <span className="font-medium text-white">{miningStats.efficiency} MH/J</span>
-                      </div>
-                    </div>
-
-                    <Separator className="bg-slate-700" />
-
-                    <div className="pt-2">
-                      <Button
-                        variant="outline"
-                        className="w-full border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                      >
-                        View Detailed Stats
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Quick Actions Card */}
-                <Card
-                  className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`}
-                  data-aos="fade-right"
-                  data-aos-delay="200"
-                >
-                  <CardHeader>
-                    <CardTitle className="text-white">Quick Actions</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                    >
-                      <Zap className="mr-2 h-4 w-4 text-yellow-500" />
-                      Optimize Mining
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                    >
-                      <Wallet className="mr-2 h-4 w-4 text-green-500" />
-                      Withdraw Earnings
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                    >
-                      <Server className="mr-2 h-4 w-4 text-blue-500" />
-                      Add New Server
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                    >
-                      <Gpu className="mr-2 h-4 w-4 text-purple-500" />
-                      Add New GPU
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
+              <DashboardSidebar miningStats={miningStats} />
             </div>
 
             {/* Mobile menu button */}
@@ -483,62 +379,7 @@ export default function DashboardPage() {
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-6">
               {/* Stats Overview */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4" data-aos="fade-up">
-                <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`}>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="text-sm text-slate-400">Total Hashrate</p>
-                        <h3 className="text-2xl font-bold text-white mt-1">{miningStats.totalHashrate} MH/s</h3>
-                        <p className="text-sm text-green-400 flex items-center mt-1">
-                          <ArrowUpRight className="h-3 w-3 mr-1" />
-                          +5.2% from yesterday
-                        </p>
-                      </div>
-                      <div className={`p-3 rounded-full bg-blue-500/10 ${styles.pulseAnimation}`}>
-                        <Activity className="h-5 w-5 text-blue-500" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`}>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="text-sm text-slate-400">Daily Earnings</p>
-                        <h3 className="text-2xl font-bold text-white mt-1">{miningStats.dailyEarnings} BTC</h3>
-                        <p className="text-sm text-green-400 flex items-center mt-1">
-                          <ArrowUpRight className="h-3 w-3 mr-1" />
-                          +1.2% from yesterday
-                        </p>
-                      </div>
-                      <div className={`p-3 rounded-full bg-yellow-500/10 ${styles.pulseAnimation}`}>
-                        <Bitcoin className="h-5 w-5 text-yellow-500" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`}>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="text-sm text-slate-400">Active Servers</p>
-                        <h3 className="text-2xl font-bold text-white mt-1">
-                          {servers.filter((s) => s.status === "online").length}/{servers.length}
-                        </h3>
-                        <p className="text-sm text-red-400 flex items-center mt-1">
-                          <ArrowDownRight className="h-3 w-3 mr-1" />1 server offline
-                        </p>
-                      </div>
-                      <div className={`p-3 rounded-full bg-green-500/10 ${styles.pulseAnimation}`}>
-                        <Server className="h-5 w-5 text-green-500" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+              <DashboardStats miningStats={miningStats} servers={servers} />
 
               {/* Hashrate Chart */}
               <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`} data-aos="fade-up">
@@ -597,13 +438,25 @@ export default function DashboardPage() {
 
               {/* Servers List */}
               <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`} data-aos="fade-up">
-                <CardHeader>
-                  <CardTitle className="text-white">Your Servers</CardTitle>
-                  <CardDescription className="text-slate-400">Manage and monitor your mining servers</CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle className="text-white">Your Servers</CardTitle>
+                    <CardDescription className="text-slate-400">Manage and monitor your mining servers</CardDescription>
+                  </div>
+                  <Link href="/dashboard/hosting">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    >
+                      View All
+                      <ChevronRight className="ml-1 h-4 w-4" />
+                    </Button>
+                  </Link>
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    {servers.map((server) => (
+                    {servers.slice(0, 3).map((server) => (
                       <div
                         key={server.id}
                         className={`p-4 rounded-lg border border-slate-700 bg-slate-800/20 ${styles.cardHover}`}
@@ -633,95 +486,28 @@ export default function DashboardPage() {
                               </div>
                             </div>
                           </div>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                          >
-                            Manage
-                            <ChevronRight className="ml-1 h-4 w-4" />
-                          </Button>
+                          <Link href={`/dashboard/hosting?server=${server.id}`}>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                            >
+                              Manage
+                              <ChevronRight className="ml-1 h-4 w-4" />
+                            </Button>
+                          </Link>
                         </div>
-
-                        {server.status !== "offline" && (
-                          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="space-y-2">
-                              <div className="flex justify-between text-sm">
-                                <span className="text-slate-400">CPU Usage</span>
-                                <span className="text-slate-300">{server.cpuUsage}%</span>
-                              </div>
-                              <Progress value={server.cpuUsage} className="h-2 bg-slate-700">
-                                <div
-                                  className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-                                  style={{ width: `${server.cpuUsage}%` }}
-                                />
-                              </Progress>
-                            </div>
-                            <div className="space-y-2">
-                              <div className="flex justify-between text-sm">
-                                <span className="text-slate-400">RAM Usage</span>
-                                <span className="text-slate-300">{server.ramUsage}%</span>
-                              </div>
-                              <Progress value={server.ramUsage} className="h-2 bg-slate-700">
-                                <div
-                                  className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"
-                                  style={{ width: `${server.ramUsage}%` }}
-                                />
-                              </Progress>
-                            </div>
-                            <div className="space-y-2">
-                              <div className="flex justify-between text-sm">
-                                <span className="text-slate-400">Disk Usage</span>
-                                <span className="text-slate-300">{server.diskUsage}%</span>
-                              </div>
-                              <Progress value={server.diskUsage} className="h-2 bg-slate-700">
-                                <div
-                                  className="h-full bg-gradient-to-r from-yellow-500 to-amber-500 rounded-full"
-                                  style={{ width: `${server.diskUsage}%` }}
-                                />
-                              </Progress>
-                            </div>
-                          </div>
-                        )}
-
-                        {server.gpus.length > 0 && server.status !== "offline" && (
-                          <div className="mt-4">
-                            <h4 className="text-sm font-medium text-slate-300 mb-2">GPUs</h4>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                              {server.gpus.map((gpu, index) => (
-                                <div key={index} className="p-3 rounded-md bg-slate-800/40 border border-slate-700">
-                                  <div className="flex justify-between items-center mb-2">
-                                    <span className="text-sm text-white">{gpu.name}</span>
-                                    <Badge className="bg-purple-500/20 text-purple-400">{gpu.usage}%</Badge>
-                                  </div>
-                                  <div className="grid grid-cols-3 gap-2 text-xs">
-                                    <div className="flex items-center">
-                                      <Thermometer className="h-3 w-3 text-red-400 mr-1" />
-                                      <span className="text-slate-300">{gpu.temp}°C</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                      <Zap className="h-3 w-3 text-yellow-400 mr-1" />
-                                      <span className="text-slate-300">{gpu.power}W</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                      <Activity className="h-3 w-3 text-blue-400 mr-1" />
-                                      <span className="text-slate-300">Active</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
                       </div>
                     ))}
                   </div>
                 </CardContent>
                 <CardFooter className="border-t border-slate-700 px-6 py-4">
-                  <Button className="w-full gradient-purple-blue gradient-purple-blue-hover">
-                    <Server className="mr-2 h-4 w-4" />
-                    Add New Server
-                  </Button>
+                  <Link href="/dashboard/hosting" className="w-full">
+                    <Button className="w-full gradient-purple-blue gradient-purple-blue-hover">
+                      <Server className="mr-2 h-4 w-4" />
+                      Manage All Servers
+                    </Button>
+                  </Link>
                 </CardFooter>
               </Card>
 
@@ -813,69 +599,29 @@ export default function DashboardPage() {
                 </Card>
               </div>
 
-              {/* Cryptocurrency Mining Stats */}
-              <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`} data-aos="fade-up">
-                <CardHeader>
-                  <CardTitle className="text-white">Cryptocurrency Mining</CardTitle>
-                  <CardDescription className="text-slate-400">
-                    Performance metrics for each cryptocurrency you&apos;re mining
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <div className="space-y-6">
-                    {miningStats.coins.map((coin, index) => {
-                      const Icon = coin.icon
-                      return (
-                        <div key={index} className="p-4 rounded-lg border border-slate-700 bg-slate-800/20">
-                          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                            <div className="flex items-center">
-                              <div
-                                className={`p-3 rounded-full ${coin.symbol === "BTC" ? "bg-yellow-500/10" : "bg-blue-500/10"} mr-4 ${styles.pulseAnimation}`}
-                              >
-                                <Icon
-                                  className={`h-6 w-6 ${coin.symbol === "BTC" ? "text-yellow-500" : "text-blue-500"}`}
-                                />
-                              </div>
-                              <div>
-                                <h3 className="font-medium text-white">{coin.name}</h3>
-                                <p className="text-sm text-slate-400">{coin.symbol}</p>
-                              </div>
-                            </div>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                              <div>
-                                <p className="text-sm text-slate-400">Hashrate</p>
-                                <p className="text-lg font-medium text-white">{coin.hashrate} MH/s</p>
-                              </div>
-                              <div>
-                                <p className="text-sm text-slate-400">Daily Earnings</p>
-                                <p className="text-lg font-medium text-white">
-                                  {coin.daily} {coin.symbol}
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-sm text-slate-400">Status</p>
-                                <Badge className="bg-green-500/20 text-green-400">Active</Badge>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* GPU Inventory */}
               <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`} data-aos="fade-up">
-                <CardHeader>
-                  <CardTitle className="text-white">GPU Inventory</CardTitle>
-                  <CardDescription className="text-slate-400">
-                    Manage your GPU assets and monitor their performance
-                  </CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle className="text-white">GPU Inventory</CardTitle>
+                    <CardDescription className="text-slate-400">
+                      Manage your GPU assets and monitor their performance
+                    </CardDescription>
+                  </div>
+                  <Link href="/dashboard/gpu">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    >
+                      View All
+                      <ChevronRight className="ml-1 h-4 w-4" />
+                    </Button>
+                  </Link>
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    {gpuInventory.map((gpu) => (
+                    {gpuInventory.slice(0, 2).map((gpu) => (
                       <div
                         key={gpu.id}
                         className={`p-4 rounded-lg border border-slate-700 bg-slate-800/20 ${styles.cardHover}`}
@@ -913,64 +659,103 @@ export default function DashboardPage() {
                               </div>
                             </div>
                           </div>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                          >
-                            Details
-                            <ChevronRight className="ml-1 h-4 w-4" />
-                          </Button>
+                          <Link href={`/dashboard/gpu?gpu=${gpu.id}`}>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                            >
+                              Details
+                              <ChevronRight className="ml-1 h-4 w-4" />
+                            </Button>
+                          </Link>
                         </div>
                       </div>
                     ))}
                   </div>
                 </CardContent>
                 <CardFooter className="border-t border-slate-700 px-6 py-4">
-                  <Button className="w-full gradient-purple-blue gradient-purple-blue-hover">
-                    <Gpu className="mr-2 h-4 w-4" />
-                    Add New GPU
-                  </Button>
+                  <Link href="/dashboard/gpu" className="w-full">
+                    <Button className="w-full gradient-purple-blue gradient-purple-blue-hover">
+                      <Gpu className="mr-2 h-4 w-4" />
+                      Manage All GPUs
+                    </Button>
+                  </Link>
                 </CardFooter>
               </Card>
 
-              {/* Recent Payments */}
+              {/* Cloud Storage Preview */}
               <Card className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover}`} data-aos="fade-up">
-                <CardHeader>
-                  <CardTitle className="text-white">Recent Payments</CardTitle>
-                  <CardDescription className="text-slate-400">Your recent mining payouts</CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle className="text-white">Cloud Storage</CardTitle>
+                    <CardDescription className="text-slate-400">
+                      Manage your files and storage resources
+                    </CardDescription>
+                  </div>
+                  <Link href="/dashboard/cloudstorage">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    >
+                      View All
+                      <ChevronRight className="ml-1 h-4 w-4" />
+                    </Button>
+                  </Link>
                 </CardHeader>
                 <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {miningStats.recentPayments.map((payment, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between p-3 rounded-lg border border-slate-700 bg-slate-800/20"
-                      >
-                        <div className="flex items-center">
-                          <div className="p-2 rounded-full bg-yellow-500/10 mr-3">
-                            <Bitcoin className="h-5 w-5 text-yellow-500" />
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-white">BTC Payment</p>
-                            <p className="text-xs text-slate-400">{payment.date}</p>
-                          </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+                      <div className="flex items-center mb-3">
+                        <div className="h-8 w-8 rounded-md bg-blue-500/10 flex items-center justify-center mr-3">
+                          <HardDrive className="h-4 w-4 text-blue-400" />
                         </div>
-                        <div className="text-right">
-                          <p className="text-sm font-medium text-white">{payment.amount} BTC</p>
-                          <Badge className="bg-green-500/20 text-green-400">{payment.status}</Badge>
+                        <div>
+                          <h4 className="text-sm font-medium text-white">Storage Usage</h4>
+                          <p className="text-xs text-slate-400">245 GB / 500 GB</p>
                         </div>
                       </div>
-                    ))}
+                      <Progress value={49} className="h-2 bg-slate-700" />
+                    </div>
+
+                    <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+                      <div className="flex items-center mb-3">
+                        <div className="h-8 w-8 rounded-md bg-purple-500/10 flex items-center justify-center mr-3">
+                          <Database className="h-4 w-4 text-purple-400" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-medium text-white">Recent Files</h4>
+                          <p className="text-xs text-slate-400">12 files uploaded today</p>
+                        </div>
+                      </div>
+                      <div className="text-xs text-slate-300">mining_data.csv, backup_2025.zip, config.json</div>
+                    </div>
+
+                    <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+                      <div className="flex items-center mb-3">
+                        <div className="h-8 w-8 rounded-md bg-green-500/10 flex items-center justify-center mr-3">
+                          <Server className="h-4 w-4 text-green-400" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-medium text-white">Backup Status</h4>
+                          <p className="text-xs text-slate-400">Last backup: 2 hours ago</p>
+                        </div>
+                      </div>
+                      <div className="text-xs text-green-400 flex items-center">
+                        <div className="h-2 w-2 rounded-full bg-green-500 mr-1"></div>
+                        All systems operational
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
                 <CardFooter className="border-t border-slate-700 px-6 py-4">
-                  <Button
-                    variant="outline"
-                    className="w-full border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                  >
-                    View All Transactions
-                  </Button>
+                  <Link href="/dashboard/cloudstorage" className="w-full">
+                    <Button className="w-full gradient-purple-blue gradient-purple-blue-hover">
+                      <Database className="mr-2 h-4 w-4" />
+                      Manage Cloud Storage
+                    </Button>
+                  </Link>
                 </CardFooter>
               </Card>
             </div>
@@ -981,3 +766,4 @@ export default function DashboardPage() {
     </div>
   )
 }
+

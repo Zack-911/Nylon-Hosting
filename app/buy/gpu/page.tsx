@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -17,6 +17,7 @@ import { CpuIcon as Gpu, MemoryStickIcon as Memory, HardDrive, Zap, Check, Arrow
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { ToSButton } from "@/components/tos-modal"
+import Link from "next/link"
 
 // GPU data
 const gpus = [
@@ -230,7 +231,7 @@ const softwareOptions = [
   },
 ]
 
-export default function CreateInstancePage() {
+export default function CreateGpuInstancePage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedGpu, setSelectedGpu] = useState<string | null>(null)
   const [selectedOs, setSelectedOs] = useState<string | null>(null)
@@ -348,44 +349,19 @@ export default function CreateInstancePage() {
                       }`}
                       onClick={() => setSelectedGpu(gpu.id)}
                     >
-                      <div className="relative">
-                        <Image
-                          src={gpu.image || "/placeholder.svg"}
-                          width={400}
-                          height={200}
-                          alt={gpu.name}
-                          className="w-full h-40 object-cover"
-                        />
-                        {gpu.popular && (
-                          <Badge className="absolute top-2 right-2 gradient-purple-blue text-white border-0">
-                            Popular
-                          </Badge>
-                        )}
-                        {gpu.enterprise && (
-                          <Badge className="absolute top-2 right-2 bg-blue-600 text-white border-0">Enterprise</Badge>
-                        )}
-                        {gpu.value && (
-                          <Badge className="absolute top-2 right-2 bg-green-600 text-white border-0">Best Value</Badge>
-                        )}
-                        {selectedGpu === gpu.id && (
-                          <div className="absolute top-2 left-2 h-6 w-6 rounded-full bg-purple-500 flex items-center justify-center">
-                            <Check className="h-4 w-4 text-white" />
-                          </div>
-                        )}
-                      </div>
                       <CardHeader>
                         <div className="flex justify-between items-center">
                           <CardTitle className="text-white">{gpu.name}</CardTitle>
                           <Badge
                             className={`
-                              ${
-                                gpu.availability === "High"
-                                  ? "bg-green-500/20 text-green-400"
-                                  : gpu.availability === "Medium"
-                                    ? "bg-yellow-500/20 text-yellow-400"
-                                    : "bg-red-500/20 text-red-400"
-                              }
-                            `}
+                  ${
+                    gpu.availability === "High"
+                      ? "bg-green-500/20 text-green-400"
+                      : gpu.availability === "Medium"
+                        ? "bg-yellow-500/20 text-yellow-400"
+                        : "bg-red-500/20 text-red-400"
+                  }
+                `}
                           >
                             {gpu.availability}
                           </Badge>
@@ -396,51 +372,84 @@ export default function CreateInstancePage() {
                         </div>
                       </CardHeader>
                       <CardContent className="text-slate-300">
-                        <div className="grid grid-cols-2 gap-3 mb-4">
-                          <div className="flex items-start">
-                            <Memory className="h-4 w-4 text-blue-500 mr-1 mt-0.5" />
-                            <span className="text-sm">{gpu.memory}</span>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="flex items-start">
+                              <Memory className="h-4 w-4 text-blue-500 mr-1 mt-0.5" />
+                              <span className="text-sm">{gpu.memory}</span>
+                            </div>
+                            <div className="flex items-start">
+                              <Gpu className="h-4 w-4 text-purple-500 mr-1 mt-0.5" />
+                              <span className="text-sm">{gpu.cores}</span>
+                            </div>
+                            <div className="flex items-start">
+                              <Zap className="h-4 w-4 text-yellow-500 mr-1 mt-0.5" />
+                              <span className="text-sm">{gpu.tdp}</span>
+                            </div>
+                            <div className="flex items-start">
+                              <HardDrive className="h-4 w-4 text-green-500 mr-1 mt-0.5" />
+                              <span className="text-sm">{gpu.bandwidth}</span>
+                            </div>
                           </div>
-                          <div className="flex items-start">
-                            <Gpu className="h-4 w-4 text-purple-500 mr-1 mt-0.5" />
-                            <span className="text-sm">{gpu.cores}</span>
+
+                          {/* Additional Specs */}
+                          <div className="bg-slate-800/50 p-3 rounded-lg space-y-2">
+                            <h4 className="text-sm font-medium text-white">Detailed Specifications:</h4>
+                            <ul className="space-y-1 text-xs text-slate-300">
+                              <li>Architecture: {gpu.architecture}</li>
+                              <li>
+                                Compute Capability:{" "}
+                                {gpu.id.includes("a100") || gpu.id.includes("h100") ? "8.0+" : "7.5"}
+                              </li>
+                              <li>Tensor Cores: {gpu.id.includes("rtx") ? "4th Gen" : "3rd Gen"}</li>
+                              <li>RT Cores: {gpu.id.includes("rtx") ? "Yes" : "No"}</li>
+                              <li>Max Power Draw: {gpu.tdp}</li>
+                              <li>Memory Type: {gpu.memory.includes("HBM") ? gpu.memory.split(" ")[1] : "GDDR6X"}</li>
+                              <li>Memory Bandwidth: {gpu.bandwidth}</li>
+                              <li>PCIe Interface: {gpu.id.includes("h100") ? "PCIe 5.0" : "PCIe 4.0"}</li>
+                              <li>Driver Support: CUDA 12.x, cuDNN 8.x</li>
+                            </ul>
                           </div>
-                          <div className="flex items-start">
-                            <Zap className="h-4 w-4 text-yellow-500 mr-1 mt-0.5" />
-                            <span className="text-sm">{gpu.tdp}</span>
-                          </div>
-                          <div className="flex items-start">
-                            <HardDrive className="h-4 w-4 text-green-500 mr-1 mt-0.5" />
-                            <span className="text-sm">{gpu.bandwidth}</span>
-                          </div>
-                        </div>
-                        <div className="mt-2">
-                          <p className="text-sm font-medium text-slate-300 mb-1">Best for:</p>
-                          <div className="flex flex-wrap gap-1">
-                            {gpu.bestFor.map((use, i) => (
-                              <Badge
-                                key={i}
-                                variant="outline"
-                                className="bg-slate-800/50 text-slate-300 border-slate-700"
-                              >
-                                {use}
-                              </Badge>
-                            ))}
+
+                          <div className="mt-2">
+                            <p className="text-sm font-medium text-slate-300 mb-1">Best for:</p>
+                            <div className="flex flex-wrap gap-1">
+                              {gpu.bestFor.map((use, i) => (
+                                <Badge
+                                  key={i}
+                                  variant="outline"
+                                  className="bg-slate-800/50 text-slate-300 border-slate-700"
+                                >
+                                  {use}
+                                </Badge>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </CardContent>
+                      <CardFooter className="flex justify-between">
+                        <div className="text-xs text-slate-400">
+                          {selectedGpu === gpu.id && (
+                            <span className="flex items-center text-green-400">
+                              <Check className="h-3 w-3 mr-1" /> Selected
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-xs text-slate-400">Monthly: ${gpu.pricing.monthly.toFixed(0)}</div>
+                      </CardFooter>
                     </Card>
                   ))}
                 </div>
 
                 <div className="flex justify-between pt-6">
-                  <Button
-                    variant="outline"
-                    className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                    onClick={() => window.history.back()}
-                  >
-                    Cancel
-                  </Button>
+                  <Link href="/buy">
+                    <Button
+                      variant="outline"
+                      className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    >
+                      Back to Products
+                    </Button>
+                  </Link>
                   <Button
                     className="gradient-purple-blue gradient-purple-blue-hover"
                     onClick={handleNextStep}
@@ -953,8 +962,8 @@ echo 'Instance started' > /tmp/startup.log"
                           <p className="text-2xl font-bold text-white mt-2">
                             ${calculateEstimatedCost().hourly.toFixed(2)}
                           </p>
-                          <p className="text-sm text-slate-400">per hour</p>
                         </div>
+
                         <div
                           className={`flex flex-col p-4 rounded-lg border ${
                             billingCycle === "daily"
@@ -969,8 +978,8 @@ echo 'Instance started' > /tmp/startup.log"
                           <p className="text-2xl font-bold text-white mt-2">
                             ${calculateEstimatedCost().daily.toFixed(2)}
                           </p>
-                          <p className="text-sm text-slate-400">per day</p>
                         </div>
+
                         <div
                           className={`flex flex-col p-4 rounded-lg border ${
                             billingCycle === "monthly"
@@ -985,61 +994,16 @@ echo 'Instance started' > /tmp/startup.log"
                           <p className="text-2xl font-bold text-white mt-2">
                             ${calculateEstimatedCost().monthly.toFixed(2)}
                           </p>
-                          <p className="text-sm text-slate-400">per month</p>
                         </div>
                       </RadioGroup>
 
-                      <div className="bg-slate-800/50 rounded-lg p-4 space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-slate-300">GPU Cost</span>
-                          <span className="font-medium text-white">
-                            $
-                            {billingCycle === "hourly"
-                              ? getSelectedGpuDetails()?.pricing.hourly.toFixed(2)
-                              : billingCycle === "daily"
-                                ? getSelectedGpuDetails()?.pricing.daily.toFixed(2)
-                                : getSelectedGpuDetails()?.pricing.monthly.toFixed(2)}{" "}
-                            / {billingCycle === "hourly" ? "hour" : billingCycle === "daily" ? "day" : "month"}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-300">Storage Cost</span>
-                          <span className="font-medium text-white">
-                            $
-                            {billingCycle === "hourly"
-                              ? ((storageSize * 0.1) / 30 / 24).toFixed(2)
-                              : billingCycle === "daily"
-                                ? ((storageSize * 0.1) / 30).toFixed(2)
-                                : (storageSize * 0.1).toFixed(2)}{" "}
-                            / {billingCycle === "hourly" ? "hour" : billingCycle === "daily" ? "day" : "month"}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-300">Network Cost</span>
-                          <span className="font-medium text-white">Included</span>
-                        </div>
-                        <Separator className="my-2 bg-slate-700" />
-                        <div className="flex justify-between">
-                          <span className="text-white font-medium">Estimated Total</span>
-                          <span className="font-bold text-white">
-                            $
-                            {billingCycle === "hourly"
-                              ? calculateEstimatedCost().hourly.toFixed(2)
-                              : billingCycle === "daily"
-                                ? calculateEstimatedCost().daily.toFixed(2)
-                                : calculateEstimatedCost().monthly.toFixed(2)}{" "}
-                            / {billingCycle === "hourly" ? "hour" : billingCycle === "daily" ? "day" : "month"}
-                          </span>
-                        </div>
-                      </div>
-
                       <div className="flex items-center space-x-2">
                         <Checkbox
-                          id="agree-terms"
+                          id="tos-agreement"
                           className="data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
                         />
-                        <Label htmlFor="agree-terms" className="text-slate-300">
-                          I agree to the <ToSButton /> and understand the billing terms
+                        <Label htmlFor="tos-agreement" className="text-slate-300">
+                          I agree to the <ToSButton /> and Acceptable Use Policy
                         </Label>
                       </div>
                     </CardContent>
@@ -1054,9 +1018,9 @@ echo 'Instance started' > /tmp/startup.log"
                   >
                     Back
                   </Button>
-                  <Button className="gradient-purple-blue gradient-purple-blue-hover" size="lg">
-                    <Rocket className="mr-2 h-4 w-4" />
+                  <Button className="gradient-purple-blue gradient-purple-blue-hover">
                     Deploy Instance
+                    <Rocket className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </div>

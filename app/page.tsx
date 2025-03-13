@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -350,8 +350,8 @@ export default function Home() {
                   Choose the perfect plan for your needs
                 </h2>
                 <p className="max-w-[900px] text-slate-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Whether you&apos;re a hobbyist, small business, or enterprise, we have pricing options that scale with your
-                  requirements.
+                  Whether you&apos;re a hobbyist, small business, or enterprise, we have pricing options that scale with
+                  your requirements.
                 </p>
               </div>
             </div>

@@ -85,23 +85,22 @@ export default function HostingDashboard() {
 
   // Status color mapping
   const statusColors: Record<string, string> = {
-  online: "bg-green-500",
-  warning: "bg-yellow-500",
-  offline: "bg-red-500",
-  };
-  
+    online: "bg-green-500",
+    warning: "bg-yellow-500",
+    offline: "bg-red-500",
+  }
+
   const statusTextColors: Record<string, string> = {
     online: "text-green-500",
     warning: "text-yellow-500",
     offline: "text-red-500",
-  };
-  
+  }
+
   const statusBgColors: Record<string, string> = {
     online: "bg-green-500/10",
     warning: "bg-yellow-500/10",
     offline: "bg-red-500/10",
-  };
-  
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -517,3 +516,4 @@ export default function HostingDashboard() {
     </div>
   )
 }
+

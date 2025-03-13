@@ -2,18 +2,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import {
-  Users,
-  Globe,
-  Rocket,
-  Target,
-  Heart,
-  Zap,
-  Shield,
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react"
+import { Users, Globe, Rocket, Target, Heart, Zap, Shield, Mail, MapPin, Phone } from "lucide-react"
 import { FaGithub, FaDiscord } from "react-icons/fa"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
@@ -35,7 +24,7 @@ const teamMembers = [
     image: "/team/zack.png?height=400&width=400",
     github: "https://github.com/zack-911",
     discord: "https://discord.com/users/1273256222715285527",
-  }
+  },
 ]
 
 // Partners data
@@ -185,8 +174,12 @@ export default function AboutPage() {
         <section className="w-full py-12 md:py-24 bg-[var(--bg-dark)]">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center text-center space-y-4 mb-10">
-              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20" data-aos="fade-right">Our Values</Badge>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text" data-aos="fade-right">What We Stand For</h2>
+              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20" data-aos="fade-right">
+                Our Values
+              </Badge>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text" data-aos="fade-right">
+                What We Stand For
+              </h2>
               <p className="text-lg text-slate-400 max-w-[700px]" data-aos="fade-right">
                 Our core values guide everything we do, from how we build our products to how we interact with our
                 customers and each other.
@@ -240,13 +233,15 @@ export default function AboutPage() {
         <section className="w-full py-12 md:py-24 bg-[#030305]">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center text-center space-y-4 mb-10">
-              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20" data-aos="fade-left">Our Team</Badge>
+              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20" data-aos="fade-left">
+                Our Team
+              </Badge>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text" data-aos="fade-left">
                 Meet the People Behind NexusHost
               </h2>
               <p className="text-lg text-slate-400 max-w-[700px]" data-aos="fade-left">
-                We&apos;re a diverse team of engineers, product managers, designers, and customer success specialists united
-                by our passion for GPU computing and helping our customers succeed.
+                We&apos;re a diverse team of engineers, product managers, designers, and customer success specialists
+                united by our passion for GPU computing and helping our customers succeed.
               </p>
             </div>
 
@@ -265,20 +260,20 @@ export default function AboutPage() {
                   </CardContent>
                   <CardFooter className="flex justify-start space-x-2">
                     <Button asChild variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                        <a href={member.github} target="_blank" rel="noopener noreferrer">
-                          <span className="h-5 w-5">
-                            <FaGithub size={20} />
-                          </span>
-                        </a>
-                      </Button>
+                      <a href={member.github} target="_blank" rel="noopener noreferrer">
+                        <span className="h-5 w-5">
+                          <FaGithub size={20} />
+                        </span>
+                      </a>
+                    </Button>
 
-                      <Button asChild variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-                        <a href={member.discord} target="_blank" rel="noopener noreferrer">
-                          <span className="h-5 w-5">
-                            <FaDiscord size={20} />
-                          </span>
-                        </a>
-                      </Button>                                           
+                    <Button asChild variant="ghost" size="icon" className="text-slate-400 hover:text-white">
+                      <a href={member.discord} target="_blank" rel="noopener noreferrer">
+                        <span className="h-5 w-5">
+                          <FaDiscord size={20} />
+                        </span>
+                      </a>
+                    </Button>
                   </CardFooter>
                 </Card>
               ))}
@@ -369,8 +364,12 @@ export default function AboutPage() {
         <section className="w-full py-12 md:py-24 bg-[#030305]">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center text-center space-y-4 mb-10">
-              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20" data-aos="fade-right">Our Partners</Badge>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text" data-aos="fade-right">Strategic Partnerships</h2>
+              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20" data-aos="fade-right">
+                Our Partners
+              </Badge>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text" data-aos="fade-right">
+                Strategic Partnerships
+              </h2>
               <p className="text-lg text-slate-400 max-w-[700px]" data-aos="fade-right">
                 We collaborate with industry leaders to provide the best possible experience for our customers.
               </p>
