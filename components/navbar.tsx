@@ -76,6 +76,10 @@ export default function Navbar({ transparent = false }: NavbarProps) {
                 Pricing
               </Link>
 
+              <Link href="/status" className={styles.navLink}>
+                Status
+              </Link>
+
               <Link href="/docs" className={styles.navLink}>
                 Documentation
               </Link>
