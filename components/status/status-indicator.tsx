@@ -1,6 +1,5 @@
 import { CheckCircle, AlertTriangle, XCircle, Clock } from "lucide-react"
 import { cn } from "@/lib/utils"
-import type { StatusType } from "@/types/status"
 
 interface StatusIndicatorProps {
   status: string

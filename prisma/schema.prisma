@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id        String   @id
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  company   String?
+  avatarUrl String?
+  timezone  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model BillingInfo {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  fullName   String?
+  company    String?
+  address    String?
+  city       String?
+  state      String?
+  postalCode String?
+  country    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
+
+model PaymentMethod {
+  id           String   @id @default(cuid())
+  userId       String
+  type         String   // "card", "paypal", etc.
+  lastFour     String?  // Last four digits of card
+  expiryMonth  Int?
+  expiryYear   Int?
+  isDefault    Boolean  @default(false)
+  providerData Json?    // Store provider-specific data
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Subscription {
+  id             String   @id @default(cuid())
+  userId         String
+  planId         String
+  status         String   // "active", "canceled", "past_due", etc.
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Invoice {
+  id          String   @id @default(cuid())
+  userId      String
+  amount      Float
+  currency    String   @default("USD")
+  status      String   // "paid", "open", "void", etc.
+  invoiceDate DateTime
+  dueDate     DateTime
+  paidDate    DateTime?
+  items       Json?    // Array of line items
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  @@index([userId])
+}
+
