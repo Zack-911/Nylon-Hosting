@@ -131,7 +131,7 @@ const hostingPlans = {
       id: "vps-starter",
       name: "Starter VPS",
       description: "Entry-level VPS for small applications",
-      price: 10.99,
+      price: 4.99,
       features: [
         "1 vCPU",
         "2 GB RAM",
@@ -148,7 +148,7 @@ const hostingPlans = {
       id: "vps-business",
       name: "Business VPS",
       description: "Balanced VPS for websites and applications",
-      price: 19.99,
+      price: 9.99,
       features: [
         "2 vCPU",
         "4 GB RAM",
@@ -166,7 +166,7 @@ const hostingPlans = {
       id: "vps-premium",
       name: "Premium VPS",
       description: "High-performance VPS for demanding workloads",
-      price: 39.99,
+      price: 14.99,
       features: [
         "4 vCPU",
         "8 GB RAM",
