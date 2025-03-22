@@ -161,7 +161,7 @@ const hostingPlans = {
   vps: [
     {
       id: "vps-testbench",
-      name: "Starter VPS",
+      name: "Testbench VPS",
       description: "Small VPS best for testing purposes",
       price: 2.99,
       features: [
@@ -239,7 +239,7 @@ const hostingPlans = {
       ],
           {
       id: "vps-deluxe",
-      name: "Premium VPS",
+      name: "Deluxe VPS",
       description: "High-performance VPS for demanding workloads",
       price: 17.99,
       features: [
