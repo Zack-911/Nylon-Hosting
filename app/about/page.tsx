@@ -11,7 +11,7 @@ import Footer from "@/components/footer"
 const teamMembers = [
   {
     name: "Koomball",
-    role: "CEO & Co-Founder",
+    role: "CEO & Founder",
     bio: "CEO & Founder of Nylon Developments, Currently starting Nylon Hosting Services (NHS) & The Nylon Design Studio.",
     image: "/team/koomball.png?height=400&width=400",
     github: "https://github.com/Koomball",
