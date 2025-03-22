@@ -20,6 +20,22 @@ import Link from "next/link"
 const hostingPlans = {
   web: [
     {
+      id: "web-free",
+      name: "Free",
+      description: "Free plan for those not fussed on domains",
+      price: 0.00,
+      features: [
+        "1 Website",
+        "5 GB SSD Storage",
+        "Unmetered Bandwidth",
+        "1 Database",
+        "Daily Backups",
+        "24/7 Support",
+        "locked to .nylonhosting.net & .nylondevelopments.org domains",
+      ],
+      popular: false,
+    },
+    {
       id: "web-basic",
       name: "Basic",
       description: "Perfect for personal websites and blogs",
