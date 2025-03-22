@@ -23,7 +23,7 @@ const hostingPlans = {
       id: "web-basic",
       name: "Basic",
       description: "Perfect for personal websites and blogs",
-      price: 4.99,
+      price: 2.99,
       features: [
         "1 Website",
         "10 GB SSD Storage",
@@ -39,7 +39,7 @@ const hostingPlans = {
       id: "web-plus",
       name: "Plus",
       description: "Great for small businesses and growing websites",
-      price: 9.99,
+      price: 5.99,
       features: [
         "10 Websites",
         "25 GB SSD Storage",
@@ -56,7 +56,7 @@ const hostingPlans = {
       id: "web-pro",
       name: "Pro",
       description: "Advanced hosting for high-traffic websites",
-      price: 19.99,
+      price: 9.99,
       features: [
         "Unlimited Websites",
         "100 GB SSD Storage",
@@ -77,7 +77,7 @@ const hostingPlans = {
       id: "discord-basic",
       name: "Basic",
       description: "For small Discord bots with basic functionality",
-      price: 5.99,
+      price: 2.99,
       features: [
         "1 Bot",
         "1 GB RAM",
@@ -93,9 +93,9 @@ const hostingPlans = {
       id: "discord-standard",
       name: "Standard",
       description: "For medium-sized Discord bots with more features",
-      price: 9.99,
+      price: 5.99,
       features: [
-        "1 Bot",
+        "5 Bot",
         "2 GB RAM",
         "1 vCPU",
         "20 GB Storage",
@@ -110,9 +110,9 @@ const hostingPlans = {
       id: "discord-premium",
       name: "Premium",
       description: "For large Discord bots with high resource needs",
-      price: 19.99,
+      price: 9.99,
       features: [
-        "1 Bot",
+        "Unlimited Bot",
         "4 GB RAM",
         "2 vCPU",
         "40 GB Storage",
