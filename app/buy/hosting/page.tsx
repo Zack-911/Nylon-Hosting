@@ -513,7 +513,7 @@ export default function HostingPage() {
                               <RadioGroupItem value="register-new" id="register-new" className="mt-1 text-purple-500" />
                               <div>
                                 <Label htmlFor="register-new" className="text-white">
-                                  Register a new domain
+                                  Register a FREE new domain
                                 </Label>
                                 <div className="mt-2 flex gap-2">
                                   <Input
@@ -525,10 +525,9 @@ export default function HostingPage() {
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-[var(--bg-card)] border-slate-700">
-                                      <SelectItem value=".com">.com</SelectItem>
-                                      <SelectItem value=".net">.net</SelectItem>
-                                      <SelectItem value=".org">.org</SelectItem>
-                                      <SelectItem value=".io">.io</SelectItem>
+                                      <SelectItem value=".com">.nylonhosting.net</SelectItem>
+                                      <SelectItem value=".net">.nylondevelopments.org</SelectItem>
+                                      <SelectItem value=".org">.nylonstudios.org</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
