@@ -20,10 +20,26 @@ import Link from "next/link"
 const hostingPlans = {
   web: [
     {
+      id: "web-free",
+      name: "Free",
+      description: "Free plan for those not fussed on domains",
+      price: 0.00,
+      features: [
+        "1 Website",
+        "5 GB SSD Storage",
+        "Unmetered Bandwidth",
+        "1 Database",
+        "Daily Backups",
+        "24/7 Support",
+        "locked to 1 nylon owned subdomain",
+      ],
+      popular: false,
+    },
+    {
       id: "web-basic",
       name: "Basic",
       description: "Perfect for personal websites and blogs",
-      price: 4.99,
+      price: 2.99,
       features: [
         "1 Website",
         "10 GB SSD Storage",
@@ -32,6 +48,7 @@ const hostingPlans = {
         "1 Database",
         "Daily Backups",
         "24/7 Support",
+        "1 nylon owned subdomain",
       ],
       popular: false,
     },
@@ -39,7 +56,7 @@ const hostingPlans = {
       id: "web-plus",
       name: "Plus",
       description: "Great for small businesses and growing websites",
-      price: 9.99,
+      price: 5.99,
       features: [
         "10 Websites",
         "25 GB SSD Storage",
@@ -48,7 +65,7 @@ const hostingPlans = {
         "10 Databases",
         "Daily Backups",
         "Priority Support",
-        "Free Domain for 1 Year",
+        "2 nylon owned subdomains",
       ],
       popular: true,
     },
@@ -56,7 +73,7 @@ const hostingPlans = {
       id: "web-pro",
       name: "Pro",
       description: "Advanced hosting for high-traffic websites",
-      price: 19.99,
+      price: 9.99,
       features: [
         "Unlimited Websites",
         "100 GB SSD Storage",
@@ -65,19 +82,35 @@ const hostingPlans = {
         "Unlimited Databases",
         "Daily Backups",
         "Priority Support",
-        "Free Domain for 1 Year",
         "Staging Environment",
         "Advanced Caching",
+        "5 nylon owned subdomains",
       ],
       popular: false,
     },
   ],
   discord: [
+        {
+      id: "discord-free",
+      name: "Free",
+      description: "For testing and small development.",
+      price: 0.00,
+      features: [
+        "1 Bot",
+        "1 GB RAM",
+        "Shared CPU",
+        "5 GB Storage",
+        "Automatic Restarts",
+        "16 Hours a Day Uptime",
+        "Basic Dashboard",
+      ],
+      popular: false,
+    },
     {
       id: "discord-basic",
       name: "Basic",
       description: "For small Discord bots with basic functionality",
-      price: 5.99,
+      price: 2.99,
       features: [
         "1 Bot",
         "1 GB RAM",
@@ -85,7 +118,7 @@ const hostingPlans = {
         "10 GB Storage",
         "Automatic Restarts",
         "24/7 Uptime",
-        "Basic Monitoring",
+        "Basic Dashboard",
       ],
       popular: false,
     },
@@ -93,15 +126,15 @@ const hostingPlans = {
       id: "discord-standard",
       name: "Standard",
       description: "For medium-sized Discord bots with more features",
-      price: 9.99,
+      price: 5.99,
       features: [
-        "1 Bot",
+        "5 Bot",
         "2 GB RAM",
         "1 vCPU",
         "20 GB Storage",
         "Automatic Restarts",
         "24/7 Uptime",
-        "Advanced Monitoring",
+        "Advanced Dashboard",
         "Priority Support",
       ],
       popular: true,
@@ -110,15 +143,15 @@ const hostingPlans = {
       id: "discord-premium",
       name: "Premium",
       description: "For large Discord bots with high resource needs",
-      price: 19.99,
+      price: 9.99,
       features: [
-        "1 Bot",
+        "Unlimited Bot",
         "4 GB RAM",
         "2 vCPU",
         "40 GB Storage",
         "Automatic Restarts",
         "24/7 Uptime",
-        "Advanced Monitoring",
+        "Advanced Dashboard",
         "Priority Support",
         "Dedicated Resources",
         "Custom Domain",
@@ -128,10 +161,10 @@ const hostingPlans = {
   ],
   vps: [
     {
-      id: "vps-starter",
-      name: "Starter VPS",
-      description: "Entry-level VPS for small applications",
-      price: 4.99,
+      id: "vps-testbench",
+      name: "Testbench VPS",
+      description: "Small VPS best for testing purposes",
+      price: 2.99,
       features: [
         "1 vCPU",
         "2 GB RAM",
@@ -141,8 +174,28 @@ const hostingPlans = {
         "Linux/Windows",
         "Full Root Access",
         "24/7 Support",
-        "Access to Nylons Specalised Dashboard",
+        "Standard Dashboard",
+        "Basic Dashboard",
+      ],
+      popular: false,
+    },
+    {
+      id: "vps-starter",
+      name: "Starter VPS",
+      description: "Entry-level VPS for small applications",
+      price: 4.99,
+      features: [
+        "1 vCPU",
+        "2 GB RAM",
+        "30 GB SSD Storage",
+        "2 TB Bandwidth @ 2.5GiB",
+        "1 IPv4 Address",
+        "Linux/Windows",
+        "Full Root Access",
+        "24/7 Support",
+        "Advanced Dashboard",
         "Access to 3 Specalized Packages",
+        "Basic Dashboard",
       ],
       popular: false,
     },
@@ -154,13 +207,13 @@ const hostingPlans = {
       features: [
         "2 vCPU",
         "4 GB RAM",
-        "30 GB SSD Storage",
-        "4 TB Bandwidth @ 2.5GiB",
+        "50 GB SSD Storage",
+        "Unlimited Bandwidth @ 2.5GiB",
         "1 IPv4 Address",
         "Linux/Windows",
         "Full Root Access",
         "Priority Support",
-        "Access to Nylons Specalised Dashboard",
+        "Advanced Dashboard",
         "Access to 3 Specalized Packages",
         "1 Backup",
       ],
@@ -174,15 +227,34 @@ const hostingPlans = {
       features: [
         "4 vCPU",
         "8 GB RAM",
-        "60 GB SSD Storage",
-        "6 TB Bandwidth @ 2.5GiB",
+        "100 GB SSD Storage",
+        "Unlimited Bandwidth @ 2.5GiB",
         "1 IPv4 Address",
         "Linux/Windows",
         "Full Root Access",
         "Priority Support",
-        "Access to Nylons Specalised Dashboard",
+        "Advanced Dashboard",
         "Access to 3 Specalized Packages",
         "2 Backup",
+        "DDoS Protection",
+      ],
+          {
+      id: "vps-deluxe",
+      name: "Deluxe VPS",
+      description: "High-performance VPS for demanding workloads",
+      price: 18.99,
+      features: [
+        "6 vCPU",
+        "16 GB RAM",
+        "150 GB SSD Storage",
+        "Unlimited Bandwidth @ 2.5GiB",
+        "1 IPv4 Address",
+        "Linux/Windows",
+        "Full Root Access",
+        "Priority Support",
+        "Advanced Dashboard",
+        "Access to 3 Specalized Packages",
+        "3 Backup",
         "DDoS Protection",
       ],
       popular: false,
@@ -442,7 +514,7 @@ export default function HostingPage() {
                               <RadioGroupItem value="register-new" id="register-new" className="mt-1 text-purple-500" />
                               <div>
                                 <Label htmlFor="register-new" className="text-white">
-                                  Register a new domain
+                                  Register a FREE new domain
                                 </Label>
                                 <div className="mt-2 flex gap-2">
                                   <Input
@@ -454,10 +526,9 @@ export default function HostingPage() {
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-[var(--bg-card)] border-slate-700">
-                                      <SelectItem value=".com">.com</SelectItem>
-                                      <SelectItem value=".net">.net</SelectItem>
-                                      <SelectItem value=".org">.org</SelectItem>
-                                      <SelectItem value=".io">.io</SelectItem>
+                                      <SelectItem value=".com">.nylonhosting.net</SelectItem>
+                                      <SelectItem value=".net">.nylondevelopments.org</SelectItem>
+                                      <SelectItem value=".org">.nylonstudios.org</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </div>
