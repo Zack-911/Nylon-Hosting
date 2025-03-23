@@ -238,7 +238,9 @@ const hostingPlans = {
         "2 Backup",
         "DDoS Protection",
       ],
-          {
+      popular: false,
+      },
+      {
       id: "vps-deluxe",
       name: "Deluxe VPS",
       description: "High-performance VPS for demanding workloads",
