@@ -23,7 +23,7 @@ const hostingPlans = {
       id: "web-free",
       name: "Free",
       description: "Free plan for those not fussed on domains",
-      price: 0.00,
+      price: 0.0,
       features: [
         "1 Website",
         "5 GB SSD Storage",
@@ -90,11 +90,11 @@ const hostingPlans = {
     },
   ],
   discord: [
-        {
+    {
       id: "discord-free",
       name: "Free",
       description: "For testing and small development.",
-      price: 0.00,
+      price: 0.0,
       features: [
         "1 Bot",
         "1 GB RAM",
@@ -239,8 +239,8 @@ const hostingPlans = {
         "DDoS Protection",
       ],
       popular: false,
-      },
-      {
+    },
+    {
       id: "vps-deluxe",
       name: "Deluxe VPS",
       description: "High-performance VPS for demanding workloads",
