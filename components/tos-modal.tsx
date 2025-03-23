@@ -19,7 +19,6 @@ export function ToSProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
   const [accepted, setAccepted] = useState(false)
 
-
   // Check if ToS has been accepted previously
   useEffect(() => {
     const tosAccepted = localStorage.getItem("tos-accepted")
