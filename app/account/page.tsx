@@ -47,7 +47,7 @@ export default function AccountPage() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="space-y-4">
                 <div className="inline-block rounded-lg bg-purple-500/10 px-3 py-1 text-sm text-purple-400">
-                  {activeTab === "login" ? "Welcome Back" : "Join NexusHost"}
+                  {activeTab === "login" ? "Welcome Back" : "Join Nylon Hosting Service"}
                 </div>
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl gradient-text">
                   {activeTab === "login" ? "Sign in to your account" : "Create your account"}
@@ -55,7 +55,7 @@ export default function AccountPage() {
                 <p className="text-lg text-slate-400 max-w-[600px]">
                   {activeTab === "login"
                     ? "Access your GPU instances, manage your account, and view your billing information."
-                    : "Get started with NexusHost to deploy high-performance GPU instances for your workloads."}
+                    : "Get started with Nylon Hosting Service to deploy high-performance GPU instances for your workloads."}
                 </p>
               </div>
               <div className="glow-effect">

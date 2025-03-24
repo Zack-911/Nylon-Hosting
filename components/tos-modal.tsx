@@ -8,9 +8,10 @@ import styles from "./tos-modal.module.css"
 // Context to manage the ToS modal state
 type ToSContextType = {
   isOpen: boolean
-  openToS: () => void
+  openToS: (source?: string) => void
   closeToS: () => void
   acceptToS: () => void
+  source: string | null
 }
 
 const ToSContext = createContext<ToSContextType | undefined>(undefined)
@@ -18,6 +19,7 @@ const ToSContext = createContext<ToSContextType | undefined>(undefined)
 export function ToSProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
   const [accepted, setAccepted] = useState(false)
+  const [source, setSource] = useState<string | null>(null)
 
   // Check if ToS has been accepted previously
   useEffect(() => {
@@ -27,18 +29,27 @@ export function ToSProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const openToS = () => setIsOpen(true)
+  const openToS = (source?: string) => {
+    setSource(source || null)
+    setIsOpen(true)
+  }
 
-  const closeToS = () => setIsOpen(false)
+  const closeToS = () => {
+    setIsOpen(false)
+    // Reset source after modal is closed
+    setTimeout(() => setSource(null), 300)
+  }
 
   const acceptToS = () => {
     localStorage.setItem("tos-accepted", "true")
     setAccepted(true)
     setIsOpen(false)
+    // Reset source after modal is closed
+    setTimeout(() => setSource(null), 300)
   }
 
   return (
-    <ToSContext.Provider value={{ isOpen, openToS, closeToS, acceptToS }}>
+    <ToSContext.Provider value={{ isOpen, openToS, closeToS, acceptToS, source }}>
       {children}
       {isOpen && <ToSModal />}
     </ToSContext.Provider>
@@ -56,13 +67,18 @@ export function useToS() {
 // Button component to trigger the ToS modal
 type TOSProps = {
   css?: string // Customizable class prop
+  source?: string // Source identifier
 }
 
-export function ToSButton({ css }: TOSProps) {
+export function ToSButton({ css, source }: TOSProps) {
   const { openToS } = useToS()
 
+  const handleClick = () => {
+    openToS(source)
+  }
+
   return (
-    <Button variant="link" onClick={openToS} className={css || styles.tosButton}>
+    <Button variant="link" onClick={handleClick} className={css || styles.tosButton}>
       Terms of Service
     </Button>
   )
@@ -70,7 +86,10 @@ export function ToSButton({ css }: TOSProps) {
 
 // The actual ToS modal component
 function ToSModal() {
-  const { closeToS, acceptToS } = useToS()
+  const { closeToS, acceptToS, source } = useToS()
+
+  // Determine if this modal was opened from the footer
+  const isFromFooter = source === "footer"
 
   // Prevent scrolling of the background when modal is open
   useEffect(() => {
@@ -90,8 +109,8 @@ function ToSModal() {
         aria-hidden="true"
       />
 
-      {/* Modal container */}
-      <div className={styles.modalContainer}>
+      {/* Modal container with conditional styling */}
+      <div className={`${styles.modalContainer} ${isFromFooter ? styles.footerModal : ""}`}>
         {/* Header */}
         <div className={styles.modalHeader}>
           <h2 className={styles.modalTitle}>Terms of Service</h2>
@@ -101,12 +120,12 @@ function ToSModal() {
         </div>
 
         {/* Content */}
-        <div className={styles.modalContent}>
+        <div className={`${styles.modalContent} ${isFromFooter ? styles.footerModalContent : ""}`}>
           <div className="space-y-6">
             <section className={styles.contentSection}>
               <h3 className={styles.sectionTitle}>1. Introduction</h3>
               <p className={styles.sectionText}>
-                Welcome to NexusHost. By accessing or using our GPU hosting services, you agree to be bound by these
+                Welcome to Nylon Hosting Service. By accessing or using our GPU hosting services, you agree to be bound by these
                 Terms of Service (&quot;Terms&quot;). Please read these Terms carefully before using our services.
               </p>
             </section>
@@ -114,7 +133,7 @@ function ToSModal() {
             <section className={styles.contentSection}>
               <h3 className={styles.sectionTitle}>2. Service Description</h3>
               <p className={styles.sectionText}>
-                NexusHost provides cloud-based GPU computing resources for various applications including but not
+                Nylon Hosting Service provides cloud-based GPU computing resources for various applications including but not
                 limited to machine learning, artificial intelligence, rendering, and scientific computing.
               </p>
               <p className={styles.sectionText}>

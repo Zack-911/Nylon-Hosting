@@ -281,7 +281,7 @@ export default function VolunteerPage() {
                     <Shield className={`h-10 w-10 text-yellow-500 mb-2 ${styles.pulseAnimation}`} />
                     <CardTitle className="text-white">Cybersecurity</CardTitle>
                     <CardDescription className="text-slate-400">
-                      Help secure our infrastructure and protect our users&apos; data.
+                      Help secure our infrastructure and protect our users' data.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -471,7 +471,7 @@ export default function VolunteerPage() {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Initial Screening</h3>
                 <p className="text-slate-400">
-                  Our team will review your application and reach out to schedule an initial conversation if there&apos;s a
+                  Our team will review your application and reach out to schedule an initial conversation if there's a
                   good fit.
                 </p>
               </div>
@@ -500,7 +500,7 @@ export default function VolunteerPage() {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Onboarding</h3>
                 <p className="text-slate-400">
-                  If selected, you&apos;ll receive an invitation to join our team, along with onboarding materials and your
+                  If selected, you'll receive an invitation to join our team, along with onboarding materials and your
                   first tasks.
                 </p>
               </div>
@@ -535,7 +535,7 @@ export default function VolunteerPage() {
                   </CardHeader>
                   <CardContent className="text-slate-300">
                     <p>
-                      We&apos;re flexible with time commitments. Most volunteers contribute 5-10 hours per week, but we can
+                      We're flexible with time commitments. Most volunteers contribute 5-10 hours per week, but we can
                       work with your schedule. The minimum commitment is 3 months to ensure you have enough time to
                       integrate with the team and make meaningful contributions.
                     </p>
@@ -550,7 +550,7 @@ export default function VolunteerPage() {
                   <CardContent className="text-slate-300">
                     <p>
                       No, professional experience is not required. We welcome volunteers with various skill levels, from
-                      beginners to experts. What&apos;s most important is your willingness to learn and contribute. We
+                      beginners to experts. What's most important is your willingness to learn and contribute. We
                       provide mentorship and resources to help you grow.
                     </p>
                   </CardContent>
@@ -578,7 +578,7 @@ export default function VolunteerPage() {
                   </CardHeader>
                   <CardContent className="text-slate-300">
                     <p>
-                      We encourage you to include your volunteer work with NexusHost on your resume. We can also provide
+                      We encourage you to include your volunteer work with Nylon Hosting Service on your resume. We can also provide
                       reference letters and LinkedIn recommendations for volunteers who make significant contributions
                       to our projects.
                     </p>
@@ -593,7 +593,7 @@ export default function VolunteerPage() {
                   <CardContent className="text-slate-300">
                     <p>
                       Yes, exceptional volunteers are often considered first when paid positions become available. Many
-                      of our current team members started as volunteers. While we can&apos;t guarantee paid positions,
+                      of our current team members started as volunteers. While we can't guarantee paid positions,
                       volunteering is an excellent way to demonstrate your skills and work ethic.
                     </p>
                   </CardContent>

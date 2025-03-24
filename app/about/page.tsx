@@ -63,12 +63,12 @@ const timelineEvents = [
     year: "2026",
     title: "Public Launch",
     description:
-      "Officially launched the NexusHost platform to the public with support for a wide range of GPU models.",
+      "Officially launched the Nylon Hosting Service platform to the public with support for a wide range of GPU models.",
   },
   {
     year: "2026",
     title: "Enterprise Offering",
-    description: "Introduced NexusHost Enterprise with dedicated infrastructure and advanced security features.",
+    description: "Introduced Nylon Hosting Service Enterprise with dedicated infrastructure and advanced security features.",
   },
   {
     year: "2026",
@@ -106,7 +106,7 @@ export default function AboutPage() {
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <Badge className="inline-flex bg-purple-500/10 text-purple-400 border-purple-500/20 mb-2">
-                    About NexusHost
+                    About Nylon Hosting Service
                   </Badge>
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none gradient-text">
                     Powering the Future of GPU Computing
@@ -237,7 +237,7 @@ export default function AboutPage() {
                 Our Team
               </Badge>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl gradient-text" data-aos="fade-left">
-                Meet the People Behind NexusHost
+                Meet the People Behind Nylon Hosting Service
               </h2>
               <p className="text-lg text-slate-400 max-w-[700px]" data-aos="fade-left">
                 We&apos;re a diverse team of engineers, product managers, designers, and customer success specialists
@@ -430,11 +430,11 @@ export default function AboutPage() {
                     <div>
                       <h3 className="text-white font-medium">Email</h3>
                       <p className="text-slate-400">
-                        info@nexushost.com
+                        info@Nylon Hosting Service.com
                         <br />
-                        support@nexushost.com
+                        support@Nylon Hosting Service.com
                         <br />
-                        careers@nexushost.com
+                        careers@Nylon Hosting Service.com
                       </p>
                     </div>
                   </div>

@@ -23,12 +23,12 @@ const faqCategories = [
     icon: HelpCircle,
     questions: [
       {
-        question: "What is NexusHost?",
+        question: "What is Nylon Hosting Service?",
         answer:
-          "NexusHost is a comprehensive hosting platform that provides high-performance GPU instances for AI, machine learning, rendering, and other compute-intensive workloads. We offer a variety of NVIDIA and AMD GPUs with flexible pricing options.",
+          "Nylon Hosting Service is a comprehensive hosting platform that provides high-performance GPU instances for AI, machine learning, rendering, and other compute-intensive workloads. We offer a variety of NVIDIA and AMD GPUs with flexible pricing options.",
       },
       {
-        question: "How do I get started with NexusHost?",
+        question: "How do I get started with Nylon Hosting Service?",
         answer:
           "Getting started is easy! Simply create an account, add a payment method, and deploy your first GPU instance. Check out our Getting Started guide in the documentation for step-by-step instructions.",
       },

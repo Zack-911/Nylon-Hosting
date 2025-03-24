@@ -12,10 +12,10 @@ const docCategories = [
   {
     id: "getting-started",
     title: "Getting Started",
-    description: "Learn the basics of NexusHost and deploy your first GPU instance",
+    description: "Learn the basics of Nylon Hosting Service and deploy your first GPU instance",
     icon: Rocket,
     articles: [
-      { id: "introduction", title: "Introduction to NexusHost", readTime: "3 min read" },
+      { id: "introduction", title: "Introduction to Nylon Hosting Service", readTime: "3 min read" },
       { id: "account-setup", title: "Setting up your account", readTime: "5 min read" },
       { id: "first-instance", title: "Deploying your first GPU instance", readTime: "7 min read" },
       { id: "billing-basics", title: "Understanding billing and pricing", readTime: "4 min read" },
@@ -43,7 +43,7 @@ const docCategories = [
     articles: [
       { id: "pytorch-setup", title: "Setting up PyTorch environment", readTime: "12 min read" },
       { id: "tensorflow-setup", title: "Setting up TensorFlow environment", readTime: "11 min read" },
-      { id: "stable-diffusion", title: "Running Stable Diffusion on NexusHost", readTime: "15 min read" },
+      { id: "stable-diffusion", title: "Running Stable Diffusion on Nylon Hosting Service", readTime: "15 min read" },
       { id: "jupyter-notebook", title: "Setting up Jupyter Notebook", readTime: "8 min read" },
       { id: "docker-containers", title: "Working with Docker containers", readTime: "14 min read" },
     ],
@@ -51,7 +51,7 @@ const docCategories = [
   {
     id: "api-reference",
     title: "API Reference",
-    description: "Comprehensive documentation for the NexusHost API",
+    description: "Comprehensive documentation for the Nylon Hosting Service API",
     icon: Code,
     articles: [
       { id: "api-overview", title: "API Overview and Authentication", readTime: "9 min read" },
@@ -67,7 +67,7 @@ const docCategories = [
     description: "Command-line interface documentation and examples",
     icon: Terminal,
     articles: [
-      { id: "cli-installation", title: "Installing the NexusHost CLI", readTime: "4 min read" },
+      { id: "cli-installation", title: "Installing the Nylon Hosting Service CLI", readTime: "4 min read" },
       { id: "cli-authentication", title: "CLI Authentication and Configuration", readTime: "6 min read" },
       { id: "instance-commands", title: "Instance Management Commands", readTime: "9 min read" },
       { id: "monitoring-commands", title: "Monitoring and Logging Commands", readTime: "7 min read" },
@@ -101,7 +101,7 @@ export default function DocsPage() {
             <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
               <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Documentation</Badge>
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl gradient-text">
-                NexusHost Documentation
+                Nylon Hosting Service Documentation
               </h1>
               <p className="text-xl text-slate-400 max-w-[700px]">
                 Comprehensive guides, tutorials, and reference materials to help you get the most out of our GPU hosting
@@ -213,14 +213,14 @@ export default function DocsPage() {
                 },
                 {
                   title: "Running Stable Diffusion",
-                  description: "Step-by-step guide to running Stable Diffusion on NexusHost",
+                  description: "Step-by-step guide to running Stable Diffusion on Nylon Hosting Service",
                   category: "Tutorials",
                   readTime: "15 min read",
                   icon: BookOpen,
                 },
                 {
                   title: "Advanced CLI Usage",
-                  description: "Advanced techniques for using the NexusHost CLI",
+                  description: "Advanced techniques for using the Nylon Hosting Service CLI",
                   category: "CLI Reference",
                   readTime: "12 min read",
                   icon: Terminal,

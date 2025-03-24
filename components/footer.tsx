@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Cpu } from "lucide-react"
 import { FaTwitter, FaLinkedin, FaGithub, FaDiscord } from "react-icons/fa"
+import { ToSButton } from "./tos-modal"
 
 export default function Footer() {
   return (
@@ -23,9 +24,7 @@ export default function Footer() {
             <Link href="/privacy" className="text-xs text-white/60 hover:text-white transition-colors">
               Privacy
             </Link>
-            <Link href="/terms" className="text-xs text-white/60 hover:text-white transition-colors">
-              Terms
-            </Link>
+            <ToSButton css="text-xs text-white/60 hover:text-white transition-colors cursor-pointer" source="footer" />
             <Link href="/status" className="text-xs text-white/60 hover:text-white transition-colors">
               Status
             </Link>
