@@ -34,6 +34,7 @@ const hostingPlans = {
         "locked to 1 nylon owned subdomain",
       ],
       popular: false,
+      type: null,
     },
     {
       id: "web-basic",
@@ -51,6 +52,7 @@ const hostingPlans = {
         "1 nylon owned subdomain",
       ],
       popular: false,
+      type: null,
     },
     {
       id: "web-plus",
@@ -68,6 +70,7 @@ const hostingPlans = {
         "2 nylon owned subdomains",
       ],
       popular: true,
+      type: null,
     },
     {
       id: "web-pro",
@@ -87,6 +90,7 @@ const hostingPlans = {
         "5 nylon owned subdomains",
       ],
       popular: false,
+      type: null,
     },
   ],
   discord: [
@@ -105,6 +109,7 @@ const hostingPlans = {
         "Basic Dashboard",
       ],
       popular: false,
+      type: null,
     },
     {
       id: "discord-basic",
@@ -121,6 +126,7 @@ const hostingPlans = {
         "Basic Dashboard",
       ],
       popular: false,
+      type: null,
     },
     {
       id: "discord-standard",
@@ -138,6 +144,7 @@ const hostingPlans = {
         "Priority Support",
       ],
       popular: true,
+      type: null,
     },
     {
       id: "discord-premium",
@@ -157,6 +164,7 @@ const hostingPlans = {
         "Custom Domain",
       ],
       popular: false,
+      type: null,
     },
   ],
   vps: [
@@ -178,6 +186,7 @@ const hostingPlans = {
         "Basic Dashboard",
       ],
       popular: false,
+      type: "Tier II",
     },
     {
       id: "vps-starter",
@@ -198,6 +207,7 @@ const hostingPlans = {
         "Basic Dashboard",
       ],
       popular: false,
+      type: "Tier II",
     },
     {
       id: "vps-business",
@@ -219,6 +229,7 @@ const hostingPlans = {
         "1 Backup",
       ],
       popular: true,
+      type: "Tier II",
     },
     {
       id: "vps-premium",
@@ -241,6 +252,7 @@ const hostingPlans = {
         "DDoS Protection",
       ],
       popular: false,
+      type: "Tier II",
     },
     {
       id: "vps-deluxe",
@@ -263,6 +275,7 @@ const hostingPlans = {
         "DDoS Protection",
       ],
       popular: false,
+      type: "Tier II",
     },
     {
       id: "vps-2-testbench",
@@ -282,6 +295,7 @@ const hostingPlans = {
         "Basic Dashboard",
       ],
       popular: true,
+      type: "Tier I",
     },
   ],
 }
