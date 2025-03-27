@@ -578,9 +578,9 @@ export default function VolunteerPage() {
                   </CardHeader>
                   <CardContent className="text-slate-300">
                     <p>
-                      We encourage you to include your volunteer work with Nylon Hosting Service on your resume. We can also provide
-                      reference letters and LinkedIn recommendations for volunteers who make significant contributions
-                      to our projects.
+                      We encourage you to include your volunteer work with Nylon Hosting Service on your resume. We can
+                      also provide reference letters and LinkedIn recommendations for volunteers who make significant
+                      contributions to our projects.
                     </p>
                   </CardContent>
                 </Card>

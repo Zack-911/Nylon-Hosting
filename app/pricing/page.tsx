@@ -15,6 +15,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import Link from "next/link"
 
+// Import the new filter components
+import FilterableServicesGrid from "@/components/enhanced/FilterableServicesGrid"
+
 // Define types for our data structures
 interface GPUProduct {
   id: string
@@ -56,6 +59,15 @@ interface ServiceProduct {
   availability: string
   popular?: boolean
   category: string
+  specs: {
+    ram?: string
+    cpu?: string
+    storage?: string
+    bandwidth?: string
+    os?: string[]
+    botType?: string[]
+  }
+  tags: string[]
 }
 
 // Type guard functions to check product types
@@ -321,6 +333,14 @@ const otherServices = [
     },
     availability: "High",
     category: "discord",
+    specs: {
+      ram: "1 GB",
+      cpu: "Shared CPU",
+      storage: "10 GB",
+      bandwidth: "Unlimited",
+      botType: ["Discord"],
+    },
+    tags: ["restart"],
   },
   {
     id: "discord-bot-standard",
@@ -335,6 +355,14 @@ const otherServices = [
     availability: "High",
     popular: true,
     category: "discord",
+    specs: {
+      ram: "2 GB",
+      cpu: "1 vCPU",
+      storage: "20 GB",
+      bandwidth: "Unlimited",
+      botType: ["Discord"],
+    },
+    tags: ["restart", "monitoring", "priority"],
   },
   {
     id: "discord-bot-premium",
@@ -348,6 +376,35 @@ const otherServices = [
     },
     availability: "High",
     category: "discord",
+    specs: {
+      ram: "4 GB",
+      cpu: "2 vCPU",
+      storage: "40 GB",
+      bandwidth: "Unlimited",
+      botType: ["Discord"],
+    },
+    tags: ["restart", "monitoring", "scaling", "priority", "db"],
+  },
+  {
+    id: "telegram-bot-standard",
+    name: "Telegram Bot Hosting",
+    icon: Bot,
+    iconColor: "text-blue-500",
+    description: "Reliable hosting for Telegram bots",
+    features: ["2 GB RAM", "1 vCPU", "20 GB Storage", "Unlimited Traffic", "API Webhook Support"],
+    pricing: {
+      monthly: 11.99,
+    },
+    availability: "High",
+    category: "discord",
+    specs: {
+      ram: "2 GB",
+      cpu: "1 vCPU",
+      storage: "20 GB",
+      bandwidth: "Unlimited",
+      botType: ["Telegram"],
+    },
+    tags: ["restart", "monitoring"],
   },
   {
     id: "game-server-minecraft",
@@ -361,6 +418,13 @@ const otherServices = [
     },
     availability: "High",
     category: "game",
+    specs: {
+      ram: "4 GB",
+      cpu: "2 vCPU",
+      storage: "50 GB",
+      bandwidth: "2 TB",
+    },
+    tags: ["backup", "snapshot"],
   },
   {
     id: "game-server-valheim",
@@ -374,6 +438,13 @@ const otherServices = [
     },
     availability: "High",
     category: "game",
+    specs: {
+      ram: "6 GB",
+      cpu: "2 vCPU",
+      storage: "100 GB",
+      bandwidth: "5 TB",
+    },
+    tags: ["backup", "snapshot"],
   },
   {
     id: "vps-basic",
@@ -387,6 +458,14 @@ const otherServices = [
     },
     availability: "High",
     category: "vps",
+    specs: {
+      ram: "2 GB",
+      cpu: "1 vCPU",
+      storage: "50 GB",
+      bandwidth: "2 TB",
+      os: ["Linux", "Windows"],
+    },
+    tags: ["ssd"],
   },
   {
     id: "vps-standard",
@@ -401,6 +480,35 @@ const otherServices = [
     availability: "High",
     popular: true,
     category: "vps",
+    specs: {
+      ram: "4 GB",
+      cpu: "2 vCPU",
+      storage: "80 GB",
+      bandwidth: "4 TB",
+      os: ["Linux", "Windows"],
+    },
+    tags: ["ssd", "backup", "ddos"],
+  },
+  {
+    id: "vps-premium",
+    name: "VPS - Premium",
+    icon: Server,
+    iconColor: "text-blue-500",
+    description: "High-performance VPS with dedicated resources",
+    features: ["8 GB RAM", "4 vCPU", "160 GB SSD", "8 TB Traffic", "Premium Support"],
+    pricing: {
+      monthly: 39.99,
+    },
+    availability: "Medium",
+    category: "vps",
+    specs: {
+      ram: "8 GB",
+      cpu: "4 vCPU",
+      storage: "160 GB",
+      bandwidth: "8 TB",
+      os: ["Linux", "Windows"],
+    },
+    tags: ["ssd", "backup", "ddos", "ipv6", "snapshot"],
   },
   {
     id: "web-hosting-basic",
@@ -414,6 +522,48 @@ const otherServices = [
     },
     availability: "High",
     category: "web",
+    specs: {
+      storage: "10 GB",
+      bandwidth: "Unlimited",
+    },
+    tags: ["ssl"],
+  },
+  {
+    id: "web-hosting-plus",
+    name: "Web Hosting - Plus",
+    icon: Globe,
+    iconColor: "text-cyan-500",
+    description: "Ideal for small business websites",
+    features: ["25 GB Storage", "Unlimited Bandwidth", "10 Databases", "Free SSL", "Email Accounts"],
+    pricing: {
+      monthly: 9.99,
+    },
+    availability: "High",
+    popular: true,
+    category: "web",
+    specs: {
+      storage: "25 GB",
+      bandwidth: "Unlimited",
+    },
+    tags: ["ssl", "cpanel", "email"],
+  },
+  {
+    id: "web-hosting-business",
+    name: "Web Hosting - Business",
+    icon: Globe,
+    iconColor: "text-cyan-500",
+    description: "Advanced hosting for high-traffic websites",
+    features: ["100 GB Storage", "Unlimited Bandwidth", "Unlimited Databases", "Free SSL", "CDN Integration"],
+    pricing: {
+      monthly: 19.99,
+    },
+    availability: "High",
+    category: "web",
+    specs: {
+      storage: "100 GB",
+      bandwidth: "Unlimited",
+    },
+    tags: ["ssl", "cpanel", "email", "subdomain", "cdn"],
   },
 ]
 
@@ -690,59 +840,64 @@ export default function PricingPage() {
               </div>
             </div>
 
-            {/* Filtering and Sorting Controls */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
-              {selectedCategory !== "other" && (
-                <div className="flex gap-3 w-full md:w-auto">
-                  <Select defaultValue={pricingView} onValueChange={setPricingView}>
-                    <SelectTrigger className="w-full md:w-[180px] bg-[var(--bg-card)] border-slate-700 text-slate-300">
-                      <SelectValue placeholder="Pricing" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[var(--bg-card)] border-slate-700">
-                      <SelectItem value="hourly">Hourly Pricing</SelectItem>
-                      <SelectItem value="daily">Daily Pricing</SelectItem>
-                      <SelectItem value="monthly">Monthly Pricing</SelectItem>
-                    </SelectContent>
-                  </Select>
+            {selectedCategory !== "other" ? (
+              <>
+                {/* Filtering and Sorting Controls for GPUs */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+                  <div className="flex gap-3 w-full md:w-auto">
+                    <Select defaultValue={pricingView} onValueChange={setPricingView}>
+                      <SelectTrigger className="w-full md:w-[180px] bg-[var(--bg-card)] border-slate-700 text-slate-300">
+                        <SelectValue placeholder="Pricing" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[var(--bg-card)] border-slate-700">
+                        <SelectItem value="hourly">Hourly Pricing</SelectItem>
+                        <SelectItem value="daily">Daily Pricing</SelectItem>
+                        <SelectItem value="monthly">Monthly Pricing</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex gap-3 w-full md:w-auto">
+                    <Select defaultValue={sortOption} onValueChange={setSortOption}>
+                      <SelectTrigger className="w-full md:w-[180px] bg-[var(--bg-card)] border-slate-700 text-slate-300">
+                        <SelectValue placeholder="Sort by" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[var(--bg-card)] border-slate-700">
+                        <SelectItem value="availability">Availability</SelectItem>
+                        <SelectItem value="price-low">Price: Low to High</SelectItem>
+                        <SelectItem value="price-high">Price: High to Low</SelectItem>
+                        <SelectItem value="memory">Memory Size</SelectItem>
+                        <SelectItem value="performance">Performance</SelectItem>
+                        {selectedCategory === "mining" && <SelectItem value="efficiency">Mining Efficiency</SelectItem>}
+                        <SelectItem value="popular">Most Popular</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-              )}
-              <div className="flex gap-3 w-full md:w-auto">
-                <Select defaultValue={sortOption} onValueChange={setSortOption}>
-                  <SelectTrigger className="w-full md:w-[180px] bg-[var(--bg-card)] border-slate-700 text-slate-300">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[var(--bg-card)] border-slate-700">
-                    <SelectItem value="availability">Availability</SelectItem>
-                    <SelectItem value="price-low">Price: Low to High</SelectItem>
-                    <SelectItem value="price-high">Price: High to Low</SelectItem>
-                    <SelectItem value="memory">Memory Size</SelectItem>
-                    <SelectItem value="performance">Performance</SelectItem>
-                    {selectedCategory === "mining" && <SelectItem value="efficiency">Mining Efficiency</SelectItem>}
-                    <SelectItem value="popular">Most Popular</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
 
-            {/* Products Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sortedProducts().map((product) => (
-                <Card key={product.id} className="bg-[var(--bg-card)] border-slate-800 overflow-hidden flex flex-col">
-                  {isGPUProduct(product) ? (
-                    // Mining GPU Card
-                    <>
-                      <div className="p-4 border-b border-slate-700 flex justify-between items-center">
-                        {product.popular && <Badge className="gradient-purple-blue text-white border-0">Popular</Badge>}
-                        {product.premium && <Badge className="bg-purple-600 text-white border-0">Premium</Badge>}
-                        {product.value && <Badge className="bg-green-600 text-white border-0">Best Value</Badge>}
-                        {!product.popular && !product.premium && !product.value && (
-                          <span className="text-transparent">-</span>
-                        )}
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Badge
-                                className={`
+                {/* Products Grid for GPUs */}
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {sortedProducts().map((product) => (
+                    <Card
+                      key={product.id}
+                      className="bg-[var(--bg-card)] border-slate-800 overflow-hidden flex flex-col"
+                    >
+                      {isGPUProduct(product) ? (
+                        // Mining GPU Card
+                        <>
+                          <div className="p-4 border-b border-slate-700 flex justify-between items-center">
+                            {product.popular && (
+                              <Badge className="gradient-purple-blue text-white border-0">Popular</Badge>
+                            )}
+                            {product.premium && <Badge className="bg-purple-600 text-white border-0">Premium</Badge>}
+                            {product.value && <Badge className="bg-green-600 text-white border-0">Best Value</Badge>}
+                            {!product.popular && !product.premium && !product.value && (
+                              <span className="text-transparent">-</span>
+                            )}
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Badge
+                                    className={`
             ${
               product.availability === "High"
                 ? "bg-green-500/20 text-green-400"
@@ -751,118 +906,6 @@ export default function PricingPage() {
                   : "bg-red-500/20 text-red-400"
             }
           `}
-                              >
-                                {product.availability}
-                              </Badge>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Current availability status</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </div>
-                      <CardHeader>
-                        <CardTitle className="text-white">{product.name}</CardTitle>
-                        <div className="flex justify-between items-center mt-2">
-                          <CardDescription className="text-slate-400">{product.architecture}</CardDescription>
-                          <span className="text-lg font-bold text-purple-400">
-                            $
-                            {pricingView === "hourly"
-                              ? product.pricing.hourly.toFixed(2) + "/hr"
-                              : pricingView === "daily"
-                                ? product.pricing.daily.toFixed(2) + "/day"
-                                : pricingView === "monthly"
-                                  ? product.pricing.monthly.toFixed(0) + "/mo"
-                                  : null}
-                          </span>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="text-slate-300 grow">
-                        <div className="grid grid-cols-2 gap-3 mb-4">
-                          <div className="flex items-start">
-                            <Memory className="h-4 w-4 text-blue-500 mr-1 mt-0.5" />
-                            <span className="text-sm">{product.memory}</span>
-                          </div>
-                          <div className="flex items-start">
-                            <Gpu className="h-4 w-4 text-purple-500 mr-1 mt-0.5" />
-                            <span className="text-sm">{product.cores}</span>
-                          </div>
-                          {isGPUProduct(product) && product.hashrate && (
-                            <div className="flex items-start">
-                              <Zap className="h-4 w-4 text-yellow-500 mr-1 mt-0.5" />
-                              <span className="text-sm">{product.hashrate}</span>
-                            </div>
-                          )}
-                          {isGPUProduct(product) && product.efficiency && (
-                            <div className="flex items-start">
-                              <HardDrive className="h-4 w-4 text-green-500 mr-1 mt-0.5" />
-                              <span className="text-sm">{product.efficiency}</span>
-                            </div>
-                          )}
-                        </div>
-                        <div className="mt-2">
-                          <p className="text-sm font-medium text-slate-300 mb-1">Best for:</p>
-                          <div className="flex flex-wrap gap-1">
-                            {product.bestFor &&
-                              product.bestFor.map((use, i) => (
-                                <Badge
-                                  key={i}
-                                  variant="outline"
-                                  className="bg-slate-800/50 text-slate-300 border-slate-700"
-                                >
-                                  {use}
-                                </Badge>
-                              ))}
-                          </div>
-                        </div>
-                      </CardContent>
-                      <CardFooter className="flex flex-col gap-3">
-                        <div className="w-full flex justify-between text-sm text-slate-400 px-1">
-                          <span>Hourly: ${product.pricing.hourly.toFixed(2)}</span>
-                          <span>Daily: ${product.pricing.daily.toFixed(2)}</span>
-                          <span>Monthly: ${product.pricing.monthly.toFixed(0)}</span>
-                        </div>
-                        <div className="flex gap-2 w-full">
-                          <Button className="flex-1 gradient-purple-blue gradient-purple-blue-hover">Deploy Now</Button>
-                          <Button
-                            variant="outline"
-                            className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                          >
-                            Details
-                          </Button>
-                        </div>
-                      </CardFooter>
-                    </>
-                  ) : (
-                    // Other Services Card
-                    !isGPUProduct(product) && (
-                      <>
-                        <CardHeader>
-                          <div className="flex items-center space-x-2 mb-2">
-                            {isServiceProduct(product) && product.icon && (
-                              <div className="h-10 w-10 rounded-md bg-slate-800/50 flex items-center justify-center">
-                                <product.icon className={`h-5 w-5 ${product.iconColor || "text-purple-400"}`} />
-                              </div>
-                            )}
-                            {product.popular && (
-                              <Badge className="gradient-purple-blue text-white border-0">Popular</Badge>
-                            )}
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <CardTitle className="text-white">{product.name}</CardTitle>
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <Badge
-                                    className={`
-                    ${
-                      product.availability === "High"
-                        ? "bg-green-500/20 text-green-400"
-                        : product.availability === "Medium"
-                          ? "bg-yellow-500/20 text-yellow-400"
-                          : "bg-red-500/20 text-red-400"
-                    }
-                  `}
                                   >
                                     {product.availability}
                                   </Badge>
@@ -873,51 +916,173 @@ export default function PricingPage() {
                               </Tooltip>
                             </TooltipProvider>
                           </div>
-                          {isServiceProduct(product) && (
-                            <CardDescription className="text-slate-400 mt-2">{product.description}</CardDescription>
-                          )}
-                        </CardHeader>
-                        <CardContent className="text-slate-300 grow">
-                          {isServiceProduct(product) && (
-                            <div className="space-y-2">
-                              <p className="text-sm font-medium text-slate-300 mb-1">Features:</p>
-                              <ul className="space-y-1">
-                                {product.features &&
-                                  product.features.map((feature: string, i: number) => (
-                                    <li key={i} className="flex items-start text-sm">
-                                      <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                                      <span>{feature}</span>
-                                    </li>
-                                  ))}
-                              </ul>
+                          <CardHeader>
+                            <CardTitle className="text-white">{product.name}</CardTitle>
+                            <div className="flex justify-between items-center mt-2">
+                              <CardDescription className="text-slate-400">{product.architecture}</CardDescription>
+                              <span className="text-lg font-bold text-purple-400">
+                                $
+                                {pricingView === "hourly"
+                                  ? product.pricing.hourly.toFixed(2) + "/hr"
+                                  : pricingView === "daily"
+                                    ? product.pricing.daily.toFixed(2) + "/day"
+                                    : pricingView === "monthly"
+                                      ? product.pricing.monthly.toFixed(0) + "/mo"
+                                      : null}
+                              </span>
                             </div>
-                          )}
-                        </CardContent>
-                        <CardFooter className="flex flex-col gap-3">
-                          <div className="w-full flex justify-between items-center">
-                            <span className="text-sm text-slate-400">Monthly Price</span>
-                            <span className="text-xl font-bold text-purple-400">
-                              ${product.pricing && product.pricing.monthly ? product.pricing.monthly.toFixed(2) : "N/A"}
-                            </span>
-                          </div>
-                          <div className="flex gap-2 w-full">
-                            <Button className="flex-1 gradient-purple-blue gradient-purple-blue-hover">
-                              Deploy Now
-                            </Button>
-                            <Button
-                              variant="outline"
-                              className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-                            >
-                              Details
-                            </Button>
-                          </div>
-                        </CardFooter>
-                      </>
-                    )
-                  )}
-                </Card>
-              ))}
-            </div>
+                          </CardHeader>
+                          <CardContent className="text-slate-300 grow">
+                            <div className="grid grid-cols-2 gap-3 mb-4">
+                              <div className="flex items-start">
+                                <Memory className="h-4 w-4 text-blue-500 mr-1 mt-0.5" />
+                                <span className="text-sm">{product.memory}</span>
+                              </div>
+                              <div className="flex items-start">
+                                <Gpu className="h-4 w-4 text-purple-500 mr-1 mt-0.5" />
+                                <span className="text-sm">{product.cores}</span>
+                              </div>
+                              {isGPUProduct(product) && product.hashrate && (
+                                <div className="flex items-start">
+                                  <Zap className="h-4 w-4 text-yellow-500 mr-1 mt-0.5" />
+                                  <span className="text-sm">{product.hashrate}</span>
+                                </div>
+                              )}
+                              {isGPUProduct(product) && product.efficiency && (
+                                <div className="flex items-start">
+                                  <HardDrive className="h-4 w-4 text-green-500 mr-1 mt-0.5" />
+                                  <span className="text-sm">{product.efficiency}</span>
+                                </div>
+                              )}
+                            </div>
+                            <div className="mt-2">
+                              <p className="text-sm font-medium text-slate-300 mb-1">Best for:</p>
+                              <div className="flex flex-wrap gap-1">
+                                {product.bestFor &&
+                                  product.bestFor.map((use, i) => (
+                                    <Badge
+                                      key={i}
+                                      variant="outline"
+                                      className="bg-slate-800/50 text-slate-300 border-slate-700"
+                                    >
+                                      {use}
+                                    </Badge>
+                                  ))}
+                              </div>
+                            </div>
+                          </CardContent>
+                          <CardFooter className="flex flex-col gap-3">
+                            <div className="w-full flex justify-between text-sm text-slate-400 px-1">
+                              <span>Hourly: ${product.pricing.hourly.toFixed(2)}</span>
+                              <span>Daily: ${product.pricing.daily.toFixed(2)}</span>
+                              <span>Monthly: ${product.pricing.monthly.toFixed(0)}</span>
+                            </div>
+                            <div className="flex gap-2 w-full">
+                              <Button className="flex-1 gradient-purple-blue gradient-purple-blue-hover">
+                                Deploy Now
+                              </Button>
+                              <Button
+                                variant="outline"
+                                className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                              >
+                                Details
+                              </Button>
+                            </div>
+                          </CardFooter>
+                        </>
+                      ) : (
+                        // Other Services Card
+                        !isGPUProduct(product) && (
+                          <>
+                            <CardHeader>
+                              <div className="flex items-center space-x-2 mb-2">
+                                {isServiceProduct(product) && product.icon && (
+                                  <div className="h-10 w-10 rounded-md bg-slate-800/50 flex items-center justify-center">
+                                    <product.icon className={`h-5 w-5 ${product.iconColor || "text-purple-400"}`} />
+                                  </div>
+                                )}
+                                {product.popular && (
+                                  <Badge className="gradient-purple-blue text-white border-0">Popular</Badge>
+                                )}
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <CardTitle className="text-white">{product.name}</CardTitle>
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <Badge
+                                        className={`
+                    ${
+                      product.availability === "High"
+                        ? "bg-green-500/20 text-green-400"
+                        : product.availability === "Medium"
+                          ? "bg-yellow-500/20 text-yellow-400"
+                          : "bg-red-500/20 text-red-400"
+                    }
+                  `}
+                                      >
+                                        {product.availability}
+                                      </Badge>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p>Current availability status</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              </div>
+                              {isServiceProduct(product) && (
+                                <CardDescription className="text-slate-400 mt-2">{product.description}</CardDescription>
+                              )}
+                            </CardHeader>
+                            <CardContent className="text-slate-300 grow">
+                              {isServiceProduct(product) && (
+                                <div className="space-y-2">
+                                  <p className="text-sm font-medium text-slate-300 mb-1">Features:</p>
+                                  <ul className="space-y-1">
+                                    {product.features &&
+                                      product.features.map((feature: string, i: number) => (
+                                        <li key={i} className="flex items-start text-sm">
+                                          <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                                          <span>{feature}</span>
+                                        </li>
+                                      ))}
+                                  </ul>
+                                </div>
+                              )}
+                            </CardContent>
+                            <CardFooter className="flex flex-col gap-3">
+                              <div className="w-full flex justify-between items-center">
+                                <span className="text-sm text-slate-400">Monthly Price</span>
+                                <span className="text-xl font-bold text-purple-400">
+                                  $
+                                  {product.pricing && product.pricing.monthly
+                                    ? product.pricing.monthly.toFixed(2)
+                                    : "N/A"}
+                                </span>
+                              </div>
+                              <div className="flex gap-2 w-full">
+                                <Button className="flex-1 gradient-purple-blue gradient-purple-blue-hover">
+                                  Deploy Now
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                                >
+                                  Details
+                                </Button>
+                              </div>
+                            </CardFooter>
+                          </>
+                        )
+                      )}
+                    </Card>
+                  ))}
+                </div>
+              </>
+            ) : (
+              /* Filterable Services Grid for other services */
+              <FilterableServicesGrid services={otherServices} category="vps" />
+            )}
 
             <div className="flex justify-center mt-10">
               <Link href="/buy">
@@ -1338,3 +1503,4 @@ export default function PricingPage() {
     </div>
   )
 }
+

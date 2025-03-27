@@ -68,7 +68,8 @@ const timelineEvents = [
   {
     year: "2026",
     title: "Enterprise Offering",
-    description: "Introduced Nylon Hosting Service Enterprise with dedicated infrastructure and advanced security features.",
+    description:
+      "Introduced Nylon Hosting Service Enterprise with dedicated infrastructure and advanced security features.",
   },
   {
     year: "2026",

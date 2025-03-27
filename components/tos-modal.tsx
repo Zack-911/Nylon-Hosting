@@ -125,16 +125,17 @@ function ToSModal() {
             <section className={styles.contentSection}>
               <h3 className={styles.sectionTitle}>1. Introduction</h3>
               <p className={styles.sectionText}>
-                Welcome to Nylon Hosting Service. By accessing or using our GPU hosting services, you agree to be bound by these
-                Terms of Service (&quot;Terms&quot;). Please read these Terms carefully before using our services.
+                Welcome to Nylon Hosting Service. By accessing or using our GPU hosting services, you agree to be bound
+                by these Terms of Service (&quot;Terms&quot;). Please read these Terms carefully before using our
+                services.
               </p>
             </section>
 
             <section className={styles.contentSection}>
               <h3 className={styles.sectionTitle}>2. Service Description</h3>
               <p className={styles.sectionText}>
-                Nylon Hosting Service provides cloud-based GPU computing resources for various applications including but not
-                limited to machine learning, artificial intelligence, rendering, and scientific computing.
+                Nylon Hosting Service provides cloud-based GPU computing resources for various applications including
+                but not limited to machine learning, artificial intelligence, rendering, and scientific computing.
               </p>
               <p className={styles.sectionText}>
                 Our services include GPU instance provisioning, management tools, and related technical support as

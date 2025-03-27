@@ -25,7 +25,9 @@ export default function BuyPage() {
         <section className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
           <div className="container relative z-10 px-4 md:px-6">
             <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
-              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">Nylon Hosting Service Marketplace</Badge>
+              <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">
+                Nylon Hosting Service Marketplace
+              </Badge>
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl gradient-text">
                 Find the Perfect Solution
               </h1>
