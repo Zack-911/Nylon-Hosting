@@ -93,10 +93,10 @@ export default function FilterableServicesGrid({ services, category }: Filterabl
           !filters.ram.some((ram) => {
             // Handle special cases like "16GB" for "16+ GB"
             if (ram === "16GB") {
-              const ramValue = Number.parseInt(service.specs.ram)
+              const ramValue = Number.parseInt(service.specs?.ram || "0")
               return ramValue >= 16
             }
-            return service.specs.ram.includes(ram.replace("GB", " GB"))
+            return service.specs?.ram?.includes(ram.replace("GB", " GB")) || false
           })
         ) {
           return false
@@ -110,10 +110,10 @@ export default function FilterableServicesGrid({ services, category }: Filterabl
           !filters.cpu.some((cpu) => {
             // Handle special cases like "8vCPU" for "8+ vCPU"
             if (cpu === "8vCPU") {
-              const cpuValue = Number.parseInt(service.specs.cpu)
+              const cpuValue = Number.parseInt(service.specs?.cpu || "0")
               return cpuValue >= 8
             }
-            return service.specs.cpu.includes(cpu.replace("vCPU", " vCPU"))
+            return service.specs?.cpu?.includes(cpu.replace("vCPU", " vCPU")) || false
           })
         ) {
           return false
@@ -127,10 +127,10 @@ export default function FilterableServicesGrid({ services, category }: Filterabl
           !filters.storage.some((storage) => {
             // Handle special cases like "250GB" for "250+ GB"
             if (storage === "250GB") {
-              const storageValue = Number.parseInt(service.specs.storage)
+              const storageValue = Number.parseInt(service.specs?.storage || "0")
               return storageValue >= 250
             }
-            return service.specs.storage.includes(storage.replace("GB", " GB"))
+            return service.specs?.storage?.includes(storage.replace("GB", " GB")) || false
           })
         ) {
           return false
@@ -142,17 +142,17 @@ export default function FilterableServicesGrid({ services, category }: Filterabl
         if (
           !service.specs?.bandwidth ||
           !filters.bandwidth.some((bandwidth) => {
-            if (bandwidth === "unlimited" && service.specs.bandwidth.toLowerCase().includes("unlimited")) {
+            if (bandwidth === "unlimited" && service.specs?.bandwidth?.toLowerCase().includes("unlimited")) {
               return true
             }
             if (bandwidth === "10TB") {
-              const match = service.specs.bandwidth.match(/(\d+)\s*TB/)
+              const match = service.specs?.bandwidth?.match(/(\d+)\s*TB/)
               if (match) {
                 const bandwidthValue = Number.parseInt(match[1])
                 return bandwidthValue >= 10
               }
             }
-            return service.specs.bandwidth.includes(bandwidth.replace("TB", " TB"))
+            return service.specs?.bandwidth?.includes(bandwidth.replace("TB", " TB")) || false
           })
         ) {
           return false
