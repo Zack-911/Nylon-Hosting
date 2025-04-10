@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 267 30% 95%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 267 75% 59%;
+    --primary-rgb: 139, 92, 246;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 267 30% 90%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 267 30% 90%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 267 30% 90%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 267 30% 85%;
+    --input: 267 30% 85%;
+    --ring: 267 75% 59%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 210 40% 98%;
+    --card: 267 30% 5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 267 30% 5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 263 70% 70%;
+    --primary-rgb: 167, 139, 250;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 267 30% 10%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 267 30% 10%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 267 30% 15%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 267 30% 15%;
+    --input: 267 30% 15%;
+    --ring: 263 70% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+/* Background patterns */
+.bg-grid-pattern-light {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+  background-size: 50px 50px, 50px 50px;
+  background-position: center;
+}
+
+.bg-grid-pattern-dark {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px, 50px 50px;
+  background-position: center;
+}
+
+/* Card gradient */
+.card-gradient {
+  @apply transition-all duration-300;
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.8) 100%);
+}
+
+/* Panel layout */
+.panel-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .panel-layout {
+    grid-template-columns: 300px 1fr;
+  }
+}
+
+.panel {
+  @apply rounded-xl border bg-card p-6 shadow-md transition-colors duration-300;
+}
+
+.panel-gradient {
+  @apply transition-all duration-300;
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.8) 100%);
+}
