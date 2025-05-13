@@ -1,91 +1,79 @@
-"use client"
-
-import { useState } from "react"
 import Link from "next/link"
-import { constants } from "@/lib/constants"
-import { TermsModal } from "@/components/terms-modal"
-import { useToast } from "@/hooks/use-toast"
-import { Button } from "@/components/ui/button"
+import { Cpu } from "lucide-react"
+import { FaTwitter, FaLinkedin, FaGithub, FaDiscord } from "react-icons/fa"
+import { ToSButton } from "./tos-modal"
 
-export function Footer() {
-  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false)
-  const { toast } = useToast()
-
-  const handleAcceptTerms = () => {
-    toast({
-      title: "Terms Accepted",
-      description: "You have accepted the Terms of Service.",
-    })
-    setIsTermsModalOpen(false)
-  }
-
-  const handleDeclineTerms = () => {
-    toast({
-      title: "Terms Declined",
-      description: "You have declined the Terms of Service.",
-      variant: "destructive",
-    })
-    setIsTermsModalOpen(false)
-  }
-
+export default function Footer() {
   return (
-    <>
-      <footer className="border-t bg-background">
-        <div className="container px-4 py-12 md:px-6 md:py-16 lg:py-20">
-          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Nylon Hosting</h3>
-              <p className="text-sm text-muted-foreground">
-                High-performance hosting solutions for businesses of all sizes.
-              </p>
-            </div>
-            {constants.footerLinks.map((section, index) => (
-              <div key={index} className="space-y-4">
-                <h3 className="text-lg font-medium">{section.title}</h3>
-                <ul className="space-y-2">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+    <footer className="w-full bg-black border-t border-purple-900/30 py-4">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          {/* Logo and Copyright */}
+          <div className="flex items-center gap-2">
+            <Cpu className="h-4 w-4 text-purple-500" />
+            <span className="text-sm font-medium text-white/80">
+              © {new Date().getFullYear()} Nylon Hosting Services
+            </span>
           </div>
-          <div className="mt-12 border-t pt-8">
-            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-              <p className="text-center text-sm text-muted-foreground md:text-left">
-                &copy; {new Date().getFullYear()} Nylon Hosting. All rights reserved.
-              </p>
-              <div className="flex items-center gap-4">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsTermsModalOpen(true)}
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  Terms of Service
-                </Button>
-                <Link href="/privacy" className="text-sm text-muted-foreground transition-colors hover:text-primary">
-                  Privacy Policy
-                </Link>
-              </div>
-            </div>
+
+          {/* Quick Links */}
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+            <Link href="/about" className="text-xs text-white/60 hover:text-white transition-colors">
+              About
+            </Link>
+            <Link href="/privacy" className="text-xs text-white/60 hover:text-white transition-colors">
+              Privacy
+            </Link>
+            <ToSButton css="text-xs text-white/60 hover:text-white transition-colors cursor-pointer" source="footer" />
+            <Link href="/status" className="text-xs text-white/60 hover:text-white transition-colors">
+              Status
+            </Link>
+            <Link href="/support" className="text-xs text-white/60 hover:text-white transition-colors">
+              Contact
+            </Link>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://twitter.com/nylonhosting"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-white transition-colors"
+              aria-label="Twitter"
+            >
+              <FaTwitter className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://linkedin.com/company/nylonhosting"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-white transition-colors"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://github.com/nylonhosting"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-white transition-colors"
+              aria-label="GitHub"
+            >
+              <FaGithub className="h-3.5 w-3.5" />
+            </a>
+            <a
+              href="https://discord.gg/nylonhosting"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-white transition-colors"
+              aria-label="Discord"
+            >
+              <FaDiscord className="h-3.5 w-3.5" />
+            </a>
           </div>
         </div>
-      </footer>
-
-      <TermsModal
-        isOpen={isTermsModalOpen}
-        onClose={() => setIsTermsModalOpen(false)}
-        onAccept={handleAcceptTerms}
-        onDecline={handleDeclineTerms}
-      />
-    </>
+      </div>
+    </footer>
   )
 }

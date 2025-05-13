@@ -1,0 +1,143 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  transition: opacity 0.2s;
+}
+
+.modalContainer {
+  position: relative;
+  width: 100%;
+  max-width: 64rem;
+  max-height: 90vh;
+  border-radius: 0.75rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-dark);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s;
+  transform: scale(0.95);
+}
+
+.modalContainer:hover {
+  transform: scale(1);
+}
+
+/* Footer-specific modal styling */
+.footerModal {
+  max-width: 56rem;
+  max-height: 85vh;
+  margin: 0 1rem;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(to right, white, #cbd5e1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  background-color: var(--secondary);
+}
+
+.modalContent {
+  padding: 1.5rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Footer-specific modal content styling */
+.footerModalContent {
+  padding: 1.25rem;
+  max-height: 55vh;
+}
+
+.contentSection {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.sectionText {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+.modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-dark);
+}
+
+.tosButton {
+  font-size: 0.875rem;
+  color: var(--primary-purple);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.tosButton:hover {
+  color: var(--accent-purple);
+}
+
+.customTosButton {
+  composes: tosButton;
+}
+
+/* Media queries for responsive adjustments */
+@media (max-height: 700px) {
+  .footerModal {
+    max-height: 95vh;
+  }
+
+  .footerModalContent {
+    max-height: 65vh;
+    padding: 1rem;
+  }
+}

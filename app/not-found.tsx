@@ -1,52 +1,63 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Cpu, Home } from "lucide-react"
+import Footer from "@/components/footer"
 
-import { Button } from "@/components/ui/button";
-import { GlowEffect } from "@/components/glow-effect";
-
-export default function NotFoundPage() {
-	return (
-		<div className="relative flex min-h-screen flex-col items-center justify-center text-center -mt-16">
-			<GlowEffect />
-
-			{/* SVG Illustration */}
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				strokeWidth="2"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-				className="mb-8 h-24 w-24 text-muted-foreground"
-			>
-				<circle cx="12" cy="12" r="10" />
-				<line x1="15" y1="9" x2="9" y2="15" />
-				<line x1="9" y1="9" x2="15" y2="15" />
-			</svg>
-
-			{/* 404 Content */}
-			<div className="space-y-6">
-				<h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl">
-					Oops! Page Not Found
-				</h1>
-				<p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto">
-					The page you&apos;re looking for doesn&apos;t exist. It might have been moved or deleted.
-				</p>
-				<div className="flex flex-col gap-2 justify-center min-[400px]:flex-row">
-					<Link href="/">
-						<Button size="lg" className="group">
-							Go Back Home
-							<ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-						</Button>
-					</Link>
-					<Link href="/contact">
-						<Button size="lg" variant="outline">
-							Contact Support
-						</Button>
-					</Link>
-				</div>
-			</div>
-		</div>
-	);
+export default function NotFound() {
+  return (
+    <div className="flex min-h-screen flex-col bg-[var(--bg-dark)]">
+      <main className="flex-1 flex items-center justify-center">
+        <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16 md:py-24 lg:py-32 text-center">
+          <div className="relative glow-effect">
+            <div className="relative z-10 flex items-center justify-center w-24 h-24 rounded-full bg-[var(--bg-card)] border border-slate-800">
+              <div className="flex items-center justify-center">
+                <Cpu className="h-10 w-10 text-purple-500" />
+              </div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl gradient-text">
+              404
+            </h1>
+            <p className="text-xl font-medium text-white">Page Not Found</p>
+            <p className="max-w-[600px] text-slate-400 md:text-xl/relaxed">
+              The page you&apos;re looking for doesn&apos;t exist or has been moved.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 min-[400px]:flex-row">
+            <Button asChild size="lg" className="gradient-purple-blue gradient-purple-blue-hover">
+              <Link href="/">
+                <Home className="mr-2 h-4 w-4" />
+                Back to Home
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+            >
+              <Link href="#contact">
+                <Cpu className="mr-2 h-4 w-4" />
+                Contact Support
+              </Link>
+            </Button>
+          </div>
+          <div className="w-full max-w-md">
+            <div className="relative glow-effect">
+              <div className="relative flex items-center h-12 rounded-lg bg-[var(--bg-card)]/70 border border-slate-800 px-4 z-10">
+                <div className="w-full flex items-center space-x-2">
+                  <div className="h-2 w-2 rounded-full bg-red-500"></div>
+                  <div className="h-2 w-2 rounded-full bg-yellow-500"></div>
+                  <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                  <div className="flex-1 h-2 rounded-full bg-slate-700"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  )
 }

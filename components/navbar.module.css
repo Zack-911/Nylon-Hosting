@@ -1,0 +1,140 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+  transition: all 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.headerTransparent {
+  background-color: transparent;
+}
+
+.headerDefault {
+  background-color: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(8px);
+}
+
+.container {
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logoIcon {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: var(--primary-purple);
+}
+
+.logoText {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.25rem;
+  background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.navWrapper {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.desktopNav {
+  display: none;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .desktopNav {
+    display: flex;
+    gap: 1.5rem;
+  }
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+}
+
+.actionsContainer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.mobileMenuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .mobileMenuButton {
+    display: none;
+  }
+}
+
+.mobileMenu {
+  display: block;
+  border-top: 1px solid var(--border-dark);
+  background-color: rgba(5, 5, 8, 0.95);
+  backdrop-filter: blur(4px);
+}
+
+@media (min-width: 768px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileMenuContainer {
+  padding: 1rem 0;
+}
+
+.mobileNavList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mobileNavLink {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.mobileNavLink:hover {
+  color: var(--text-primary);
+}
+
+.mobileActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
