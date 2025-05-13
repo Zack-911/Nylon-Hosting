@@ -14,7 +14,7 @@ export default function VolunteerPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#030305] relative overflow-hidden">
+        <section className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-4 text-center" data-aos="fade-up">
               <div className="space-y-2">

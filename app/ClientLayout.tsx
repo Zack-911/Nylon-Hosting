@@ -5,6 +5,8 @@ import { useEffect } from "react"
 import "@/app/globals.css"
 import { ThemeProvider } from "next-themes"
 import { ToSProvider } from "@/components/tos-modal"
+import BackgroundGrid from "@/components/backgroundGrid"
+import Stars from "@/components/particles/Stars"
 import AOS from "aos"
 import "aos/dist/aos.css"
 
@@ -31,6 +33,8 @@ export default function ClientLayout({
       </head>
       <body className="min-h-screen bg-[var(--bg-dark)] font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <Stars count={300} />
+          <BackgroundGrid />
           <ToSProvider>{children}</ToSProvider>
         </ThemeProvider>
       </body>

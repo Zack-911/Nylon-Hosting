@@ -100,8 +100,8 @@ export default function AboutPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[var(--bg-dark)] relative overflow-hidden">
-          <div className="absolute inset-0 bg-linear-to-r from-purple-900/10 to-blue-900/10 opacity-30"></div>
+        <section className="w-full py-12 md:py-24 lg:py-32  relative overflow-hidden">
+          <div className="absolute inset-0  opacity-30"></div>
           <div className="container relative z-10 px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 items-center">
               <div className="flex flex-col justify-center space-y-4">

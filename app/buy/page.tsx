@@ -8,8 +8,6 @@ import { Badge } from "@/components/ui/badge"
 import { CpuIcon as Gpu, ArrowRight, Globe, Bot, Database } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import Stars from "@/components/particles/Stars"
-import GlowingOrbs from "@/components/particles/GlowingOrbs"
 import styles from "@/styles/modules/animations.module.css"
 
 export default function BuyPage() {
@@ -17,9 +15,6 @@ export default function BuyPage() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1 relative">
-        {/* Background effects */}
-        <Stars count={100} />
-        <GlowingOrbs count={3} />
 
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">

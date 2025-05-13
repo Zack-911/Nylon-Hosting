@@ -17,11 +17,13 @@ export default function Stars({ count = 100 }: { count?: number }) {
 
   useEffect(() => {
     const generatedStars: Star[] = []
+    const pageHeight = document.documentElement.scrollHeight  // Full page height
+    const pageWidth = document.documentElement.scrollWidth    // Full page width
 
     for (let i = 0; i < count; i++) {
       const size = Math.random() > 0.8 ? "large" : Math.random() > 0.5 ? "medium" : "small"
-      const top = `${Math.random() * 100}%`
-      const left = `${Math.random() * 100}%`
+      const top = `${Math.random() * pageHeight}px`  // Full page height for positioning
+      const left = `${Math.random() * pageWidth}px`  // Full page width for positioning
       const animationDuration = `${Math.random() * 3 + 1}s`
       const animationDelay = `${Math.random() * 3}s`
 

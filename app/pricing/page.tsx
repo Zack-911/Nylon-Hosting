@@ -722,8 +722,7 @@ export default function PricingPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 bg-[var(--bg-dark)] relative overflow-hidden">
-          <div className="absolute inset-0 bg-linear-to-r from-purple-900/10 to-blue-900/10 opacity-30"></div>
+        <section className="w-full py-12 md:py-24 relative overflow-hidden">
           <div className="container relative z-10 px-4 md:px-6">
             <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
               <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">
@@ -811,8 +810,8 @@ export default function PricingPage() {
             </div>
 
             {/* Category Selection */}
-            <div className="flex justify-center mb-8">
-              <div className="inline-flex bg-slate-800/50 rounded-lg p-1">
+            <div className="flex justify-center mb-8 px-4 sm:px-0">
+              <div className="flex flex-wrap bg-slate-800/50 rounded-lg p-1 max-w-full gap-1">
                 <Button
                   variant={selectedCategory === "all" ? "default" : "ghost"}
                   className={selectedCategory === "all" ? "gradient-purple-blue text-white" : "text-slate-400"}
@@ -839,7 +838,6 @@ export default function PricingPage() {
                 </Button>
               </div>
             </div>
-
             {selectedCategory !== "other" ? (
               <>
                 {/* Filtering and Sorting Controls for GPUs */}

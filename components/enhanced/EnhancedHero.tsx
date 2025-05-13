@@ -48,12 +48,12 @@ export default function EnhancedHero({
               <p className={`max-w-[600px] text-slate-400 md:text-xl`}>{description}</p>
             </div>
             <div
-              className={`flex flex-col gap-2 min-[400px]:flex-row}`}
+              className={`flex flex-col gap-2 min-[400px]:flex-row justify-start space-x-0 min-[400px]:space-x-4`}
               style={{ animationDelay: "0.5s" }}
             >
               <Button
                 size="lg"
-                className={`gradient-purple-blue gradient-purple-blue-hover`}
+                className={`gradient-purple-blue gradient-purple-blue-hover max-w-[250px]`}
                 onClick={onPrimaryButtonClick}
               >
                 {primaryButtonText}
@@ -61,7 +61,7 @@ export default function EnhancedHero({
               <Button
                 size="lg"
                 variant="outline"
-                className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white max-w-[250px]"
                 onClick={onSecondaryButtonClick}
               >
                 {secondaryButtonText}
