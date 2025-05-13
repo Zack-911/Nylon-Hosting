@@ -4,6 +4,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Cpu, Menu, X, ChevronDown } from "lucide-react"
 import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import styles from "@/styles/modules/animations.module.css"
 
 interface NavbarProps {
   transparent?: boolean
@@ -22,8 +24,28 @@ export default function Navbar({ transparent = false }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const navVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 },
+  }
+
   return (
-    <header
+    <motion.header
+      initial="hidden"
+      animate="visible"
+      variants={navVariants}
       className={`sticky top-0 z-50 w-full border-b border-slate-800/50 transition-all duration-300 ${
         transparent && !scrolled ? "bg-transparent" : "bg-black/70 backdrop-blur-md"
       }`}
@@ -31,22 +53,24 @@ export default function Navbar({ transparent = false }: NavbarProps) {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center">
+          <motion.div variants={itemVariants} className="flex items-center">
             <Link href="/" className="flex items-center gap-2">
-              <Cpu className="h-6 w-6 text-purple-500" />
+              <Cpu className={`h-6 w-6 text-purple-500 ${styles.pulseAnimation}`} />
               <span className="text-lg font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
                 Nylon Hosting Services
               </span>
             </Link>
-          </div>
+          </motion.div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
-              Home
-            </Link>
+            <motion.div variants={itemVariants}>
+              <Link href="/" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                Home
+              </Link>
+            </motion.div>
 
-            <div className="relative group">
+            <motion.div variants={itemVariants} className="relative group">
               <button className="flex items-center gap-1 text-sm font-medium text-white/80 hover:text-white transition-colors">
                 Products <ChevronDown className="h-4 w-4 opacity-70" />
               </button>
@@ -64,11 +88,23 @@ export default function Navbar({ transparent = false }: NavbarProps) {
                   >
                     Cloud Storage
                   </Link>
+                  <Link
+                    href="/buy/dedicated-servers"
+                    className="block px-4 py-2 text-sm text-white/80 hover:bg-purple-900/30 hover:text-white"
+                  >
+                    Dedicated Servers
+                  </Link>
+                  <Link
+                    href="/buy/vps"
+                    className="block px-4 py-2 text-sm text-white/80 hover:bg-purple-900/30 hover:text-white"
+                  >
+                    VPS
+                  </Link>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="relative group">
+            <motion.div variants={itemVariants} className="relative group">
               <button className="flex items-center gap-1 text-sm font-medium text-white/80 hover:text-white transition-colors">
                 Solutions <ChevronDown className="h-4 w-4 opacity-70" />
               </button>
@@ -94,51 +130,70 @@ export default function Navbar({ transparent = false }: NavbarProps) {
                   </Link>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <Link href="/pricing" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
-              Pricing
-            </Link>
+            <motion.div variants={itemVariants}>
+              <Link href="/pricing" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                Pricing
+              </Link>
+            </motion.div>
 
-            <Link href="/about" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
-              About
-            </Link>
+            <motion.div variants={itemVariants}>
+              <Link href="/about" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                About
+              </Link>
+            </motion.div>
 
-            <Link href="/support" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
-              Support
-            </Link>
+            <motion.div variants={itemVariants}>
+              <Link href="/support" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+                Support
+              </Link>
+            </motion.div>
           </nav>
 
           {/* Action Buttons */}
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-3">
-              <Link href="/account">
-                <Button variant="ghost" className="text-white/80 hover:text-white hover:bg-purple-900/20">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/account?tab=register">
-                <Button className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white border-0">
-                  Get Started
-                </Button>
-              </Link>
+              <motion.div variants={itemVariants}>
+                <Link href="/account">
+                  <Button variant="ghost" className="text-white/80 hover:text-white hover:bg-purple-900/20">
+                    Sign In
+                  </Button>
+                </Link>
+              </motion.div>
+              <motion.div variants={itemVariants}>
+                <Link href="/account?tab=register">
+                  <Button
+                    className={`bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white border-0 ${styles.buttonHover}`}
+                  >
+                    Get Started
+                  </Button>
+                </Link>
+              </motion.div>
             </div>
 
             {/* Mobile Menu Button */}
-            <button
+            <motion.button
+              variants={itemVariants}
               className="md:hidden flex items-center justify-center text-white p-2 rounded-md hover:bg-purple-900/20"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-black/95 backdrop-blur-md border-t border-purple-900/30">
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+          className="md:hidden bg-black/95 backdrop-blur-md border-t border-purple-900/30"
+        >
           <div className="container mx-auto px-4 py-3">
             <nav className="flex flex-col space-y-3">
               <Link
@@ -164,6 +219,20 @@ export default function Navbar({ transparent = false }: NavbarProps) {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Cloud Storage
+                </Link>
+                <Link
+                  href="/buy/dedicated-servers"
+                  className="px-4 py-1.5 text-sm text-white/80 hover:text-white block"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dedicated Servers
+                </Link>
+                <Link
+                  href="/buy/vps"
+                  className="px-4 py-1.5 text-sm text-white/80 hover:text-white block"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  VPS
                 </Link>
               </div>
 
@@ -241,15 +310,17 @@ export default function Navbar({ transparent = false }: NavbarProps) {
                   </Button>
                 </Link>
                 <Link href="/account?tab=register" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full justify-center bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white border-0">
+                  <Button
+                    className={`w-full justify-center bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white border-0 ${styles.buttonHover}`}
+                  >
                     Get Started
                   </Button>
                 </Link>
               </div>
             </nav>
           </div>
-        </div>
+        </motion.div>
       )}
-    </header>
+    </motion.header>
   )
 }

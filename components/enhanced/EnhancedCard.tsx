@@ -1,27 +1,20 @@
 "use client"
 
 import type React from "react"
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import type { LucideIcon } from "lucide-react"
+import { motion } from "framer-motion"
 import styles from "@/styles/modules/animations.module.css"
 
 interface EnhancedCardProps {
   title: string
-  description?: string
-  icon?: LucideIcon
+  description: string
+  icon: LucideIcon
   iconColor?: string
   content?: React.ReactNode
   footer?: React.ReactNode
-  badge?: string
-  badgeVariant?: "default" | "popular" | "premium" | "value"
-  buttonText?: string
-  buttonVariant?: "default" | "outline" | "ghost"
-  onClick?: () => void
-  animationDelay?: string
-  className?: string
-  dataAos?: string
+  delay?: number
 }
 
 export default function EnhancedCard({
@@ -31,67 +24,31 @@ export default function EnhancedCard({
   iconColor = "text-purple-500",
   content,
   footer,
-  badge,
-  badgeVariant = "default",
-  buttonText,
-  buttonVariant = "default",
-  onClick,
-  animationDelay = "0s",
-  className = "",
-  dataAos = "fade-up",
+  delay = 0,
 }: EnhancedCardProps) {
-  const getBadgeClass = () => {
-    switch (badgeVariant) {
-      case "popular":
-        return "gradient-purple-blue text-white border-0"
-      case "premium":
-        return "bg-purple-600 text-white border-0"
-      case "value":
-        return "bg-green-600 text-white border-0"
-      default:
-        return "bg-slate-800/50 text-slate-400 border-slate-700"
-    }
-  }
-
-  const getButtonClass = () => {
-    switch (buttonVariant) {
-      case "outline":
-        return "border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
-      case "ghost":
-        return "text-slate-400 hover:text-white hover:bg-slate-800/30"
-      default:
-        return "gradient-purple-blue gradient-purple-blue-hover"
-    }
-  }
-
   return (
-    <Card
-      className={`bg-[var(--bg-card)] border-slate-800 ${styles.cardHover} ${className}`}
-      data-aos={dataAos}
-      style={{ animationDelay }}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: delay * 0.1 }}
+      whileHover={{ y: -10, transition: { duration: 0.3 } }}
+      className={`glow-effect ${styles.cardHover}`}
     >
-      <CardHeader>
-        {Icon && (
-          <div
-            className={`h-10 w-10 rounded-md bg-purple-500/10 flex items-center justify-center mb-2 ${styles.pulseAnimation}`}
-          >
-            <Icon className={`h-5 w-5 ${iconColor}`} />
+      <Card className="h-full bg-[var(--bg-card)] border-slate-800 relative z-10">
+        <CardHeader>
+          <div className="flex items-center gap-3 mb-2">
+            <div
+              className={`h-10 w-10 rounded-md bg-${iconColor.split("-")[1]}-500/10 flex items-center justify-center ${styles.pulseAnimation}`}
+            >
+              <Icon className={`h-5 w-5 ${iconColor}`} />
+            </div>
           </div>
-        )}
-        {badge && <Badge className={getBadgeClass()}>{badge}</Badge>}
-        <CardTitle className="text-white">{title}</CardTitle>
-        {description && <CardDescription className="text-slate-400">{description}</CardDescription>}
-      </CardHeader>
-      {content && <CardContent>{content}</CardContent>}
-      {(footer || buttonText) && (
-        <CardFooter>
-          {footer || (
-            <Button className={`w-full ${getButtonClass()}`} onClick={onClick}>
-              {buttonText}
-            </Button>
-          )}
-        </CardFooter>
-      )}
-    </Card>
+          <CardTitle className="text-white">{title}</CardTitle>
+          <CardDescription className="text-slate-400">{description}</CardDescription>
+        </CardHeader>
+        {content && <CardContent className="text-slate-300">{content}</CardContent>}
+        {footer && <CardFooter>{footer}</CardFooter>}
+      </Card>
+    </motion.div>
   )
 }

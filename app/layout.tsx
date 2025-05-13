@@ -5,7 +5,7 @@ export const metadata = {
   title: "Nylon Hosting Service - Comprehensive Hosting & GPU Marketplace",
   description:
     "Host websites, Discord bots, applications, and access high-performance GPU resources on our cutting-edge infrastructure.",
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
@@ -16,5 +16,4 @@ export default function RootLayout({
   return <ClientLayout>{children}</ClientLayout>
 }
 
-
-import './globals.css'
+import "./globals.css"
