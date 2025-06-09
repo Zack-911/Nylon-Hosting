@@ -117,12 +117,6 @@ export default function Navbar({ transparent = false }: NavbarProps) {
                     Marketplace
                   </Link>
                   <Link
-                    href="/dashboard"
-                    className="block px-4 py-2 text-sm text-white/80 hover:bg-purple-900/30 hover:text-white"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
                     href="/volunteer"
                     className="block px-4 py-2 text-sm text-white/80 hover:bg-purple-900/30 hover:text-white"
                   >
@@ -244,13 +238,6 @@ export default function Navbar({ transparent = false }: NavbarProps) {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Marketplace
-                </Link>
-                <Link
-                  href="/dashboard"
-                  className="px-4 py-1.5 text-sm text-white/80 hover:text-white block"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Dashboard
                 </Link>
                 <Link
                   href="/volunteer"
